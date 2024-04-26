@@ -1,5 +1,6 @@
 <script setup>
 
+import Playlist from "@/components/Playlist.vue";
 </script>
 
 <template>
@@ -12,7 +13,7 @@
     </div>
 
     <div class="menu">
-      <h5>Menu</h5>
+      <h5>Меню</h5>
       <ul>
         <li>
           <box-icon name='bolt-circle' type='solid' color='#ffffff' ></box-icon>
@@ -58,11 +59,7 @@
           <box-icon name='plus-square' type='solid' color='#ffffff' ></box-icon>
           <a href="#">Создать новый</a>
         </li>
-        <li>
-          <box-icon name='caret-right-circle' type='solid' color='#ffffff' ></box-icon>
-          <a href="#">Лучшее за 2023</a>
-        </li>
-
+        <Playlist />
       </ul>
     </div>
   </aside>
@@ -106,23 +103,10 @@
   color: #919191;
   margin-bottom: 12px;
   text-transform: uppercase;
+  font-size: 14px;
 }
 
 .container .sidebar .menu ul{
   list-style: none;
-}
-
-.container .sidebar .menu ul li{
-  margin-bottom: 12px;
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  cursor: pointer;
-}
-
-.container .sidebar .menu ul li a{
-  font-size: 14px;
-  font-weight: bold;
-  transition: all 0.3s ease;
 }
 </style>

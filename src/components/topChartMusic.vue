@@ -15,9 +15,9 @@
     <div class="actions">
       <p>03:45</p>
       <div class="icon">
-        <box-icon name='right-arrow' type='solid' color='#ffffff' ></box-icon>
+        <box-icon name='right-arrow' class="playMusic" type='solid' color='#ffffff' ></box-icon>
       </div>
-      <box-icon name='plus-square' type='solid' color='#ffffff' ></box-icon>
+      <box-icon name='plus-square' type='solid' class="addMusicToFavourite" color='#ffffff' ></box-icon>
     </div>
   </div>
 </template>
@@ -36,6 +36,14 @@
 
 .details h5 {
   margin-bottom: 0px;
+}
+
+.playMusic {
+  cursor: pointer;
+}
+
+.addMusicToFavourite {
+  cursor: pointer;
 }
 
 .container main .playlist .music-list .items .item .info,
