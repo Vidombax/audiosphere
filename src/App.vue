@@ -1,6 +1,4 @@
 <script setup>
-import { ref } from 'vue'
-import axios from "axios";
 import 'boxicons'
 import Genre from "@/components/genre.vue";
 import TopChartMusic from "@/components/topChartMusic.vue";
@@ -8,23 +6,8 @@ import NewInTrend from "@/components/newInTrend.vue";
 import MusicPlayer from "@/components/musicPlayer.vue";
 import Sidebar from "@/components/Sidebar.vue";
 import MainPage from "@/components/MainPage.vue";
-import {onMounted} from "vue";
+import Profile from "@/components/Profile.vue";
 
-const items = ref([])
-
-const fetchData = async () => {
-  try {
-    const response = await axios.get('api/data')
-    items.value = response.data
-  }
-  catch (err) {
-    console.log(err)
-  }
-}
-
-onMounted(async () => {
-  await fetchData()
-})
 </script>
 
 <template>
@@ -47,18 +30,7 @@ onMounted(async () => {
       <MainPage />
     </main>
     <div class="right-section">
-      <div class="profile">
-        <box-icon name='bell' type='solid' color='#ffffff' style="cursor: pointer;" ></box-icon>
-        <box-icon name='cog' type='solid' color='#ffffff' style="cursor: pointer;"></box-icon>
-        <div class="user">
-          <div class="left">
-            <img src="./assets/profile.png">
-          </div>
-          <div class="right">
-            <h5>Jhon Doe</h5>
-          </div>
-        </div>
-      </div>
+    <Profile />
     <MusicPlayer />
     </div>
   </div>
@@ -114,38 +86,6 @@ img{
 
 .container .right-section{
   padding: 20px 36px 20px 0;
-}
-
-.container .right-section .profile{
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 18px;
-  margin-bottom: 40px;
-}
-
-.container .right-section .profile .user{
-  display: flex;
-}
-
-.container .right-section .profile .user .left{
-  display: flex;
-  align-items: center;
-  background: #32323d;
-  padding: 6px;
-  border-radius: 6px 0 0 6px;
-}
-
-.container .right-section .profile .user .left img{
-  width: 30px;
-  height: 30px;
-}
-
-.container .right-section .profile .user .right{
-  background-color: #25252d;
-  border-radius: 0 6px 6px 0;
-  padding: 13px;
-  color: #fff;
 }
 
 
