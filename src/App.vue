@@ -7,7 +7,6 @@ import MusicPlayer from "@/components/musicPlayer.vue";
 import Sidebar from "@/components/Sidebar.vue";
 import MainPage from "@/components/MainPage.vue";
 import Profile from "@/components/Profile.vue";
-import {createRouter} from 'vue-router'
 </script>
 
 <template>
@@ -224,9 +223,17 @@ img{
     grid-template-columns: 3fr 2fr;
   }
 
+  .container main {
+    margin-left: 0px;
+  }
+
   .container .sidebar{
     position: absolute;
     left: -100%;
+  }
+
+  .container .sidebarNotFixed {
+    display: none;
   }
 
   .container .sidebar .playing{

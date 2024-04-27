@@ -4,6 +4,9 @@ import Playlist from "@/components/Playlist.vue";
 </script>
 
 <template>
+  <div class="sidebarNotFixed">
+    dick
+  </div>
   <aside class="sidebar">
     <div class="logo">
       <button class="menu-btn" id="menu-close">
@@ -36,10 +39,6 @@ import Playlist from "@/components/Playlist.vue";
     <div class="menu">
       <h5>Библиотека</h5>
       <ul>
-        <li>
-          <box-icon name='undo' color='#ffffff'></box-icon>
-          <a href="#">Недавние</a>
-        </li>
         <li>
           <box-icon name='album' type='solid' color='#ffffff' ></box-icon>
           <a href="#">Альбомы</a>
@@ -74,6 +73,16 @@ import Playlist from "@/components/Playlist.vue";
   flex-direction: column;
   justify-content: space-between;
   z-index: 10000;
+  position: fixed;
+  transition: all 0.6s ease;
+}
+.sidebarNotFixed {
+  height: 100vh;
+  padding: 20px 36px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 10000;
   transition: all 0.6s ease;
 }
 .container .sidebar .logo{
@@ -90,13 +99,6 @@ import Playlist from "@/components/Playlist.vue";
 .container .sidebar .logo a{
   font-weight: bold;
   transition: all 0.3s ease;
-}
-
-.container .sidebar .logo a:hover,
-.container .sidebar .menu ul li:hover a,
-.container .sidebar .menu ul li:hover i,
-.container main header .nav-links a:hover{
-  color: #5773ff;
 }
 
 .container .sidebar .menu h5{

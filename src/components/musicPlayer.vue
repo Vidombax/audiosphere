@@ -43,11 +43,12 @@
   color: #fff;
   background-color: #202026;
   border-radius: 6px;
-  height: 88%;
+  height: 80%;
   display: flex;
   flex-direction: column;
   width: 400px;
-  margin-left: 20%;
+  position: fixed;
+  margin-left: 5%;
 }
 
 .container .right-section .music-player .top-section{

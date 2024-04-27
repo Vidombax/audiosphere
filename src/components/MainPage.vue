@@ -53,13 +53,25 @@ import TopChartMusic from "@/components/topChartMusic.vue";
     <div class="items">
       <div class="item">
         <a href="#">
-          <img src="" alt="albumCover">
+          <img src="../assets/albumCover1.jpeg" alt="albumCover">
           <p>Название альбома</p>
         </a>
       </div>
       <div class="item">
         <a href="#">
-          <img src="" alt="albumCover">
+          <img src="../assets/albumCover1.jpeg" alt="albumCover">
+          <p>Название альбома</p>
+        </a>
+      </div>
+      <div class="item">
+        <a href="#">
+          <img src="../assets/albumCover1.jpeg" alt="albumCover">
+          <p>Название альбома</p>
+        </a>
+      </div>
+      <div class="item">
+        <a href="#">
+          <img src="../assets/albumCover1.jpeg" alt="albumCover">
           <p>Название альбома</p>
         </a>
       </div>
@@ -144,11 +156,13 @@ import TopChartMusic from "@/components/topChartMusic.vue";
 .newAlbums .header a {
   color: #919191;
   font-size: 12px;
+  padding-right: 5px;
 }
 
 .newAlbums .items {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  padding: 12px;
 }
 
 .newAlbums .items .item a {
@@ -159,11 +173,12 @@ import TopChartMusic from "@/components/topChartMusic.vue";
 }
 
 .newAlbums .items .item a img {
-  width: 100px;
-  height: 100px;
+  width: 200px;
+  height: 200px;
 }
 
 .newAlbums .items .item a p {
+  margin-top: 8px;
   color: #fff;
 }
 </style>

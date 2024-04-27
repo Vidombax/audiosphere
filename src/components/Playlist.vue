@@ -22,4 +22,10 @@
   font-weight: bold;
   transition: all 0.3s ease;
 }
+.container .sidebar .logo a:hover,
+.container .sidebar .menu ul li:hover a,
+.container .sidebar .menu ul li:hover i,
+.container main header .nav-links a:hover{
+  color: #5773ff;
+}
 </style>
