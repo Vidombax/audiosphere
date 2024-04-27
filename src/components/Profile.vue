@@ -3,18 +3,11 @@ import {onMounted, ref} from "vue";
 import axios from "axios";
 
 const items = ref([])
-let user = {
-  name: '',
-  profilePicture: ''
-}
 
 const fetchData = async () => {
   try {
     const response = await axios.get('api/data')
     items.value = response.data
-
-    user.name = items.value[0].nameUser
-    user.profilePicture = items.value[0].profilePicture
   }
   catch (err) {
     console.log(err)
@@ -35,7 +28,7 @@ onMounted(async () => {
         <img src="../assets/profile.png">
       </div>
       <div class="right">
-        <h5>{{user}}</h5>
+        <h5 v-if="items.length > 0">{{ items[0].nameUser }}</h5>
       </div>
     </div>
   </div>
