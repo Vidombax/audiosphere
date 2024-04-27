@@ -43,7 +43,26 @@ import TopChartMusic from "@/components/topChartMusic.vue";
         <TopChartMusic />
         <TopChartMusic />
       </div>
-
+    </div>
+  </div>
+  <div class="newAlbums">
+    <div class="header">
+      <h4>Новые альбомы</h4>
+      <a href="#">Смотреть все</a>
+    </div>
+    <div class="items">
+      <div class="item">
+        <a href="#">
+          <img src="" alt="albumCover">
+          <p>Название альбома</p>
+        </a>
+      </div>
+      <div class="item">
+        <a href="#">
+          <img src="" alt="albumCover">
+          <p>Название альбома</p>
+        </a>
+      </div>
     </div>
   </div>
 </template>
@@ -53,6 +72,7 @@ import TopChartMusic from "@/components/topChartMusic.vue";
   width: 300px;
   height: 200px;
 }
+
 .container main .trending{
   margin-top: 40px;
   display: flex;
@@ -101,5 +121,49 @@ import TopChartMusic from "@/components/topChartMusic.vue";
   color: #fff;
   border-radius: 6px;
   width: 65%;
+}
+
+.newAlbums {
+  background-color: #202026;
+  padding: 20px 12px 12px 20px;
+  margin-top: 20px;
+  border-radius: 12px;
+}
+
+.newAlbums .header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.newAlbums .header h4 {
+  color: #fff;
+}
+
+.newAlbums .header a {
+  color: #919191;
+  font-size: 12px;
+}
+
+.newAlbums .items {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.newAlbums .items .item a {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.newAlbums .items .item a img {
+  width: 100px;
+  height: 100px;
+}
+
+.newAlbums .items .item a p {
+  color: #fff;
 }
 </style>

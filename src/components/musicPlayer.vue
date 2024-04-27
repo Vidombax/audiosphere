@@ -46,6 +46,8 @@
   height: 88%;
   display: flex;
   flex-direction: column;
+  width: 400px;
+  margin-left: 20%;
 }
 
 .container .right-section .music-player .top-section{

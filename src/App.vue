@@ -7,7 +7,7 @@ import MusicPlayer from "@/components/musicPlayer.vue";
 import Sidebar from "@/components/Sidebar.vue";
 import MainPage from "@/components/MainPage.vue";
 import Profile from "@/components/Profile.vue";
-
+import {createRouter} from 'vue-router'
 </script>
 
 <template>
@@ -45,6 +45,7 @@ img{
 
 .container main{
   padding: 20px 36px;
+  margin-left: 65px;
 }
 
 .container main header{
