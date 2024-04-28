@@ -22,14 +22,16 @@ onMounted(async () => {
 <template>
   <div class="profile">
     <box-icon name='cog' type='solid' color='#ffffff' style="cursor: pointer;"></box-icon>
-    <div class="user" style="cursor: pointer">
-      <div class="left">
-        <img src="../assets/profile.png">
+    <router-link to="/account">
+      <div class="user">
+        <div class="left">
+          <img src="../assets/profile.png">
+        </div>
+        <div class="right">
+          <h5 v-if="items.length > 0">{{ items[0].nameUser }}</h5>
+        </div>
       </div>
-      <div class="right">
-        <h5 v-if="items.length > 0">{{ items[0].nameUser }}</h5>
-      </div>
-    </div>
+    </router-link>
   </div>
 </template>
 

@@ -1,0 +1,83 @@
+<script setup>
+import AlbumAfisha from "@/components/album/AlbumAfisha.vue";
+import TopAlbumsChart from "@/components/album/TopAlbumsChart.vue";
+import NewAlbumsChart from "@/components/album/NewAlbumsChart.vue";
+
+
+document.title = 'AudioSphere | Альбомы'
+</script>
+
+<template>
+  <AlbumAfisha />
+  <div class="albums">
+    <div class="popularAlbums">
+      <div class="header">
+        <h5>Популярные альбомы</h5>
+        <a href="">Смотреть все</a>
+      </div>
+      <div class="items">
+        <TopAlbumsChart />
+        <TopAlbumsChart />
+        <TopAlbumsChart />
+        <TopAlbumsChart />
+      </div>
+    </div>
+    <div class="newAlbums">
+      <div class="header">
+        <h5>Новые альбомы</h5>
+        <a href="">Смотреть все</a>
+      </div>
+      <div class="items">
+        <NewAlbumsChart />
+        <NewAlbumsChart />
+        <NewAlbumsChart />
+        <NewAlbumsChart />
+      </div>
+    </div>
+  </div>
+</template>
+
+<style scoped>
+  .container main .albums {
+    margin-top: 14px;
+    display: flex;
+    gap: 20px;
+  }
+
+  .container main .albums .popularAlbums {
+    color: #fff;
+    background-color: #202026;
+    padding: 20px;
+    border-radius: 6px;
+    width: 55%;
+  }
+
+  .container main .albums .newAlbums{
+    background-color: #202026;
+    padding: 20px;
+    color: #fff;
+    border-radius: 6px;
+    width: 55%;
+  }
+
+  .container main .albums .popularAlbums .header,
+  .container main .albums .newAlbums .header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+  }
+
+  .container main .albums .popularAlbums .header a,
+  .container main .albums .newAlbums .header a{
+    color: #919191;
+    font-size: 12px;
+  }
+
+  .container main .albums .popularAlbums .items,
+  .container main .albums .newAlbums .items{
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+</style>

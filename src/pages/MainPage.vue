@@ -1,10 +1,12 @@
 <script setup>
 
-import Genre from "@/components/genre.vue";
-import NewInTrend from "@/components/newInTrend.vue";
-import TopChartMusic from "@/components/topChartMusic.vue";
-import NewAlbums from "@/components/NewAlbums.vue";
-import CustomPlaylists from "@/components/CustomPlaylists.vue";
+import Genre from "@/components/genre/Genre.vue";
+import NewInTrend from "@/components/main/newInTrend.vue";
+import TopChartMusic from "@/components/main/topChartMusic.vue";
+import NewAlbums from "@/components/album/NewAlbums.vue";
+import CustomPlaylists from "@/components/main/CustomPlaylists.vue";
+
+document.title = 'AudioSphere | Главная'
 </script>
 
 <template>
@@ -31,7 +33,6 @@ import CustomPlaylists from "@/components/CustomPlaylists.vue";
         <Genre />
         <Genre />
       </div>
-
     </div>
 
     <div class="music-list">

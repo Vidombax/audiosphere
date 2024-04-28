@@ -20,19 +20,27 @@ import Playlist from "@/components/Playlist.vue";
       <ul>
         <li>
           <box-icon name='bolt-circle' type='solid' color='#ffffff' ></box-icon>
-          <a href="#">Главная</a>
+          <router-link to="/">
+            <a href="#">Главная</a>
+          </router-link>
         </li>
         <li>
           <box-icon name='volume-full' type='solid' color='#ffffff' ></box-icon>
-          <a href="#">Жанры</a>
+          <router-link to="/genres">
+            <a href="#">Жанры</a>
+          </router-link>
         </li>
         <li>
           <box-icon type='solid' name='album' color='#ffffff'></box-icon>
-          <a href="#">Альбомы</a>
+          <router-link to="/albums">
+            <a href="#">Альбомы</a>
+          </router-link>
         </li>
         <li>
           <box-icon type='solid' name='microphone' color='#ffffff'></box-icon>
-          <a href="#">Исполнители</a>
+          <router-link to="/performers">
+            <a href="#">Исполнители</a>
+          </router-link>
         </li>
       </ul>
     </div>
@@ -41,11 +49,15 @@ import Playlist from "@/components/Playlist.vue";
       <ul>
         <li>
           <box-icon name='album' type='solid' color='#ffffff' ></box-icon>
-          <a href="#">Альбомы</a>
+          <router-link to="/favourite-albums">
+            <a href="#">Ваши альбомы</a>
+          </router-link>
         </li>
         <li>
           <box-icon name='heart' type='solid' color='#ffffff' ></box-icon>
-          <a href="#">Любимые</a>
+          <router-link to="/favourites">
+            <a href="#">Любимые</a>
+          </router-link>
         </li>
 
       </ul>
@@ -110,5 +122,9 @@ import Playlist from "@/components/Playlist.vue";
 
 .container .sidebar .menu ul{
   list-style: none;
+}
+
+.container .sidebar .menu ul li a:focus{
+  color: #5773ff;
 }
 </style>

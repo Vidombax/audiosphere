@@ -11,7 +11,7 @@ const {closeListSongs} = inject('musicPlayer')
     </div>
     <div class="items">
       <div class="item">
-        <img src="../assets/song-1.png" alt="albumCover">
+        <img src="../../assets/song-1.png" alt="albumCover">
         <p>Название музыки</p>
         <p>3:45</p>
         <box-icon name='right-arrow' class="playMusic" type='solid' color='#ffffff' style="cursor: pointer"></box-icon>

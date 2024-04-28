@@ -5,8 +5,8 @@
 <template>
   <div class="song">
     <div class="imgPlay">
-      <img src="../assets/song-3.png" class="albumImg" alt="AlbumCover">
-      <img src="../assets/playOnImage.png" class="playMusic" style="cursor: pointer">
+      <img src="../../assets/song-3.png" class="albumImg" alt="AlbumCover">
+      <img src="../../assets/playOnImage.png" class="playMusic" style="cursor: pointer">
     </div>
     <div class="songInfo">
       <p>Название песни</p>

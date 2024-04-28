@@ -1,6 +1,6 @@
 <script setup>
 import {ref, provide} from "vue";
-import ListSongs from "@/components/ListSongs.vue";
+import ListSongs from "@/components/main/ListSongs.vue";
 
 const listSongsOpen = ref(false)
 

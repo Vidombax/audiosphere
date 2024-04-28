@@ -2,27 +2,16 @@
 import 'boxicons'
 import MusicPlayer from "@/components/musicPlayer.vue";
 import Sidebar from "@/components/Sidebar.vue";
-import MainPage from "@/components/MainPage.vue";
 import Profile from "@/components/Profile.vue";
+import Header from "@/components/Header.vue";
 </script>
 
 <template>
   <div class="container">
     <Sidebar />
     <main>
-      <header>
-        <div class="nav-links">
-          <button class="menu-btn" id="menu-open">
-            <box-icon name='menu'  color='#ffffff'></box-icon>
-          </button>
-          <a href="#">Подписки</a>
-        </div>
-        <div class="search">
-          <box-icon name='search' color='#ffffff' ></box-icon>
-          <input type="text" placeholder="Поиск по аудиозаписям">
-        </div>
-      </header>
-      <MainPage />
+      <Header />
+      <router-view></router-view>
     </main>
     <div class="right-section">
     <Profile />
@@ -41,43 +30,6 @@ img{
 .container main{
   padding: 20px 36px;
   margin-left: 65px;
-}
-
-.container main header{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.container main header .nav-links{
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-
-.container main header .nav-links a{
-  text-transform: uppercase;
-  color: #919191;
-  transition: all 0.3s ease;
-}
-
-.container main header .search{
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  width: 70%;
-  background-color: #1d1d1d;
-  border: 1px solid #464748;
-  padding: 10px;
-  border-radius: 8px;
-}
-
-.container main header .search input{
-  width: 100%;
-  background-color: transparent;
-  border: none;
-  outline: none;
-  color: #fff;
 }
 
 .container .right-section{
@@ -101,7 +53,7 @@ img{
   width: 400px;
 }
 
-.newAlbums .items .item a img {
+.genres .items .item a img {
   width: 200px;
   height: 200px;
 }
@@ -115,7 +67,7 @@ img{
   .container main {
     margin-left: 20px;
   }
-  .newAlbums .items .item a img {
+  .genres .items .item a img {
     width: 150px;
     height: 150px;
   }
@@ -140,24 +92,24 @@ img{
     height: 180px;
   }
 
-  .container main .playlist .genres{
+  .container main .albums .genres{
     width: 30%;
   }
 
-  .container main .playlist .genres .items{
+  .container main .albums .genres .items{
     grid-template-columns: 1fr;
   }
 
-  .container main .playlist .genres .items .item{
+  .container main .albums .genres .items .item{
     padding: 10px;
   }
 
-  .container main .playlist .genres .items .item p{
+  .container main .albums .genres .items .item p{
     font-size: 12px;
   }
 
-  .container main .playlist .genres .items .item:nth-child(6),
-  .container main .playlist .music-list .items .item .info > p{
+  .container main .albums .genres .items .item:nth-child(6),
+  .container main .albums .popularAlbums .items .item .info > p{
     display: none;
   }
 
@@ -188,11 +140,11 @@ img{
     font-size: 14px;
   }
 
-  .container main .playlist .genres{
+  .container main .albums .genres{
     display: none;
   }
 
-  .container main .playlist .music-list{
+  .container main .albums .popularAlbums{
     width: 100%;
   }
 
@@ -277,7 +229,7 @@ img{
     margin-top: 66px;
   }
 
-  .container main .playlist{
+  .container main .albums{
     margin-top: 40px;
   }
 
@@ -312,7 +264,7 @@ img{
   }
 
   .container main .trending,
-  .container main .playlist{
+  .container main .albums{
     display: none;
   }
 

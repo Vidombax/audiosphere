@@ -6,7 +6,7 @@
   <div class="item">
     <div class="info">
       <p>01</p>
-      <img src="../assets/song-1.png">
+      <img src="../../assets/song-1.png">
       <div class="details">
         <h5>Sunrise</h5>
         <p>Lila Rivera</p>
@@ -23,14 +23,14 @@
 </template>
 
 <style scoped>
-.container main .playlist .music-list .items .item{
+.container main .albums .popularAlbums .items .item{
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 20px;
 }
 
-.container main .playlist .music-list .items .item:last-child{
+.container main .albums .popularAlbums .items .item:last-child{
   margin-bottom: 0;
 }
 
@@ -46,32 +46,32 @@
   cursor: pointer;
 }
 
-.container main .playlist .music-list .items .item .info,
-.container main .playlist .music-list .items .item .actions{
+.container main .albums .popularAlbums .items .item .info,
+.container main .albums .popularAlbums .items .item .actions{
   display: flex;
   align-items: center;
   gap: 20px;
 }
 
-.container main .playlist .music-list .items .item .info p{
+.container main .albums .popularAlbums .items .item .info p{
   color: #919191;
   font-size: 12px;
   font-weight: bold;
   margin-top: 6px;
 }
 
-.container main .playlist .music-list .items .item .info img{
+.container main .albums .popularAlbums .items .item .info img{
   width: 50px;
   height: 50px;
   border-radius: 6px;
 }
 
-.container main .playlist .music-list .items .item .actions p{
+.container main .albums .popularAlbums .items .item .actions p{
   font-size: 13px;
   font-weight: bold;
 }
 
-.container main .playlist .music-list .items .item .actions .icon{
+.container main .albums .popularAlbums .items .item .actions .icon{
   display: flex;
   align-items: center;
   justify-content: center;
@@ -81,12 +81,12 @@
   border-radius: 6px;
 }
 
-.container main .playlist .music-list .items .item .actions .icon i{
+.container main .albums .popularAlbums .items .item .actions .icon i{
   font-size: 10px;
   color: #5773ff;
 }
 
-.container main .playlist .music-list .items .item .actions i{
+.container main .albums .popularAlbums .items .item .actions i{
   color: #919191;
 }
 </style>

@@ -1,6 +1,6 @@
 <script setup>
 
-import Song from "@/components/Song.vue";
+import Song from "@/components/main/Song.vue";
 </script>
 
 <template>
