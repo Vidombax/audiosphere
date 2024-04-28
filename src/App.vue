@@ -1,8 +1,5 @@
 <script setup>
 import 'boxicons'
-import Genre from "@/components/genre.vue";
-import TopChartMusic from "@/components/topChartMusic.vue";
-import NewInTrend from "@/components/newInTrend.vue";
 import MusicPlayer from "@/components/musicPlayer.vue";
 import Sidebar from "@/components/Sidebar.vue";
 import MainPage from "@/components/MainPage.vue";
@@ -18,7 +15,6 @@ import Profile from "@/components/Profile.vue";
           <button class="menu-btn" id="menu-open">
             <box-icon name='menu'  color='#ffffff'></box-icon>
           </button>
-          <a href="#">Музыка</a>
           <a href="#">Подписки</a>
         </div>
         <div class="search">
@@ -88,7 +84,6 @@ img{
   padding: 20px 36px 20px 0;
 }
 
-
 .container main header .nav-links button,
 .container .sidebar .logo button{
   display: none;
@@ -100,6 +95,30 @@ img{
   padding: 4px;
   border-radius: 8px;
   cursor: pointer;
+}
+
+.container .right-section .music-player {
+  width: 400px;
+}
+
+.newAlbums .items .item a img {
+  width: 200px;
+  height: 200px;
+}
+
+@media screen and (max-width: 1560px){
+  .container .right-section .music-player {
+    margin-left: 5px;
+    width: 360px;
+
+  }
+  .container main {
+    margin-left: 20px;
+  }
+  .newAlbums .items .item a img {
+    width: 150px;
+    height: 150px;
+  }
 }
 
 @media screen and (max-width: 1400px) {

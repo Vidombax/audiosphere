@@ -1,40 +1,56 @@
 <script setup>
+import {ref, provide} from "vue";
+import ListSongs from "@/components/ListSongs.vue";
 
+const listSongsOpen = ref(false)
+
+const openListSongs = () => {
+  listSongsOpen.value = true
+}
+
+const closeListSongs = () => {
+  listSongsOpen.value = false
+}
+
+provide('musicPlayer', {
+  closeListSongs,
+  listSongsOpen
+})
 </script>
 
 <template>
   <div class="music-player">
+    <ListSongs v-if="listSongsOpen"/>
     <div class="top-section">
       <div class="header">
-        <h5>Player</h5>
-        <box-icon name='playlist' type='solid' color='#ffffff' ></box-icon>
+        <h5>Плеер</h5>
+        <box-icon name='playlist' type='solid' color='#ffffff' style="cursor: pointer;" @click="openListSongs()"></box-icon>
       </div>
       <div class="song-info">
         <img src="../assets/player.png">
         <div class="description">
           <h3>Ripple Echoes</h3>
-          <h5>Kael Fischer</h5>
-          <p>Лучшее за 2023</p>
-        </div>
-        <div class="progress">
-          <p>02:45</p>
-          <div class="active-line"></div>
-          <div class="deactive-line"></div>
-          <p>01:02</p>
+          <h5><a href="">Kael Fischer</a></h5>
+          <a href="">Лучшее за 2023</a>
         </div>
       </div>
     </div>
 
     <div class="player-actions">
+      <div class="progress">
+        <!--    TODO: добавить прогресс бар который будет показывать сколько прошло и сколь осталось    -->
+      </div>
       <div class="buttons">
-        <box-icon name='repeat' color='#ffffff' ></box-icon>
-        <box-icon name='first-page' color='#ffffff' ></box-icon>
-        <box-icon name='play-circle' color='#ffffff'></box-icon>
-        <box-icon name='last-page' color='#ffffff' ></box-icon>
-        <box-icon name='shuffle' color="#ffffff"></box-icon>
+        <box-icon name='repeat' color='#ffffff' style="cursor: pointer;"></box-icon>
+        <box-icon name='first-page' color='#ffffff' style="cursor: pointer;"></box-icon>
+        <box-icon name='play-circle' color='#ffffff' style="cursor: pointer;"></box-icon>
+        <box-icon name='last-page' color='#ffffff' style="cursor: pointer;"></box-icon>
+        <box-icon name='shuffle' color="#ffffff" style="cursor: pointer;"></box-icon>
+      </div>
+      <div class="volumeChange">
+        <!--   TODO: сделать настройку громкости     -->
       </div>
     </div>
-
   </div>
 </template>
 
@@ -43,12 +59,10 @@
   color: #fff;
   background-color: #202026;
   border-radius: 6px;
-  height: 80%;
+  height: 70%;
   display: flex;
   flex-direction: column;
-  width: 400px;
   position: fixed;
-  margin-left: 5%;
 }
 
 .container .right-section .music-player .top-section{
@@ -77,7 +91,7 @@
 }
 
 .container .right-section .music-player .description{
-  margin-bottom: 36px;
+  margin-bottom: 12px;
 }
 
 .container .right-section .music-player .description h3{
@@ -86,52 +100,27 @@
   margin-bottom: 8px;
 }
 
-.container .right-section .music-player .description h5{
-  font-size: 24px;
-  margin-bottom: 4px;
+.container .right-section .music-player .description h5 a{
+  transition: .3s linear;
+  font-size: 28px;
+  margin-bottom: 8px;
+  color: #fff;
+  font-weight: normal;
 }
 
-.container .right-section .music-player .description p{
+.container .right-section .music-player .description h5 a:hover {
+  color: #5773ff;
+}
+
+.container .right-section .music-player .description a{
   color: #919191;
   font-size: 14px;
   font-weight: bold;
+  transition: .3s linear;
 }
 
-.container .right-section .music-player .song-info .progress{
-  display: flex;
-  align-items: center;
-  margin: 10px 0;
-}
-
-.container .right-section .music-player .song-info .progress p{
-  font-size: 14px;
-}
-
-.container .right-section .music-player .song-info .progress .active-line{
-  position: relative;
-  width: 120px;
-  height: 2px;
-  background-color: #fff;
-  margin-left: 30px;
-}
-
-.container .right-section .music-player .song-info .progress .deactive-line{
-  width: 80px;
-  height: 2px;
-  background-color: #919191;
-  margin-right: 30px;
-}
-
-.container .right-section .music-player .song-info .progress .active-line::before{
-  content: "";
-  background-color: #25252d;
-  height: 10px;
-  width: 10px;
-  border: 2px solid #fff;
-  position: absolute;
-  top: -6px;
-  left: 120px;
-  border-radius: 50%;
+.container .right-section .music-player .description a:hover {
+  color: #5773ff;
 }
 
 .container .right-section .music-player .player-actions{

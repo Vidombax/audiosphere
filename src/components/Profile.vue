@@ -21,9 +21,8 @@ onMounted(async () => {
 
 <template>
   <div class="profile">
-    <box-icon name='bell' type='solid' color='#ffffff' style="cursor: pointer;" ></box-icon>
     <box-icon name='cog' type='solid' color='#ffffff' style="cursor: pointer;"></box-icon>
-    <div class="user">
+    <div class="user" style="cursor: pointer">
       <div class="left">
         <img src="../assets/profile.png">
       </div>
