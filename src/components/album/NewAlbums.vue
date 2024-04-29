@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <div class="genres">
+  <div class="newAlbums">
     <div class="header">
       <h4>Новые альбомы</h4>
       <a href="#">Смотреть все</a>
@@ -38,45 +38,96 @@
 </template>
 
 <style scoped>
-.genres {
+.newAlbums {
   background-color: #202026;
   padding: 20px 12px 12px 20px;
   margin-top: 20px;
   border-radius: 12px;
 }
 
-.genres .header {
+.newAlbums .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 30px;
 }
 
-.genres .header h4 {
+.newAlbums .header h4 {
   color: #fff;
 }
 
-.genres .header a {
+.newAlbums .header a {
   color: #919191;
   font-size: 12px;
   padding-right: 5px;
 }
 
-.genres .items {
+.newAlbums .items {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   padding: 12px;
 }
 
-.genres .items .item a {
+.newAlbums .items .item a {
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
 }
 
-.genres .items .item a p {
+.newAlbums .items .item a p {
   margin-top: 8px;
   color: #fff;
+}
+
+.newAlbums .items .item a img {
+  width: 200px;
+  height: 200px;
+}
+
+@media screen and (max-width: 1540px) {
+  .newAlbums .items .item a img {
+    width: 150px;
+    height: 150px;
+  }
+}
+
+@media screen and (max-width: 1450px) {
+  .newAlbums {
+    width: 82.5%;
+  }
+  .newAlbums .items .item a img {
+    width: 100px;
+    height: 100px;
+  }
+  .newAlbums .items {
+    grid-template-columns: repeat(4, 26%);
+  }
+  .newAlbums .items .item a p {
+    font-size: small;
+  }
+}
+
+@media screen and (max-width: 1250px) {
+  .newAlbums {
+    width: 140%;
+  }
+  .newAlbums .items .item a img {
+    width: 130px;
+    height: 130px;
+  }
+  .newAlbums .items {
+    grid-template-columns: repeat(4, 26%);
+  }
+}
+
+@media screen and (max-width: 950px) {
+  .newAlbums {
+    width: 98%;
+  }
+  .newAlbums .items {
+    grid-template-columns: repeat(2, 50%);
+    gap: 10px;
+  }
 }
 </style>

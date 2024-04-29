@@ -91,9 +91,6 @@ import Song from "@/components/main/Song.vue";
   margin-bottom: 20px;
   border-radius: 8px;
   padding: 20px;
-}
-
-.headerItem {
   background-color: #5773ff;
 }
 
@@ -109,5 +106,38 @@ import Song from "@/components/main/Song.vue";
   justify-content: center;
   align-items: center;
   margin-bottom: 10px;
+}
+
+@media screen and (max-width: 1450px) {
+  .customPlaylists .items {
+    grid-template-columns: 1fr;
+  }
+  .customPlaylists {
+    width: 82.5%;
+  }
+  .customPlaylists .items .item {
+    width: 100%;
+  }
+  .headerItem {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 1250px) {
+  .customPlaylists {
+    width: 140%;
+  }
+}
+
+@media screen and (max-width: 950px) {
+  .customPlaylists {
+    width: 98%;
+  }
+  .customPlaylists .items .item:first-child {
+    margin-bottom: 12px;
+  }
+  .customPlaylists .items .item {
+    width: 87%;
+  }
 }
 </style>

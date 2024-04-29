@@ -79,9 +79,7 @@ import Playlist from "@/components/Playlist.vue";
 <style scoped>
 .container .sidebar{
   height: 100vh;
-  background-color: #18181d;
   padding: 20px 36px;
-  display: flex;
   flex-direction: column;
   justify-content: space-between;
   z-index: 10000;
@@ -126,5 +124,21 @@ import Playlist from "@/components/Playlist.vue";
 
 .container .sidebar .menu ul li a:focus{
   color: #5773ff;
+}
+
+@media screen and (min-width: 651px) {
+  .sidebar {
+    background-color: #18181d;
+    display: flex;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .sidebarNotFixed {
+    display: none;
+  }
+  .sidebar {
+    display: none;
+  }
 }
 </style>

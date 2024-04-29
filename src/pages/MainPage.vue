@@ -68,8 +68,8 @@ document.title = 'AudioSphere | Главная'
 
 .container main .playlist{
   margin-top: 14px;
-  display: flex;
   gap: 20px;
+  display: flex;
 }
 
 .container main .playlist .genres{
@@ -106,5 +106,60 @@ document.title = 'AudioSphere | Главная'
   color: #fff;
   border-radius: 6px;
   width: 65%;
+}
+
+@media screen and (max-width: 1450px) {
+  .container main .playlist .music-list {
+    width: 50%;
+  }
+  .container main .playlist .genres {
+    width: 30%;
+  }
+  .container main .trending {
+    justify-content: normal;
+  }
+  .container main .trending img {
+    width: 240px;
+  }
+}
+
+@media screen and (max-width: 1250px) {
+  .container main .playlist {
+    width: 140%;
+  }
+  .container main .playlist .music-list {
+    width: 98%;
+  }
+  .container main .playlist .genres {
+    width: 98%;
+  }
+  .container main .trending {
+    width: 140%;
+  }
+  .container main .trending img {
+    width: 300px;
+  }
+}
+
+@media screen and (max-width: 950px) {
+  .playlist {
+    flex-direction: column;
+    width: 100%;
+  }
+  .trending {
+    width: 100%;
+  }
+  .trending img {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 850px) {
+  .container main .trending {
+    width: 100%;
+  }
+  .container main .playlist {
+    width: 100%;
+  }
 }
 </style>

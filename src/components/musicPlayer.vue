@@ -60,7 +60,6 @@ provide('musicPlayer', {
   background-color: #202026;
   border-radius: 6px;
   height: 70%;
-  display: flex;
   flex-direction: column;
   position: fixed;
 }
@@ -157,5 +156,19 @@ provide('musicPlayer', {
   align-items: center;
   position: absolute;
   bottom: 8px;
+}
+
+@media screen and (max-width: 1540px) {
+  .music-player {
+    margin-left: 5px;
+    width: 350px;
+    display: flex;
+  }
+}
+
+@media screen and (max-width: 1250px) {
+  .music-player {
+    display: none;
+  }
 }
 </style>

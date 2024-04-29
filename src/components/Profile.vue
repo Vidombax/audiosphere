@@ -36,7 +36,7 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-.container .right-section .profile{
+.container .right-section .profile {
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -66,5 +66,21 @@ onMounted(async () => {
   border-radius: 0 6px 6px 0;
   padding: 13px;
   color: #fff;
+}
+
+@media screen and (max-width: 850px) {
+  .container .right-section .profile .user .left {
+    border-radius: 6px;
+  }
+  .profile .user .right {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .container .right-section .profile {
+    position: relative;
+    left: 80%;
+  }
 }
 </style>
