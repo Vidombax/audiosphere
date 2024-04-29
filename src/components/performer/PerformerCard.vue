@@ -54,4 +54,11 @@
   margin-top: 8px;
   color: #fff;
 }
+
+@media screen and (max-width: 850px) {
+  .performerImg {
+    width: 32px;
+    height: 32px;
+  }
+}
 </style>

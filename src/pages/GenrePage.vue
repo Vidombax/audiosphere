@@ -6,25 +6,34 @@ document.title = 'AudioSphere | Жанры'
 </script>
 
 <template>
-  <GenreAfisha />
-  <div class="genres">
-    <div class="header">
-      <h4>Все жанры</h4>
-    </div>
-    <div class="items">
-      <PlayGenre />
-      <PlayGenre />
-      <PlayGenre />
-      <PlayGenre />
-      <PlayGenre />
-      <PlayGenre />
-      <PlayGenre />
-      <PlayGenre />
+  <div class="containerGenres">
+    <GenreAfisha />
+    <div class="genres">
+      <div class="header">
+        <h4>Все жанры</h4>
+      </div>
+      <div class="items">
+        <PlayGenre />
+        <PlayGenre />
+        <PlayGenre />
+        <PlayGenre />
+        <PlayGenre />
+        <PlayGenre />
+        <PlayGenre />
+        <PlayGenre />
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
+
+.containerGenres {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
 
 .genres {
   background-color: #202026;
@@ -56,4 +65,33 @@ document.title = 'AudioSphere | Жанры'
   padding: 12px;
 }
 
+@media screen and (max-width: 1540px) {
+  .genres .items {
+    gap: 6px;
+    margin-left: -7%;
+  }
+}
+
+@media screen and (max-width: 1250px) {
+  .genres .items {
+    gap: 24px;
+  }
+}
+
+@media screen and (max-width: 950px) {
+  .containerGenres {
+    margin-left: -20%;
+  }
+  .genres .items {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+
+@media screen and (max-width: 880px) {
+  .containerGenres {
+    margin-left: 40%;
+  }
+
+}
 </style>

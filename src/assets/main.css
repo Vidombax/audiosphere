@@ -3,6 +3,7 @@
 html,
 body{
     background: linear-gradient(#050505, #18181d);
+    background-repeat: no-repeat;
     height: 100vh;
 }
 
@@ -11,6 +12,7 @@ body{
     display: grid;
     grid-template-columns: 1fr 4fr 2fr;
     background: linear-gradient(#050505, #18181d);
+    background-repeat: no-repeat;
 }
 
 *{

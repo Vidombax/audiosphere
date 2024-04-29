@@ -96,8 +96,8 @@ img{
   }
   .right-section {
     position: relative;
-    left: -150%;
-    width: 150px;
+    left: -20%;
+    width: 50px;
   }
 }
 </style>

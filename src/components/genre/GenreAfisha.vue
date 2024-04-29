@@ -75,4 +75,10 @@
   padding: 10px;
   border-radius: 50%;
 }
+
+@media screen and (max-width: 880px) {
+  .container main .trending img {
+    display: none;
+  }
+}
 </style>

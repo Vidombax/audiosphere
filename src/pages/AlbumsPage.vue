@@ -80,4 +80,22 @@ document.title = 'AudioSphere | Альбомы'
     grid-template-columns: 1fr;
     gap: 10px;
   }
+  
+  @media screen and (max-width: 1250px) {
+    .container main .albums .popularAlbums {
+      width: 80%;
+    }
+    .container main .albums .newAlbums {
+      width: 80%;
+    }
+  }
+  
+  @media screen and (max-width: 1035px) {
+    .container main .albums {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 140%;
+    }
+  }
 </style>

@@ -8,36 +8,38 @@ document.title = 'AudioSphere | Исполнители'
 </script>
 
 <template>
-  <PerformersAfisha />
-  <div class="genres">
-    <div class="header">
-      <h4>Ваши исполнители</h4>
-      <a href="#">Смотреть все</a>
-    </div>
-    <div class="items">
-      <PerformerCard />
-      <PerformerCard />
-    </div>
-  </div>
-  <div class="performers">
-    <div class="popularPerformers">
+  <div class="performersContainer">
+    <PerformersAfisha />
+    <div class="genres">
       <div class="header">
-        <h5>Популярные исполнители</h5>
-        <a href="">Смотреть все</a>
+        <h4>Ваши исполнители</h4>
+        <a href="#">Смотреть все</a>
       </div>
       <div class="items">
         <PerformerCard />
         <PerformerCard />
       </div>
     </div>
-    <div class="newPerformers">
-      <div class="header">
-        <h5>Новые исполнители</h5>
-        <a href="">Смотреть все</a>
+    <div class="performers">
+      <div class="popularPerformers">
+        <div class="header">
+          <h5>Популярные исполнители</h5>
+          <a href="">Смотреть все</a>
+        </div>
+        <div class="items">
+          <PerformerCard />
+          <PerformerCard />
+        </div>
       </div>
-      <div class="items">
-        <PerformerCard />
-        <PerformerCard />
+      <div class="newPerformers">
+        <div class="header">
+          <h5>Новые исполнители</h5>
+          <a href="">Смотреть все</a>
+        </div>
+        <div class="items">
+          <PerformerCard />
+          <PerformerCard />
+        </div>
       </div>
     </div>
   </div>
@@ -78,7 +80,7 @@ document.title = 'AudioSphere | Исполнители'
 .container main .performers {
   margin-top: 14px;
   display: flex;
-  gap: 20px;
+  gap: 32px;
 }
 
 .container main .performers .popularPerformers {
@@ -86,7 +88,6 @@ document.title = 'AudioSphere | Исполнители'
   background-color: #202026;
   padding: 20px;
   border-radius: 6px;
-  width: 55%;
 }
 
 .container main .performers .newPerformers{
@@ -94,7 +95,6 @@ document.title = 'AudioSphere | Исполнители'
   padding: 20px;
   color: #fff;
   border-radius: 6px;
-  width: 55%;
 }
 
 .container main .performers .popularPerformers .header,
@@ -115,6 +115,57 @@ document.title = 'AudioSphere | Исполнители'
 .container main .performers .newPerformers .items{
   display: grid;
   grid-template-columns: 1fr;
-  gap: 10px;
+  gap: 24px;
+}
+
+@media screen and (min-width: 1250px) {
+  .container main .performers .popularPerformers {
+    width: 55%;
+  }
+  .container main .performers .newPerformers {
+    width: 55%;
+  }
+}
+
+@media screen and (max-width: 1250px) {
+  .genres,
+  .performers{
+    width: 139%;
+  }
+}
+
+@media screen and (max-width: 850px) {
+  .genres,
+  .performers{
+    width: 130%;
+  }
+  .genres .items {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media screen and (max-width: 760px) {
+  .performers {
+    flex-direction: column;
+    width: 100%;
+
+  }
+  .performers .newPerformers,
+  .performers .popularPerformers{
+    width: 130%;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .performersContainer {
+    width: 300px;
+    margin-left: 40%;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .performersContainer {
+    margin-left: 5%;
+  }
 }
 </style>

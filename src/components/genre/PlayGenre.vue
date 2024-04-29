@@ -33,4 +33,17 @@
   color: #fff;
   font-size: larger;
 }
+
+@media screen and (max-width: 1350px) {
+  .genres .items .item {
+    margin-left: 10%;
+    width: 250px;
+  }
+}
+
+@media screen and (max-width: 1250px) {
+  .genres .items .item {
+    width: 300px;
+  }
+}
 </style>

@@ -75,4 +75,16 @@
   padding: 10px;
   border-radius: 50%;
 }
+
+@media screen and (max-width: 1250px) {
+  .container main .trending {
+    gap: 150px;
+  }
+}
+
+@media screen and (max-width: 950px) {
+  .container main .trending img {
+    display: none;
+  }
+}
 </style>
