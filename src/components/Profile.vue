@@ -25,7 +25,7 @@ onMounted(async () => {
     <router-link to="/account">
       <div class="user">
         <div class="left">
-          <img src="../assets/profile.png">
+          <img v-if="items.length > 0" :src="items[0].profilePicture">
         </div>
         <div class="right">
           <h5 v-if="items.length > 0">{{ items[0].nameUser }}</h5>
