@@ -14,7 +14,7 @@ document.title = 'AudioSphere | Ваш аккаунт'
       <h3>подписчиков</h3>
     </div>
     <div class="name">
-      <img src="/public/profilePictures/vidombax.jpg" alt="photoProfile">
+      <img src="/profilePictures/vidombax.jpg" alt="photoProfile">
       <h1>vidombax</h1>
     </div>
     <div class="exit">

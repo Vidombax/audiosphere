@@ -2,15 +2,15 @@
 
 import FavouriteSong from "@/components/favourite/FavouriteSong.vue";
 
-document.title = 'AudioSphere | Любимые'
+document.title = 'AudioSphere | Название плейлиста'
 </script>
 
 <template>
   <div class="containerPlaylist">
     <div class="playlist">
-      <img src="../assets/favouritesPlaylist.png" alt="playlistImg">
+      <img src="../assets/defaultPlaylistPhoto.png" alt="playlistImg">
       <div class="infoPlaylist">
-        <h1>Любимые треки</h1>
+        <h1>Название плейлиста</h1>
         <div class="buttons">
           <button>Слушать</button>
           <p>20 треков</p>

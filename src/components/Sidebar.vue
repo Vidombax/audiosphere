@@ -12,7 +12,7 @@ import Playlist from "@/components/Playlist.vue";
       <button class="menu-btn" id="menu-close">
         <box-icon name='log-out-circle' type='solid' ></box-icon>
       </button>
-      <a href="#">AudioSphere</a>
+      <p>AudioSphere</p>
     </div>
 
     <div class="menu">
@@ -21,25 +21,25 @@ import Playlist from "@/components/Playlist.vue";
         <li>
           <box-icon name='bolt-circle' type='solid' color='#ffffff' ></box-icon>
           <router-link to="/">
-            <a href="#">Главная</a>
+            <p>Главная</p>
           </router-link>
         </li>
         <li>
           <box-icon name='volume-full' type='solid' color='#ffffff' ></box-icon>
           <router-link to="/genres">
-            <a href="#">Жанры</a>
+            <p>Жанры</p>
           </router-link>
         </li>
         <li>
           <box-icon type='solid' name='album' color='#ffffff'></box-icon>
           <router-link to="/albums">
-            <a href="#">Альбомы</a>
+            <p>Альбомы</p>
           </router-link>
         </li>
         <li>
           <box-icon type='solid' name='microphone' color='#ffffff'></box-icon>
           <router-link to="/performers">
-            <a href="#">Исполнители</a>
+            <p>Исполнители</p>
           </router-link>
         </li>
       </ul>
@@ -50,13 +50,13 @@ import Playlist from "@/components/Playlist.vue";
         <li>
           <box-icon name='album' type='solid' color='#ffffff' ></box-icon>
           <router-link to="/favourite-albums">
-            <a href="#">Ваши альбомы</a>
+            <p>Ваши альбомы</p>
           </router-link>
         </li>
         <li>
           <box-icon name='heart' type='solid' color='#ffffff' ></box-icon>
           <router-link to="/favourites">
-            <a href="#">Любимые</a>
+            <p>Любимые</p>
           </router-link>
         </li>
 
@@ -68,7 +68,7 @@ import Playlist from "@/components/Playlist.vue";
       <ul>
         <li>
           <box-icon name='plus-square' type='solid' color='#ffffff' ></box-icon>
-          <a href="#">Создать новый</a>
+          <p class="createNewPlaylistBtn">Создать новый</p>
         </li>
         <Playlist />
       </ul>
@@ -106,7 +106,20 @@ import Playlist from "@/components/Playlist.vue";
   transition: all 0.3s ease;
 }
 
-.container .sidebar .logo a{
+.createNewPlaylistBtn {
+  color: #fff;
+  transition: all 0.3s ease;
+}
+
+.createNewPlaylistBtn:hover {
+  color: #5773ff;
+}
+
+p {
+  color: #fff;
+}
+
+.container .sidebar .logo p{
   font-weight: bold;
   transition: all 0.3s ease;
 }
@@ -120,10 +133,6 @@ import Playlist from "@/components/Playlist.vue";
 
 .container .sidebar .menu ul{
   list-style: none;
-}
-
-.container .sidebar .menu ul li a:focus{
-  color: #5773ff;
 }
 
 @media screen and (min-width: 651px) {

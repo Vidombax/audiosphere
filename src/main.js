@@ -11,6 +11,9 @@ import PerformersPage from "@/pages/PerformersPage.vue";
 import LibraryAlbumsPage from "@/pages/LibraryAlbumsPage.vue";
 import FavouritesPage from "@/pages/FavouritesPage.vue";
 import Account from "@/pages/Account.vue";
+import SubscribesPage from "@/pages/SubscribesPage.vue";
+import SettingsPage from "@/pages/SettingsPage.vue";
+import PlaylistPage from "@/pages/PlaylistPage.vue";
 
 const app = createApp(App)
 
@@ -22,6 +25,9 @@ const routes = [
     { path: '/favourite-albums', name: 'FavouriteAlbums', component: LibraryAlbumsPage },
     { path: '/favourites', name: 'Favourites', component: FavouritesPage },
     { path: '/account', name: 'Account', component: Account },
+    { path: '/subscribes', name: 'Subscribes', component: SubscribesPage },
+    { path: '/settings', name: 'Settings', component: SettingsPage },
+    { path: '/playlist', name: 'Playlist', component: PlaylistPage },
 ]
 
 const router = createRouter({

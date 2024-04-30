@@ -8,7 +8,9 @@
       <button class="menu-btn" id="menu-open">
         <box-icon name='menu'  color='#ffffff'></box-icon>
       </button>
-      <a href="#">Подписки</a>
+      <router-link to="/subscribes">
+        <p>Подписки</p>
+      </router-link>
     </div>
     <div class="search">
       <box-icon name='search' color='#ffffff' ></box-icon>
@@ -30,10 +32,14 @@
   gap: 20px;
 }
 
-.container main header .nav-links a{
+.container main header .nav-links p{
   text-transform: uppercase;
   color: #919191;
   transition: all 0.3s ease;
+}
+
+.container main header .nav-links p:hover {
+  color: #5773ff;
 }
 
 .container main header .search{

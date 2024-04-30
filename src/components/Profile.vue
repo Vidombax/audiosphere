@@ -21,7 +21,9 @@ onMounted(async () => {
 
 <template>
   <div class="profile">
-    <box-icon name='cog' type='solid' color='#ffffff' style="cursor: pointer;"></box-icon>
+    <router-link to="/settings">
+      <box-icon name='cog' type='solid' color='#ffffff' style="cursor: pointer;"></box-icon>
+    </router-link>
     <router-link to="/account">
       <div class="user">
         <div class="left">
