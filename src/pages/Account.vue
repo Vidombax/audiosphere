@@ -1,21 +1,39 @@
 <script setup>
+import {onMounted, ref} from "vue";
+import axios from "axios";
 
 import FavouriteComposition from "@/components/account/FavouriteComposition.vue";
 import FavouritePerfomance from "@/components/account/FavouritePerfomance.vue";
 import FavouriteAlbum from "@/components/account/FavouriteAlbum.vue";
 
 document.title = 'AudioSphere | Ваш аккаунт'
+
+const data = ref([])
+
+const fetchUser = async () => {
+  try {
+    const response = await axios.get('/api/user')
+    data.value = response.data
+  }
+  catch (err) {
+    console.log(err)
+  }
+}
+
+onMounted(async () => {
+  await fetchUser()
+})
 </script>
 
 <template>
   <div class="profile">
     <div class="subscribers">
-      <h2>10</h2>
+      <h2 v-if="data.length > 0">{{ data[0].count_follower }}</h2>
       <h3>подписчиков</h3>
     </div>
     <div class="name">
-      <img src="/profilePictures/vidombax.jpg" alt="photoProfile">
-      <h1>vidombax</h1>
+      <img v-if="data.length > 0" :src="data[0].profile_picture" alt="photoProfile">
+      <h1 v-if="data.length > 0">{{ data[0].name }}</h1>
     </div>
     <div class="exit">
       <img src="../assets/exitAccount.png" alt="exit">

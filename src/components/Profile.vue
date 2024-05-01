@@ -6,7 +6,7 @@ const items = ref([])
 
 const fetchData = async () => {
   try {
-    const response = await axios.get('api/data')
+    const response = await axios.get('/api/user')
     items.value = response.data
   }
   catch (err) {
@@ -27,10 +27,10 @@ onMounted(async () => {
     <router-link to="/account">
       <div class="user">
         <div class="left">
-          <img v-if="items.length > 0" :src="items[0].profilePicture">
+          <img v-if="items.length > 0" :src="items[0].profile_picture">
         </div>
         <div class="right">
-          <h5 v-if="items.length > 0">{{ items[0].nameUser }}</h5>
+          <h5 v-if="items.length > 0">{{ items[0].name }}</h5>
         </div>
       </div>
     </router-link>
