@@ -1,10 +1,12 @@
 <script setup>
-
+  defineProps({
+    title: String,
+  })
 </script>
 
 <template>
   <div class="item">
-    <p>Электро<br>Поп</p>
+    <p>{{ title }}</p>
   </div>
 </template>
 
@@ -19,7 +21,7 @@
 }
 
 .container main .playlist .genres .items .item p{
-  font-size: 14px;
+  font-size: 18px;
   font-weight: bold;
 }
 

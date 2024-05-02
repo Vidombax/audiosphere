@@ -1,10 +1,12 @@
 <script setup>
-
+  defineProps({
+    title: String,
+  })
 </script>
 
 <template>
   <div class="item">
-    <p>Рок</p>
+    <p>{{ title }}</p>
     <img src="../../assets/play.png" style="cursor: pointer">
   </div>
 </template>

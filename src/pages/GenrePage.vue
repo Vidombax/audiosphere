@@ -1,8 +1,27 @@
 <script setup>
+import {onMounted, ref} from "vue";
+import axios from "axios";
+
 import PlayGenre from "@/components/genre/PlayGenre.vue";
 import GenreAfisha from "@/components/genre/GenreAfisha.vue";
 
 document.title = 'AudioSphere | Жанры'
+
+const genres = ref([])
+
+const fetchGenres = async () => {
+  try {
+    const response = await axios.get('/api/tag')
+    genres.value = response.data
+  }
+  catch (err) {
+    console.log(err)
+  }
+}
+
+onMounted(async () => {
+  await fetchGenres()
+})
 </script>
 
 <template>
@@ -13,14 +32,7 @@ document.title = 'AudioSphere | Жанры'
         <h4>Все жанры</h4>
       </div>
       <div class="items">
-        <PlayGenre />
-        <PlayGenre />
-        <PlayGenre />
-        <PlayGenre />
-        <PlayGenre />
-        <PlayGenre />
-        <PlayGenre />
-        <PlayGenre />
+        <PlayGenre v-for="item in genres" :key="item.id" :title="item.name_tag"/>
       </div>
     </div>
   </div>
