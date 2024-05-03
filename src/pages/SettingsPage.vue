@@ -1,5 +1,26 @@
 <script setup>
+import {onMounted, ref} from "vue";
+import axios from "axios";
 
+document.title = 'AudioSphere | Настройки'
+
+const id = ref(Number(localStorage.getItem('id')))
+const data = ref([])
+
+const fetchUser = async () => {
+  try {
+    const response = await axios.get(`/api/user/${id.value}`)
+    data.value = response.data
+
+  }
+  catch (err) {
+    console.log(err)
+  }
+}
+
+onMounted(async () => {
+  await fetchUser()
+})
 </script>
 
 <template>
@@ -15,11 +36,11 @@
             <box-icon name='trash' color='#ffffff' ></box-icon>
           </div>
           <h3>Поменять никнейм</h3>
-          <input type="text" value="ник">
+          <input type="text" :value="data.name">
           <h3>Поменять почту</h3>
-          <input type="text" value="почта">
+          <input type="text" :value="data.mail">
           <h3>Поменять пароль</h3>
-          <input type="password" value="******">
+          <input type="text" :value="data.password">
         </div>
         <button>Сохранить</button>
       </div>

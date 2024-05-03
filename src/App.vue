@@ -24,19 +24,21 @@ provide('app', {
 </script>
 
 <template>
-  <div class="container">
-    <Sidebar v-if="visibleComponent"/>
-    <div v-else></div>
+  <div class="container" v-if="visibleComponent">
+    <Sidebar />
     <main>
-      <Header v-if="visibleComponent"/>
-      <div v-else></div>
+      <Header />
       <router-view></router-view>
     </main>
-    <div class="right-section" v-if="visibleComponent">
+    <div class="right-section">
       <Profile />
       <MusicPlayer />
     </div>
-    <div v-else></div>
+  </div>
+  <div class="containerRegistration" v-else>
+    <main>
+      <router-view></router-view>
+    </main>
   </div>
 </template>
 
@@ -68,6 +70,13 @@ img{
   cursor: pointer;
 }
 
+.containerRegistration {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 @media screen and (max-width: 1540px) {
   .container main {

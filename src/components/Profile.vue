@@ -3,23 +3,21 @@ import {onMounted, ref, inject} from "vue";
 import axios from "axios";
 
 const items = ref([])
+const id = ref(Number(localStorage.getItem('id')) || 0)
 const isLogged = ref(false)
 const urlAddress = ref('/registration')
+
 const {closeApp} = inject('app')
 
-const userIsRegistration = () => {
-  isLogged.value = true
-  urlAddress.value = '/account'
-}
-
-const userIsNotRegistration = () => {
-  isLogged.value = false
-}
-
-const fetchData = async () => {
+const fetchUser = async () => {
   try {
-    const response = await axios.get('/api/user')
-    items.value = response.data
+    const response = await axios.get(`/api/user/${id.value}`)
+    if (response.data) {
+      items.value = response.data
+
+      isLogged.value = true
+      urlAddress.value = '/account'
+    }
   }
   catch (err) {
     console.log(err)
@@ -27,7 +25,7 @@ const fetchData = async () => {
 }
 
 onMounted(async () => {
-  await fetchData()
+  await fetchUser()
 })
 </script>
 
@@ -36,20 +34,17 @@ onMounted(async () => {
     <router-link to="/settings">
       <box-icon name='cog' type='solid' color='#ffffff' style="cursor: pointer;"></box-icon>
     </router-link>
-    <router-link :to="urlAddress" @click="closeApp">
-      <div class="user">
-        <div class="left" v-if="isLogged">
-          <img v-if="items.length > 0" :src="items[0].profile_picture">
+    <router-link :to="urlAddress">
+      <div class="user" v-if="isLogged">
+        <div class="left">
+          <img :src="items.profile_picture">
         </div>
-        <div class="left" style="display: none" v-else>
-
+        <div class="right">
+          <h5>{{ items.name }}</h5>
         </div>
-        <div class="right" v-if="isLogged">
-          <h5 v-if="items.length > 0">{{ items[0].name }}</h5>
-        </div>
-        <div class="right" v-else style="border-radius: 6px">
-          <h5>Вход не выполнен</h5>
-        </div>
+      </div>
+      <div class="user" @click="closeApp" v-else style="border-radius: 6px; background: #32323d; padding: 10px">
+        <h5>Войти</h5>
       </div>
     </router-link>
   </div>

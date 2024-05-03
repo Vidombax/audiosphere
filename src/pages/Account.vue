@@ -6,14 +6,24 @@ import FavouriteComposition from "@/components/account/FavouriteComposition.vue"
 import FavouritePerfomance from "@/components/account/FavouritePerfomance.vue";
 import FavouriteAlbum from "@/components/account/FavouriteAlbum.vue";
 
-document.title = 'AudioSphere | Ваш аккаунт'
-
+const id = ref(Number(localStorage.getItem('id')))
 const data = ref([])
 
 const fetchUser = async () => {
   try {
-    const response = await axios.get('/api/user')
+    const response = await axios.get(`/api/user/${id.value}`)
     data.value = response.data
+    document.title = 'AudioSphere | ' + response.data.name[0].toUpperCase() + response.data.name.slice(1)
+  }
+  catch (err) {
+    console.log(err)
+  }
+}
+
+const exitFromAccount = async () => {
+  try {
+    localStorage.clear()
+    location.replace('/')
   }
   catch (err) {
     console.log(err)
@@ -28,14 +38,14 @@ onMounted(async () => {
 <template>
   <div class="profile">
     <div class="subscribers">
-      <h2 v-if="data.length > 0">{{ data[0].count_follower }}</h2>
+      <h2>{{ data.count_follower }}</h2>
       <h3>подписчиков</h3>
     </div>
     <div class="name">
-      <img v-if="data.length > 0" :src="data[0].profile_picture" alt="photoProfile">
-      <h1 v-if="data.length > 0">{{ data[0].name }}</h1>
+      <img :src="data.profile_picture" alt="photoProfile">
+      <h1>{{ data.name }}</h1>
     </div>
-    <div class="exit">
+    <div class="exit" @click="exitFromAccount">
       <img src="../assets/exitAccount.png" alt="exit">
       <h3>выход</h3>
     </div>
@@ -119,6 +129,7 @@ img{
 
 .exit {
   margin-right: 24px;
+  cursor: pointer;
 }
 
 .exit img {
