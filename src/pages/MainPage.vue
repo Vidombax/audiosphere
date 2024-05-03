@@ -13,6 +13,9 @@ document.title = 'AudioSphere | Главная'
 
 const genres = ref([])
 
+const popularMusic = ref([])
+const countPopularMusic = 1
+
 const fetchGenres = async () => {
   try {
     const response = await axios.get('/api/tag')
@@ -23,8 +26,19 @@ const fetchGenres = async () => {
   }
 }
 
+const fetchPopularMusic = async () => {
+  try {
+    const response = await axios.get('/api/popular-music')
+    popularMusic.value = response.data
+  }
+  catch (err) {
+    console.log(err)
+  }
+}
+
 onMounted(async () => {
   await fetchGenres()
+  await fetchPopularMusic()
 })
 </script>
 
@@ -55,10 +69,7 @@ onMounted(async () => {
         <a href="#">Смотреть все</a>
       </div>
       <div class="items">
-        <TopChartMusic />
-        <TopChartMusic />
-        <TopChartMusic />
-        <TopChartMusic />
+        <TopChartMusic v-for="item in popularMusic" :key="item.id" :number-set="countPopularMusic++" :name-song="item.name_music" :name-performance="item.name_performance" :album-cover="item.album_cover" />
       </div>
     </div>
   </div>
@@ -91,7 +102,7 @@ onMounted(async () => {
   background-color: #202026;
   padding: 20px;
   border-radius: 6px;
-  width: 40%;
+  width: 45%;
 }
 
 .container main .playlist .genres .header,

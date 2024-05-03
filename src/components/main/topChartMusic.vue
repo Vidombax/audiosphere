@@ -1,15 +1,20 @@
 <script setup>
-
+  defineProps({
+    numberSet: Number,
+    nameSong: String,
+    namePerformance: String,
+    albumCover: String
+  })
 </script>
 
 <template>
   <div class="item">
     <div class="info">
-      <p>01</p>
-      <img src="../../assets/song-1.png">
+      <p>{{ numberSet }}</p>
+      <img :src="albumCover">
       <div class="details">
-        <h5>Sunrise</h5>
-        <p>Lila Rivera</p>
+        <h5>{{ nameSong }}</h5>
+        <p>{{ namePerformance }}</p>
       </div>
     </div>
     <div class="actions">

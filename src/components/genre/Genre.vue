@@ -48,4 +48,12 @@
 .container main .playlist .genres .items .item:nth-child(6){
   background-color: #5547a5;
 }
+
+.container main .playlist .genres .items .item:nth-child(7){
+  background-color: #476a8a;
+}
+
+.container main .playlist .genres .items .item:nth-child(8){
+  background-color: #a69984;
+}
 </style>

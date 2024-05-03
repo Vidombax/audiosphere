@@ -5,7 +5,7 @@ class TagController {
 
     }
     async getTags(req, res) {
-        const tags = await db.query('SELECT * FROM tags')
+        const tags = await db.query('SELECT * FROM tags LIMIT 8')
         res.json(tags.rows);
     }
     async getOneTag(req, res) {

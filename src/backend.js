@@ -3,6 +3,7 @@ import userRouter from './routes/user.route.js';
 import tagRouter from './routes/tag.route.js';
 import performerRoute from "./routes/performer.route.js";
 import settingsRoute from "./routes/settings.route.js";
+import musicRoute from "./routes/music.route.js";
 
 const app = express()
 
@@ -12,6 +13,7 @@ app.use('/', userRouter)
 app.use('/', tagRouter)
 app.use('/', performerRoute)
 app.use('/', settingsRoute)
+app.use('/', musicRoute)
 
 const PORT = process.env.PORT || 5001
 app.listen(PORT, () => {
