@@ -1,11 +1,14 @@
 <script setup>
-
+  defineProps({
+    name: String,
+    image: String,
+  })
 </script>
 
 <template>
   <div class="item">
-    <img src="../../assets/newPerfomer.png" class="performerImg">
-    <a href="">Хаски</a>
+    <img :src="image" class="performerImg">
+    <a href="">{{ name }}</a>
     <img src="../../assets/play.png" style="cursor: pointer" class="playBtn">
   </div>
 </template>
@@ -43,16 +46,13 @@
   background-color: #A69984;
 }
 
-.genres .items .item a {
+a {
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
-}
-
-.genres .items .item a p {
-  margin-top: 8px;
-  color: #fff;
+  font-size: larger;
+  font-weight: bold;
 }
 
 @media screen and (max-width: 850px) {

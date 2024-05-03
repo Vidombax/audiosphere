@@ -3,6 +3,17 @@ import {onMounted, ref} from "vue";
 import axios from "axios";
 
 const items = ref([])
+const isLogged = ref(false)
+const urlAddress = ref('/registration')
+
+const userIsRegistration = () => {
+  isLogged.value = true
+  urlAddress.value = '/account'
+}
+
+const userIsNotRegistration = () => {
+  isLogged.value = false
+}
 
 const fetchData = async () => {
   try {
@@ -24,13 +35,19 @@ onMounted(async () => {
     <router-link to="/settings">
       <box-icon name='cog' type='solid' color='#ffffff' style="cursor: pointer;"></box-icon>
     </router-link>
-    <router-link to="/account">
+    <router-link :to="urlAddress">
       <div class="user">
-        <div class="left">
+        <div class="left" v-if="isLogged">
           <img v-if="items.length > 0" :src="items[0].profile_picture">
         </div>
-        <div class="right">
+        <div class="left" style="display: none" v-else>
+
+        </div>
+        <div class="right" v-if="isLogged">
           <h5 v-if="items.length > 0">{{ items[0].name }}</h5>
+        </div>
+        <div class="right" v-else style="border-radius: 6px">
+          <h5>Вход не выполнен</h5>
         </div>
       </div>
     </router-link>

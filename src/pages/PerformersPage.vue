@@ -1,10 +1,28 @@
 <script setup>
+import {onMounted, ref} from "vue";
+import axios from "axios";
 
 import PerformersAfisha from "@/components/performer/PerformersAfisha.vue";
 import PerformerCard from "@/components/performer/PerformerCard.vue";
-
+import PlayGenre from "@/components/genre/PlayGenre.vue";
 
 document.title = 'AudioSphere | Исполнители'
+
+const performers = ref([])
+
+const fetchPerformers = async () => {
+  try {
+    const response = await axios.get('/api/performer')
+    performers.value = response.data
+  }
+  catch (err) {
+    console.log(err)
+  }
+}
+
+onMounted(async () => {
+  await fetchPerformers()
+})
 </script>
 
 <template>
@@ -16,8 +34,7 @@ document.title = 'AudioSphere | Исполнители'
         <a href="#">Смотреть все</a>
       </div>
       <div class="items">
-        <PerformerCard />
-        <PerformerCard />
+        <PerformerCard v-for="item in performers" :key="item.id" :name="item.name" :image="item.profile_picture" />
       </div>
     </div>
     <div class="performers">
@@ -27,8 +44,7 @@ document.title = 'AudioSphere | Исполнители'
           <a href="">Смотреть все</a>
         </div>
         <div class="items">
-          <PerformerCard />
-          <PerformerCard />
+          <PerformerCard v-for="item in performers" :key="item.id" :name="item.name" :image="item.profile_picture" />
         </div>
       </div>
       <div class="newPerformers">
@@ -37,8 +53,7 @@ document.title = 'AudioSphere | Исполнители'
           <a href="">Смотреть все</a>
         </div>
         <div class="items">
-          <PerformerCard />
-          <PerformerCard />
+          <PerformerCard v-for="item in performers" :key="item.id" :name="item.name" :image="item.profile_picture" />
         </div>
       </div>
     </div>
