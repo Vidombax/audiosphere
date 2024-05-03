@@ -1,10 +1,11 @@
 <script setup>
-import {onMounted, ref} from "vue";
+import {onMounted, ref, inject} from "vue";
 import axios from "axios";
 
 const items = ref([])
 const isLogged = ref(false)
 const urlAddress = ref('/registration')
+const {closeApp} = inject('app')
 
 const userIsRegistration = () => {
   isLogged.value = true
@@ -35,7 +36,7 @@ onMounted(async () => {
     <router-link to="/settings">
       <box-icon name='cog' type='solid' color='#ffffff' style="cursor: pointer;"></box-icon>
     </router-link>
-    <router-link :to="urlAddress">
+    <router-link :to="urlAddress" @click="closeApp">
       <div class="user">
         <div class="left" v-if="isLogged">
           <img v-if="items.length > 0" :src="items[0].profile_picture">

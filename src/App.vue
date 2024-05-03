@@ -1,22 +1,42 @@
 <script setup>
+import {ref, provide} from "vue";
+
 import 'boxicons'
 import MusicPlayer from "@/components/musicPlayer.vue";
 import Sidebar from "@/components/Sidebar.vue";
 import Profile from "@/components/Profile.vue";
 import Header from "@/components/Header.vue";
+
+const visibleComponent = ref(true)
+
+const openApp = () => {
+  visibleComponent.value = true
+}
+
+const closeApp = () => {
+  visibleComponent.value = false
+}
+
+provide('app', {
+  closeApp,
+  openApp
+})
 </script>
 
 <template>
   <div class="container">
-    <Sidebar />
+    <Sidebar v-if="visibleComponent"/>
+    <div v-else></div>
     <main>
-      <Header />
+      <Header v-if="visibleComponent"/>
+      <div v-else></div>
       <router-view></router-view>
     </main>
-    <div class="right-section">
-    <Profile />
-    <MusicPlayer />
+    <div class="right-section" v-if="visibleComponent">
+      <Profile />
+      <MusicPlayer />
     </div>
+    <div v-else></div>
   </div>
 </template>
 
