@@ -4,16 +4,37 @@ import axios from "axios";
 
 import PerformersAfisha from "@/components/performer/PerformersAfisha.vue";
 import PerformerCard from "@/components/performer/PerformerCard.vue";
-import PlayGenre from "@/components/genre/PlayGenre.vue";
 
 document.title = 'AudioSphere | Исполнители'
 
-const performers = ref([])
+const subPerformers = ref([])
+const newPerformers = ref([])
+const popularPerformers = ref([])
 
-const fetchPerformers = async () => {
+const fetchSubPerformers = async () => {
   try {
-    const response = await axios.get('/api/performer')
-    performers.value = response.data
+    const response = await axios.get('/api/sub-performer')
+    subPerformers.value = response.data
+  }
+  catch (err) {
+    console.log(err)
+  }
+}
+
+const fetchNewPerformers = async () => {
+  try {
+    const response = await axios.get('/api/new-performer')
+    newPerformers.value = response.data
+  }
+  catch (err) {
+    console.log(err)
+  }
+}
+
+const fetchPopularPerformers = async () => {
+  try {
+    const response = await axios.get('/api/popular-performer')
+    popularPerformers.value = response.data
   }
   catch (err) {
     console.log(err)
@@ -21,7 +42,9 @@ const fetchPerformers = async () => {
 }
 
 onMounted(async () => {
-  await fetchPerformers()
+  await fetchSubPerformers()
+  await fetchNewPerformers()
+  await fetchPopularPerformers()
 })
 </script>
 
@@ -30,11 +53,11 @@ onMounted(async () => {
     <PerformersAfisha />
     <div class="genres">
       <div class="header">
-        <h4>Ваши исполнители</h4>
+        <h5>Ваши исполнители</h5>
         <a href="#">Смотреть все</a>
       </div>
       <div class="items">
-        <PerformerCard v-for="item in performers" :key="item.id" :name="item.name" :image="item.profile_picture" />
+        <PerformerCard v-for="item in subPerformers" :key="item.id" :name="item.name" :image="item.profile_picture" />
       </div>
     </div>
     <div class="performers">
@@ -44,7 +67,7 @@ onMounted(async () => {
           <a href="">Смотреть все</a>
         </div>
         <div class="items">
-          <PerformerCard v-for="item in performers" :key="item.id" :name="item.name" :image="item.profile_picture" />
+          <PerformerCard v-for="item in popularPerformers" :key="item.id" :name="item.name" :image="item.profile_picture" />
         </div>
       </div>
       <div class="newPerformers">
@@ -53,7 +76,7 @@ onMounted(async () => {
           <a href="">Смотреть все</a>
         </div>
         <div class="items">
-          <PerformerCard v-for="item in performers" :key="item.id" :name="item.name" :image="item.profile_picture" />
+          <PerformerCard v-for="item in newPerformers" :key="item.id" :name="item.name" :image="item.profile_picture" />
         </div>
       </div>
     </div>
@@ -61,6 +84,9 @@ onMounted(async () => {
 </template>
 
 <style scoped>
+h5 {
+  color: white;
+}
 .genres {
   background-color: #202026;
   padding: 20px 12px 12px 20px;

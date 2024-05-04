@@ -63,7 +63,7 @@ onMounted(async () => {
         <a href="#">Смотреть все</a>
       </div>
       <div class="items">
-        <TopChartMusic v-for="item in popularMusic" :key="item.id" :number-set="countPopularMusic++" :name-song="item.name_music" :name-performance="item.name" :album-cover="item.album_cover" />
+        <TopChartMusic v-for="item in popularMusic" :key="item.id" :number-set="countPopularMusic++" :name-song="item.name_music" :name-performance="item.name" :album-cover="item.album_cover" :duration-music="item.duration_music"/>
       </div>
     </div>
   </div>

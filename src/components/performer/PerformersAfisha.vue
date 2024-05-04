@@ -1,5 +1,22 @@
 <script setup>
+import {onMounted, ref} from "vue";
+import axios from "axios";
 
+const newPerformer = ref([])
+
+const fetchNewPerformer = async () => {
+  try {
+    const response = await axios.get('/api/new-performer')
+    newPerformer.value = response.data[0]
+  }
+  catch (err) {
+    console.log(err)
+  }
+}
+
+onMounted(async () => {
+  await fetchNewPerformer()
+})
 </script>
 
 <template>
@@ -7,13 +24,13 @@
     <div class="left">
       <h2>Новый исполнитель <br> на платформе</h2>
       <div class="info">
-        <h2>Хаски</h2>
+        <h2>{{ newPerformer.name }}</h2>
         <div class="buttons">
           <button>Слушать</button>
         </div>
       </div>
     </div>
-    <img src='../../assets/newPerfomer.png'>
+    <img :src='newPerformer.profile_picture'>
   </div>
 </template>
 

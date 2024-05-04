@@ -7,9 +7,8 @@
 
 <template>
   <div class="item">
-    <img :src="image" class="performerImg">
+    <img :src="image" class="performerImg" alt="performerImg">
     <a href="">{{ name }}</a>
-    <img src="../../assets/play.png" style="cursor: pointer" class="playBtn">
   </div>
 </template>
 
@@ -19,31 +18,39 @@
   height: 64px;
 }
 
-.playBtn {
-  width: 32px;
-  height: 32px;
-}
-
 .genres .items .item,
 .performers .popularPerformers .items .item,
 .performers .newPerformers .items .item{
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   padding: 10px;
   border-radius: 12px;
+  gap: 24px;
 }
 
-.genres .items .item:nth-child(odd),
-.performers .popularPerformers .items .item:nth-child(odd),
-.performers .newPerformers .items .item:nth-child(odd){
+.genres .items .item:nth-child(1),
+.performers .popularPerformers .items .item:nth-child(1),
+.performers .newPerformers .items .item:nth-child(1){
   background-color: #0D4045;
 }
 
-.genres .items .item:nth-child(even),
-.performers .popularPerformers .items .item:nth-child(even),
-.performers .newPerformers .items .item:nth-child(even){
+.genres .items .item:nth-child(2),
+.performers .popularPerformers .items .item:nth-child(2),
+.performers .newPerformers .items .item:nth-child(2){
   background-color: #A69984;
+}
+
+.genres .items .item:nth-child(3),
+.performers .popularPerformers .items .item:nth-child(3),
+.performers .newPerformers .items .item:nth-child(3){
+  background-color: #a24c34;
+}
+
+.genres .items .item:nth-child(4),
+.performers .popularPerformers .items .item:nth-child(4),
+.performers .newPerformers .items .item:nth-child(4){
+  background-color: #5547a5;
 }
 
 a {

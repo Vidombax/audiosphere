@@ -65,6 +65,7 @@ onMounted(async () => {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   padding: 12px;
+  gap: 12px;
 }
 
 .newAlbums .items .item a {

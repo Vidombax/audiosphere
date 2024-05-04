@@ -3,7 +3,8 @@
     numberSet: Number,
     nameSong: String,
     namePerformance: String,
-    albumCover: String
+    albumCover: String,
+    durationMusic: String,
   })
 </script>
 
@@ -18,7 +19,7 @@
       </div>
     </div>
     <div class="actions">
-      <p>03:45</p>
+      <p>{{ durationMusic }}</p>
       <div class="icon">
         <box-icon name='right-arrow' class="playMusic" type='solid' color='#ffffff' ></box-icon>
       </div>
