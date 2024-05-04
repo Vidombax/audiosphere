@@ -43,13 +43,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="trending">
-    <div class="left">
-      <h3>Новые тренды</h3>
-      <NewInTrend />
-    </div>
-    <img src='../assets/trend.png'>
-  </div>
+  <NewInTrend />
 
   <div class="playlist">
     <div class="genres">
@@ -130,7 +124,7 @@ onMounted(async () => {
   padding: 20px;
   color: #fff;
   border-radius: 6px;
-  width: 65%;
+  width: 80%;
 }
 
 @media screen and (max-width: 1450px) {

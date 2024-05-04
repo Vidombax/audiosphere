@@ -16,10 +16,16 @@ class AlbumController {
         res.json(user.rows[0]);
     }
     async getNewAlbums(req, res) {
-        const albums = await db.query('SELECT name_album, album_cover\n' +
-            'FROM albums\n' +
-            'WHERE EXTRACT(MONTH FROM date_publication) = EXTRACT(MONTH FROM CURRENT_DATE) LIMIT 4;\n')
+        const albums = await db.query('SELECT albums.name_album, albums.album_cover, users.name FROM albums\n' +
+            '    JOIN users ON albums.id_performance = users.iduser\n' +
+            'WHERE EXTRACT(MONTH FROM albums.date_publication) = EXTRACT(MONTH FROM CURRENT_DATE) ORDER BY albums.id_album DESC LIMIT 5')
         res.json(albums.rows);
+    }
+    async getPopularAlbums(req, res) {
+        const albums = await db.query('SELECT albums.name_album, albums.album_cover, users.name, albums.count_auditions, albums.count_followers FROM albums\n' +
+            '             JOIN users ON albums.id_performance = users.iduser\n' +
+            '            ORDER BY albums.count_auditions DESC, albums.count_followers DESC LIMIT 5')
+        res.json(albums.rows)
     }
     async updateAlbum(req, res) {
 

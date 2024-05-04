@@ -1,10 +1,40 @@
 <script setup>
+import {onMounted, ref} from "vue";
+import axios from "axios";
+
 import AlbumAfisha from "@/components/album/AlbumAfisha.vue";
 import TopAlbumsChart from "@/components/album/TopAlbumsChart.vue";
 import NewAlbumsChart from "@/components/album/NewAlbumsChart.vue";
 
-
 document.title = 'AudioSphere | Альбомы'
+
+const newAlbums = ref([])
+const popularAlbums = ref([])
+
+const fetchNewAlbums = async () => {
+  try {
+    const response = await axios.get('/api/new-albums')
+    newAlbums.value = response.data
+  }
+  catch (err) {
+    console.log(err)
+  }
+}
+
+const fetchPopularAlbums = async () => {
+  try {
+    const response = await axios.get('/api/popular-albums')
+    popularAlbums.value = response.data
+  }
+  catch (err) {
+    console.log(err)
+  }
+}
+
+onMounted(async () => {
+  await fetchNewAlbums()
+  await fetchPopularAlbums()
+})
 </script>
 
 <template>
@@ -16,10 +46,7 @@ document.title = 'AudioSphere | Альбомы'
         <a href="">Смотреть все</a>
       </div>
       <div class="items">
-        <TopAlbumsChart />
-        <TopAlbumsChart />
-        <TopAlbumsChart />
-        <TopAlbumsChart />
+        <TopAlbumsChart v-for="item in popularAlbums" :key="item.id" :name-album="item.name_album" :album-cover="item.album_cover" :performance="item.name"/>
       </div>
     </div>
     <div class="newAlbums">
@@ -28,10 +55,7 @@ document.title = 'AudioSphere | Альбомы'
         <a href="">Смотреть все</a>
       </div>
       <div class="items">
-        <NewAlbumsChart />
-        <NewAlbumsChart />
-        <NewAlbumsChart />
-        <NewAlbumsChart />
+        <NewAlbumsChart v-for="item in newAlbums" :key="item.id" :name-album="item.name_album" :album-cover="item.album_cover" :performance="item.name"/>
       </div>
     </div>
   </div>

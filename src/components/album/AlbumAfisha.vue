@@ -1,5 +1,22 @@
 <script setup>
+import {onMounted, ref} from "vue";
+import axios from "axios";
 
+const newAlbum = ref([])
+
+const fetchAlbum = async () => {
+  try {
+    const response = await axios.get('/api/new-albums')
+    newAlbum.value = response.data
+  }
+  catch (err) {
+    console.log(err)
+  }
+}
+
+onMounted(async () => {
+  await fetchAlbum()
+})
 </script>
 
 <template>
@@ -7,21 +24,21 @@
     <div class="left">
       <h3>Новый альбом</h3>
       <div class="info">
-        <h2>The Highlights</h2>
-        <h4>The Weeknd</h4>
+        <h2 v-if="newAlbum.length > 0">{{ newAlbum[0].name_album }}</h2>
+        <h4 v-if="newAlbum.length > 0">{{ newAlbum[0].name }}</h4>
         <div class="buttons">
           <button>Слушать</button>
         </div>
       </div>
     </div>
-    <img src='../../assets/albumAfisha.png'>
+    <img v-if="newAlbum.length > 0" :src="newAlbum[0].album_cover">
   </div>
 </template>
 
 <style scoped>
 .container main .trending img{
-  width: 300px;
-  height: 300px;
+  width: 250px;
+  height: 250px;
 
 }
 

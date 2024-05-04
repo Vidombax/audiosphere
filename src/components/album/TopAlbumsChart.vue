@@ -1,19 +1,23 @@
 <script setup>
-
+defineProps({
+  nameAlbum: String,
+  performance: String,
+  albumCover: String,
+  numberSet: Number,
+})
 </script>
 
 <template>
   <div class="item">
     <div class="info">
-      <p>01</p>
-      <img src="../../assets/song-1.png">
+      <p>{{ numberSet }}</p>
+      <img :src="albumCover">
       <div class="details">
-        <h5>Sunrise</h5>
-        <p>Lila Rivera</p>
+        <h5>{{ nameAlbum }}</h5>
+        <p>{{ performance }}</p>
       </div>
     </div>
     <div class="actions">
-      <p>03:45</p>
       <div class="icon">
         <box-icon name='right-arrow' class="playMusic" type='solid' color='#ffffff' ></box-icon>
       </div>

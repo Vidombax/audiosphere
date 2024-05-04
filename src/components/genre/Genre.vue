@@ -12,7 +12,7 @@
 
 <style scoped>
 .container main .playlist .genres .items .item{
-  padding: 24px 10px;
+  padding: 20px 10px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -21,7 +21,7 @@
 }
 
 .container main .playlist .genres .items .item p{
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold;
 }
 
@@ -55,5 +55,13 @@
 
 .container main .playlist .genres .items .item:nth-child(8){
   background-color: #a69984;
+}
+
+.container main .playlist .genres .items .item:nth-child(9){
+  background-color: #a24c34;
+}
+
+.container main .playlist .genres .items .item:nth-child(10){
+  background-color: #0d4045;
 }
 </style>

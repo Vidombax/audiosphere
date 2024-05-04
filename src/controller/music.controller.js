@@ -23,6 +23,15 @@ class MusicController {
             'LIMIT 5')
         res.json(music.rows)
     }
+    async getNewestMusic(req, res) {
+        const music = await db.query('SELECT music.name_music, users.name, albums.album_cover, albums.date_publication, music.count_auditions FROM music\n' +
+            '    JOIN music_in_albums ON music.id = music_in_albums.id_music\n' +
+            '    JOIN albums ON music_in_albums.id_album = albums.id_album\n' +
+            '    JOIN users ON music.id_performance = users.iduser\n' +
+            '    WHERE EXTRACT(WEEK FROM date_publication) = EXTRACT(WEEK FROM CURRENT_DATE)\n' +
+            'ORDER BY music.count_auditions DESC');
+        res.json(music.rows[0]);
+    }
     async updateMusic(req, res) {
 
     }

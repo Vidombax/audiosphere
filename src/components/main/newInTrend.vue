@@ -1,33 +1,77 @@
 <script setup>
+import {onMounted, ref} from "vue";
+import axios from "axios";
 
+const music = ref([])
+
+const fetchMusic = async () => {
+  try {
+    const response = await axios.get('/api/afisha-music')
+    music.value = response.data
+  }
+  catch (err) {
+    console.log(err)
+  }
+}
+
+onMounted(async () => {
+  await fetchMusic()
+})
 </script>
 
 <template>
-  <div class="info">
-    <h2>Lost Emotions</h2>
-    <h4>Rion Clarke</h4>
-    <h5>63 миллиона прослушиваний</h5>
-    <div class="buttons">
-      <button>Слушать</button>
-      <box-icon name='heart' type='solid' color='#ffffff' ></box-icon>
+  <div class="trending">
+    <div class="left">
+      <h3>Новые тренды</h3>
+      <div class="info">
+        <h2>{{ music.name_music }}</h2>
+        <p class="name">{{ music.name }}</p>
+        <p class="count">{{ music.count_auditions }} прослушиваний</p>
+        <div class="buttons">
+          <button>Слушать</button>
+          <box-icon name='heart' type='solid' color='#ffffff' ></box-icon>
+        </div>
+      </div>
     </div>
+    <img :src="music.album_cover" alt="AlbumCover">
   </div>
+
 </template>
 
 <style scoped>
+.container main .trending img{
+  width: 300px;
+  height: 200px;
+}
+
+.container main .trending{
+  margin-top: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #fff;
+}
+
 .container main .trending .left .info{
   margin-top: 12px;
   padding: 26px;
 }
 
 .container main .trending .left .info h2{
-  font-size: 56px;
+  font-size: 42px;
   margin-bottom: 8px;
 }
 
-.container main .trending .left .info h4,
-.container main .trending .left .info h5{
-  display: inline;
+.name {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  font-size: larger;
+}
+
+.count {
+  font-size: medium;
+  color: #919191;
 }
 
 .container main .trending .left .info h5{
