@@ -1,7 +1,27 @@
 <script setup>
-import {inject} from 'vue'
+import {inject, ref} from 'vue'
+import axios from "axios";
 
 const {closeRegistrationForm} = inject('registr')
+
+const username = ref('')
+const password = ref('')
+const mail = ref('')
+
+const createUser = async () => {
+  try {
+    const response = await axios.post(`/api/user`, {
+      name: username.value,
+      mail: mail.value,
+      password: password.value
+    })
+    localStorage.setItem('id', response.data.iduser)
+    location.replace('/')
+  }
+  catch (err) {
+    console.log(err)
+  }
+}
 
 defineProps({
   button: Object
@@ -9,7 +29,7 @@ defineProps({
 </script>
 
 <template>
-  <form class="form">
+  <form class="form" onsubmit="return false">
     <div class="header">
       <router-link to="/">
         <img src="../../assets/leftArrow.png" alt="leftArrow" @click="button">
@@ -18,10 +38,10 @@ defineProps({
     </div>
     <div class="items">
       <p>Регистрация</p>
-      <input type="text" placeholder="Логин" required>
-      <input type="text" placeholder="Почта" required>
-      <input type="password" placeholder="Пароль" required>
-      <button>Зарегистрироваться</button>
+      <input type="text" placeholder="Логин" v-model="username" required>
+      <input type="text" placeholder="Почта" v-model="mail" required>
+      <input type="password" placeholder="Пароль" v-model="password" required>
+      <button @click="createUser">Зарегистрироваться</button>
       <p @click="closeRegistrationForm">У меня уже есть аккаунт</p>
     </div>
   </form>

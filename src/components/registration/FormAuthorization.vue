@@ -1,5 +1,5 @@
 <script setup>
-import {inject, onMounted, ref} from 'vue'
+import {inject, ref} from 'vue'
 import axios from "axios";
 
 const {openRegistrationForm} = inject('registr')

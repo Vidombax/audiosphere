@@ -2,7 +2,11 @@ import db from '../db.js';
 
 class UserController {
     async createUser(req, res) {
-
+        const name = req.body.name
+        const mail = req.body.mail
+        const password = req.body.password
+        const newUser = await db.query('INSERT INTO users (name, mail, password, count_following, count_follower, date_registration, profile_picture, is_performance) VALUES ($1, $2, $3, 0, 0, CURRENT_DATE, \'/profilePictures/defaultProfilePicture.png\', false) RETURNING *', [name, mail, password])
+        res.json(newUser.rows[0])
     }
     async getUsers(req, res) {
         const users = await db.query('SELECT * FROM users');
