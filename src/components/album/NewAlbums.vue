@@ -1,5 +1,22 @@
 <script setup>
+import {onMounted, ref} from 'vue'
+import axios from 'axios'
 
+const newAlbums = ref([])
+
+const fetchNewAlbums = async () => {
+  try {
+    const response = await axios.get('/api/new-albums')
+    newAlbums.value = response.data
+  }
+  catch (err) {
+    console.log(err)
+  }
+}
+
+onMounted(async () => {
+  await fetchNewAlbums()
+})
 </script>
 
 <template>
@@ -9,28 +26,10 @@
       <a href="#">Смотреть все</a>
     </div>
     <div class="items">
-      <div class="item">
+      <div class="item" v-for="item in newAlbums" :key="item.id">
         <a href="#">
-          <img src="../../assets/albumCover1.jpeg" alt="albumCover">
-          <p>Название альбома</p>
-        </a>
-      </div>
-      <div class="item">
-        <a href="#">
-          <img src="../../assets/albumCover1.jpeg" alt="albumCover">
-          <p>Название альбома</p>
-        </a>
-      </div>
-      <div class="item">
-        <a href="#">
-          <img src="../../assets/albumCover1.jpeg" alt="albumCover">
-          <p>Название альбома</p>
-        </a>
-      </div>
-      <div class="item">
-        <a href="#">
-          <img src="../../assets/albumCover1.jpeg" alt="albumCover">
-          <p>Название альбома</p>
+          <img :src="item.album_cover" alt="albumCover">
+          <p>{{ item.name_album }}</p>
         </a>
       </div>
     </div>
