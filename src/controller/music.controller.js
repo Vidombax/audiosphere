@@ -14,13 +14,22 @@ class MusicController {
         res.json(music.rows[0]);
     }
     async getPopularMusic(req, res) {
-        const music = await db.query('SELECT music.name_music, music.count_auditions, music.count_likes, albums.album_cover, users.name, music.duration_music\n' +
+        const music = await db.query('SELECT music.id, music.name_music, music.count_auditions, music.count_likes, albums.album_cover, albums.name_album, users.name, music.duration_music, music.file_path_music\n' +
             'FROM music\n' +
             '         JOIN music_in_albums ON music.id = music_in_albums.id_music\n' +
             '         JOIN albums ON music_in_albums.id_album = albums.id_album\n' +
             '         JOIN users ON music.id_performance = users.iduser\n' +
             'ORDER BY music.count_auditions DESC, music.count_likes DESC\n' +
             'LIMIT 5')
+        res.json(music.rows)
+    }
+    async getPopularMusicToPlayer(req, res) {
+        const music = await db.query('SELECT music.id, music.name_music, music.count_auditions, music.count_likes, albums.album_cover, albums.name_album, users.name, music.duration_music, music.file_path_music\n' +
+            'FROM music\n' +
+            '         JOIN music_in_albums ON music.id = music_in_albums.id_music\n' +
+            '         JOIN albums ON music_in_albums.id_album = albums.id_album\n' +
+            '         JOIN users ON music.id_performance = users.iduser\n' +
+            'ORDER BY music.count_auditions DESC, music.count_likes DESC')
         res.json(music.rows)
     }
     async getNewestMusic(req, res) {

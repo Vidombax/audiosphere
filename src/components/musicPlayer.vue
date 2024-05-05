@@ -1,8 +1,17 @@
 <script setup>
-import {ref, provide} from "vue";
+import {ref, provide, inject} from "vue";
 import ListSongs from "@/components/main/ListSongs.vue";
 
+defineProps({
+  title: String,
+  author: String,
+  albumCover: String,
+  albumName: String
+})
+
 const listSongsOpen = ref(false)
+
+const {stopMusic, playMusic, pastComposition, nextComposition, isPlaying} = inject('app')
 
 const openListSongs = () => {
   listSongsOpen.value = true
@@ -27,11 +36,11 @@ provide('musicPlayer', {
         <box-icon name='playlist' type='solid' color='#ffffff' style="cursor: pointer;" @click="openListSongs()"></box-icon>
       </div>
       <div class="song-info">
-        <img src="../assets/player.png">
+        <img :src="albumCover">
         <div class="description">
-          <h3>Ripple Echoes</h3>
-          <h5><a href="">Kael Fischer</a></h5>
-          <a href="">Лучшее за 2023</a>
+          <h3>{{ title }}</h3>
+          <h5><a href="">{{ author }}</a></h5>
+          <a href="">{{ albumName }}</a>
         </div>
       </div>
     </div>
@@ -42,9 +51,10 @@ provide('musicPlayer', {
       </div>
       <div class="buttons">
         <box-icon name='repeat' color='#ffffff' style="cursor: pointer;"></box-icon>
-        <box-icon name='first-page' color='#ffffff' style="cursor: pointer;"></box-icon>
-        <box-icon name='play-circle' color='#ffffff' style="cursor: pointer;"></box-icon>
-        <box-icon name='last-page' color='#ffffff' style="cursor: pointer;"></box-icon>
+        <box-icon name='first-page' @click="pastComposition" color='#ffffff' style="cursor: pointer;"></box-icon>
+        <box-icon name='play-circle' @click="playMusic" v-if="isPlaying" color='#ffffff' style="cursor: pointer;"></box-icon>
+        <box-icon name='pause-circle' @click="stopMusic" v-else color='#ffffff' style="cursor: pointer"></box-icon>
+        <box-icon name='last-page' @click="nextComposition" color='#ffffff' style="cursor: pointer;"></box-icon>
         <box-icon name='shuffle' color="#ffffff" style="cursor: pointer;"></box-icon>
       </div>
       <div class="volumeChange">
@@ -125,6 +135,7 @@ provide('musicPlayer', {
 .container .right-section .music-player .player-actions{
   background-color: #5773ff;
   height: 26%;
+  margin-top: 10px;
   border-radius: 6px;
   display: flex;
   flex-direction: column;

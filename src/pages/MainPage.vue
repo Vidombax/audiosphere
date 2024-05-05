@@ -1,6 +1,6 @@
 <script setup>
 
-import {onMounted, ref} from "vue";
+import {onMounted, provide, ref} from "vue";
 import axios from "axios";
 
 import Genre from "@/components/genre/Genre.vue";
@@ -10,6 +10,10 @@ import NewAlbums from "@/components/album/NewAlbums.vue";
 import CustomPlaylists from "@/components/main/CustomPlaylists.vue";
 
 document.title = 'AudioSphere | Главная'
+
+const props = defineProps({
+  sendMessage: Function,
+})
 
 const genres = ref([])
 
@@ -63,7 +67,7 @@ onMounted(async () => {
         <a href="#">Смотреть все</a>
       </div>
       <div class="items">
-        <TopChartMusic v-for="item in popularMusic" :key="item.id" :number-set="countPopularMusic++" :name-song="item.name_music" :name-performance="item.name" :album-cover="item.album_cover" :duration-music="item.duration_music"/>
+        <TopChartMusic v-for="item in popularMusic" :key="item.id" :id-music="item.id" :number-set="countPopularMusic++" :name-song="item.name_music" :name-performance="item.name" :album-cover="item.album_cover" :duration-music="item.duration_music"/>
       </div>
     </div>
   </div>

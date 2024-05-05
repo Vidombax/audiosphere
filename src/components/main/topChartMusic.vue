@@ -1,16 +1,28 @@
 <script setup>
-  defineProps({
-    numberSet: Number,
-    nameSong: String,
-    namePerformance: String,
-    albumCover: String,
-    durationMusic: String,
-  })
+import {defineProps, inject} from "vue";
+
+const {addToPlayerPopularMusic} = inject('app')
+
+const props = defineProps({
+  idMusic: Number,
+  numberSet: Number,
+  nameSong: String,
+  namePerformance: String,
+  albumCover: String,
+  durationMusic: String,
+  sendMessage: Function
+})
+
+const handleClick = async () => {
+  await addToPlayerPopularMusic(props.idMusic)
+}
 </script>
+
 
 <template>
   <div class="item">
     <div class="info">
+      <p hidden>{{ idMusic }}</p>
       <p>{{ numberSet }}</p>
       <img :src="albumCover">
       <div class="details">
@@ -21,12 +33,13 @@
     <div class="actions">
       <p>{{ durationMusic }}</p>
       <div class="icon">
-        <box-icon name='right-arrow' class="playMusic" type='solid' color='#ffffff' ></box-icon>
+        <box-icon name='right-arrow' class="playMusic" type='solid' color='#ffffff' @click="handleClick"></box-icon>
       </div>
-      <box-icon name='plus-square' type='solid' class="addMusicToFavourite" color='#ffffff' ></box-icon>
+      <box-icon name='plus-square' type='solid' class="addMusicToFavourite" color='#ffffff'></box-icon>
     </div>
   </div>
 </template>
+
 
 <style scoped>
 .container main .playlist .music-list .items .item{
@@ -41,7 +54,7 @@
 }
 
 .details h5 {
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 
 .playMusic {

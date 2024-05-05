@@ -1,22 +1,25 @@
 <script setup>
-import {inject} from "vue";
+import {inject, onMounted, ref} from "vue";
+import ListSong from "@/components/main/ListSong.vue";
+
 const {closeListSongs} = inject('musicPlayer')
+const {addMusicToList} = inject('app')
+const listSong = ref([])
+
+onMounted(async () => {
+  listSong.value = await addMusicToList();
+  console.log(listSong.value); // Убедитесь, что данные успешно загружены
+  console.log(listSong.value[0]); // Попробуйте получить доступ к первому элементу массива
+});
 </script>
 
 <template>
   <div class="listSongs">
     <div class="header">
-      <h4>Название плейлиста</h4>
       <box-icon name='chevron-right' type='solid' color='#ffffff' style="cursor: pointer" @click="closeListSongs()"></box-icon>
     </div>
     <div class="items">
-      <div class="item">
-        <img src="../../assets/song-1.png" alt="albumCover">
-        <p>Название музыки</p>
-        <p>3:45</p>
-        <box-icon name='right-arrow' class="playMusic" type='solid' color='#ffffff' style="cursor: pointer"></box-icon>
-        <box-icon name='plus-square' type='solid' class="addMusicToFavourite" color='#ffffff' style="cursor: pointer"></box-icon>
-      </div>
+      <ListSong v-for="item in listSong" :key="item.id" :album-cover="item.album_cover" :title="item.name_music" :duration-music="item.duration_music" />
     </div>
   </div>
   <div class="blackout">
@@ -36,33 +39,18 @@ const {closeListSongs} = inject('musicPlayer')
 
 .listSongs .header {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 30px;
-}
-
-.listSongs .items {
-  display: grid;
-  grid-template-columns: 1fr;
-  justify-content: center;
-  align-items: center;
-}
-
-.listSongs .items .item {
-  display: flex;
-  align-items: center;
-  gap: 22px;
-  justify-content: center;
+  float: right;
   margin-bottom: 10px;
 }
 
-.listSongs .items .item img {
-  width: 50px;
-  height: 50px;
-}
-
-.listSongs .items .item p {
-  font-size: 14px;
+.listSongs .items {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: column;
+  height: 400px;
+  width: 300px;
+  overflow-y: auto;
 }
 
 .blackout {
