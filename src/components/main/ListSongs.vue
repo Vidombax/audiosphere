@@ -8,8 +8,6 @@ const listSong = ref([])
 
 onMounted(async () => {
   listSong.value = await addMusicToList();
-  console.log(listSong.value); // Убедитесь, что данные успешно загружены
-  console.log(listSong.value[0]); // Попробуйте получить доступ к первому элементу массива
 });
 </script>
 
@@ -19,7 +17,7 @@ onMounted(async () => {
       <box-icon name='chevron-right' type='solid' color='#ffffff' style="cursor: pointer" @click="closeListSongs()"></box-icon>
     </div>
     <div class="items">
-      <ListSong v-for="item in listSong" :key="item.id" :album-cover="item.album_cover" :title="item.name_music" :duration-music="item.duration_music" />
+      <ListSong v-for="item in listSong" :key="item.id" :id-music="item.id" :album-cover="item.album_cover" :title="item.name_music" :duration-music="item.duration_music" />
     </div>
   </div>
   <div class="blackout">

@@ -40,8 +40,8 @@ onMounted(async () => {
 
 <style scoped>
 .container main .trending img{
-  width: 300px;
-  height: 200px;
+  width: 250px;
+  height: 250px;
 }
 
 .container main .trending{

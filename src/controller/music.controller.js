@@ -37,7 +37,7 @@ class MusicController {
             '    JOIN music_in_albums ON music.id = music_in_albums.id_music\n' +
             '    JOIN albums ON music_in_albums.id_album = albums.id_album\n' +
             '    JOIN users ON music.id_performance = users.iduser\n' +
-            '    WHERE EXTRACT(WEEK FROM date_publication) = EXTRACT(WEEK FROM CURRENT_DATE)\n' +
+            '    WHERE EXTRACT(MONTH FROM date_publication) = EXTRACT(MONTH FROM CURRENT_DATE)\n' +
             'ORDER BY music.count_auditions DESC');
         res.json(music.rows[0]);
     }

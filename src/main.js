@@ -3,6 +3,7 @@ import './assets/main.css'
 import { createApp } from 'vue'
 import App from './App.vue'
 import {createRouter, createWebHistory} from 'vue-router'
+import 'boxicons'
 
 import MainPage from "@/pages/MainPage.vue";
 import GenrePage from "@/pages/GenrePage.vue";
@@ -31,6 +32,8 @@ const routes = [
     { path: '/playlist', name: 'Playlist', component: PlaylistPage },
     { path: '/registration', name: 'Registration', component: RegistrationPage },
 ]
+
+app.component('box-icons');
 
 const router = createRouter({
     history: createWebHistory(),

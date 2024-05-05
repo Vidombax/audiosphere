@@ -1,17 +1,29 @@
 <script setup>
-import {ref, provide, inject} from "vue";
+import {ref, provide, inject, defineEmits} from "vue";
 import ListSongs from "@/components/main/ListSongs.vue";
 
-defineProps({
+const props = defineProps({
   title: String,
   author: String,
   albumCover: String,
-  albumName: String
+  albumName: String,
+  currentTime: Number,
+  allTimeMusic: Number,
+  durationMusic: String
 })
 
 const listSongsOpen = ref(false)
+const isLooping = ref(true)
 
-const {stopMusic, playMusic, pastComposition, nextComposition, isPlaying} = inject('app')
+const {stopMusic, playMusic, pastComposition, nextComposition, loopMusic, volumeChanged, isPlaying} = inject('app')
+
+const volume = ref(100)
+
+const emit = defineEmits(['volume-change'])
+
+const handleVolumeChange = () => {
+  emit('volume-change', volume.value);
+}
 
 const openListSongs = () => {
   listSongsOpen.value = true
@@ -19,6 +31,15 @@ const openListSongs = () => {
 
 const closeListSongs = () => {
   listSongsOpen.value = false
+}
+
+const loopMusicBtn = () => {
+  isLooping.value = isLooping.value !== true;
+}
+
+const handlerLoop = async () => {
+  loopMusicBtn()
+  await loopMusic()
 }
 
 provide('musicPlayer', {
@@ -38,27 +59,32 @@ provide('musicPlayer', {
       <div class="song-info">
         <img :src="albumCover">
         <div class="description">
-          <h3>{{ title }}</h3>
+          <h4>{{ title }}</h4>
           <h5><a href="">{{ author }}</a></h5>
           <a href="">{{ albumName }}</a>
         </div>
       </div>
+      <div class="progress">
+        <p>00:00</p>
+        <input type="range" :value="currentTime" :max="allTimeMusic">
+        <p>{{ durationMusic }}</p>
+      </div>
     </div>
 
     <div class="player-actions">
-      <div class="progress">
-        <!--    TODO: добавить прогресс бар который будет показывать сколько прошло и сколь осталось    -->
-      </div>
       <div class="buttons">
-        <box-icon name='repeat' color='#ffffff' style="cursor: pointer;"></box-icon>
+        <box-icon name='repeat' v-if="isLooping" color='#ffffff' style="cursor: pointer;" @click="handlerLoop"></box-icon>
+        <box-icon name='repeat' v-else color='#1c3bd5' style="cursor: pointer;" @click="handlerLoop"></box-icon>
         <box-icon name='first-page' @click="pastComposition" color='#ffffff' style="cursor: pointer;"></box-icon>
         <box-icon name='play-circle' @click="playMusic" v-if="isPlaying" color='#ffffff' style="cursor: pointer;"></box-icon>
         <box-icon name='pause-circle' @click="stopMusic" v-else color='#ffffff' style="cursor: pointer"></box-icon>
         <box-icon name='last-page' @click="nextComposition" color='#ffffff' style="cursor: pointer;"></box-icon>
-        <box-icon name='shuffle' color="#ffffff" style="cursor: pointer;"></box-icon>
+        <box-icon name='plus' color='#ffffff' style="cursor: pointer"></box-icon>
       </div>
       <div class="volumeChange">
-        <!--   TODO: сделать настройку громкости     -->
+        <box-icon name='volume-low' color='#ffffff' ></box-icon>
+        <input type="range" value="100" v-model="volume" @input="handleVolumeChange">
+        <box-icon name='volume-full' color='#ffffff' ></box-icon>
       </div>
     </div>
   </div>
@@ -95,18 +121,17 @@ provide('musicPlayer', {
 }
 
 .container .right-section .music-player .song-info img{
-  width: 280px;
-  height: 220px;
+  width: 200px;
+  height: 200px;
 }
 
 .container .right-section .music-player .description{
   margin-bottom: 12px;
 }
 
-.container .right-section .music-player .description h3{
-  font-size: 34px;
+.container .right-section .music-player .description h4{
+  font-size: 30px;
   font-weight: 500;
-  margin-bottom: 8px;
 }
 
 .container .right-section .music-player .description h5 a{
@@ -114,7 +139,7 @@ provide('musicPlayer', {
   font-size: 28px;
   margin-bottom: 8px;
   color: #fff;
-  font-weight: normal;
+  font-weight: 500;
 }
 
 .container .right-section .music-player .description h5 a:hover {
@@ -167,6 +192,66 @@ provide('musicPlayer', {
   align-items: center;
   position: absolute;
   bottom: 8px;
+}
+
+.volumeChange {
+  display: flex;
+  gap: 12px;
+  margin-top: 2rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.progress {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+}
+
+input[type="range"]:nth-child(1) {
+  width: 40%;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 8px;
+  background-color: #ccc;
+  border-radius: 4px;
+  outline: none;
+  margin: 0;
+  padding: 0;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+input[type="range"]::-ms-thumb {
+  width: 16px;
+  height: 16px;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 1540px) {

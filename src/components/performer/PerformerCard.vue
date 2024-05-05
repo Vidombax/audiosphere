@@ -23,10 +23,9 @@
 .performers .newPerformers .items .item{
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
   padding: 10px;
   border-radius: 12px;
-  gap: 24px;
 }
 
 .genres .items .item:nth-child(1),

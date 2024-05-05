@@ -1,8 +1,7 @@
 <script setup>
-import {ref, provide} from "vue";
+import {ref, provide, onUnmounted, onMounted} from "vue";
 import axios from "axios";
 
-import 'boxicons'
 import MusicPlayer from "@/components/musicPlayer.vue";
 import Sidebar from "@/components/Sidebar.vue";
 import Profile from "@/components/Profile.vue";
@@ -13,6 +12,9 @@ let index = 0
 const isPlaying = ref(true)
 const music = ref([])
 let audio = new Audio()
+
+const allTimeMusic = ref(100)
+const currentTime = ref(0)
 
 const openApp = () => {
   visibleComponent.value = true
@@ -26,6 +28,7 @@ const title = ref('-')
 const author = ref('-')
 const albumCover = ref('/defaultPlaylistPhoto.png')
 const albumName = ref('')
+const durationMusic = ref('00:00')
 
 
 function playerInformation(index) {
@@ -33,10 +36,26 @@ function playerInformation(index) {
   author.value = music.value[index].name;
   albumCover.value = music.value[index].album_cover;
   albumName.value = music.value[index].name_album;
+  durationMusic.value = music.value[index].duration_music
+
+  allTimeMusic.value = Math.floor(audio.duration) * 2 - 10
 }
+
+function increaseVariable(currentTime) {
+
+  const intervalId = setInterval(() => {
+    currentTime.value++;
+
+    if (currentTime.value === allTimeMusic.value) {
+      clearInterval(intervalId);
+    }
+  }, 1000);
+}
+
 
 const playMusic = async () => {
   try {
+    audio.pause()
     isPlaying.value = false
     await audio.play()
   }
@@ -72,6 +91,18 @@ const nextComposition = () => {
   }
 }
 
+const endTrack = async  () => {
+
+}
+
+const loopMusic = () => {
+  audio.loop = audio.loop === false;
+}
+
+const volumeChanged = (newVolume) => {
+  audio.volume = newVolume / 100;
+}
+
 const addToPlayerPopularMusic = async (id) => {
   try {
     audio.pause()
@@ -82,7 +113,10 @@ const addToPlayerPopularMusic = async (id) => {
     index = music.value.findIndex(item => item.id === id)
 
     if (index !== -1) {
+      currentTime.value = 0
       playerInformation(index);
+
+      increaseVariable(currentTime)
       audio = new Audio(music.value[index].file_path_music);
       isPlaying.value = false;
 
@@ -111,8 +145,14 @@ provide('app', {
   pastComposition,
   nextComposition,
   addMusicToList,
+  loopMusic,
+  audio,
   music,
   isPlaying
+})
+
+onMounted( () => {
+  audio.onended = () => console.log('track ended')
 })
 </script>
 
@@ -125,7 +165,13 @@ provide('app', {
     </main>
     <div class="right-section">
       <Profile />
-      <MusicPlayer :title="title" :author="author" :album-cover="albumCover" :album-name="albumName"/>
+      <MusicPlayer
+          :all-time-music="allTimeMusic"
+          :current-time="currentTime"
+          :title="title" :author="author"
+          :album-cover="albumCover" :album-name="albumName"
+          :duration-music="durationMusic"
+          @volume-change="volumeChanged"/>
     </div>
   </div>
   <div class="containerRegistration" v-else>
