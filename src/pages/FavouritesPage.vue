@@ -1,8 +1,36 @@
 <script setup>
+import {inject, onMounted, ref} from "vue";
+import axios from "axios";
 
 import FavouriteSong from "@/components/favourite/FavouriteSong.vue";
 
 document.title = 'AudioSphere | Любимые'
+
+const id = ref(Number(localStorage.getItem('id')))
+const numberSong = 1
+const music = ref([])
+
+const url = ref(`/api/subscribe-music/${id.value}`)
+
+const fetchSubscribeMusic = async () => {
+  try {
+    const response = await axios.get(url.value)
+    music.value = response.data
+  }
+  catch (err) {
+    console.log(err)
+  }
+}
+
+const {addToPlayerMusic} = inject('app')
+
+const handleClick = async () => {
+  await addToPlayerMusic(music.value[0].id, url.value)
+}
+
+onMounted(async () => {
+  await fetchSubscribeMusic()
+})
 </script>
 
 <template>
@@ -12,16 +40,21 @@ document.title = 'AudioSphere | Любимые'
       <div class="infoPlaylist">
         <h1>Любимые треки</h1>
         <div class="buttons">
-          <button>Слушать</button>
-          <p>20 треков</p>
+          <button @click="handleClick">Слушать</button>
+          <p>{{ music.length }} трек(ов)</p>
         </div>
       </div>
     </div>
     <div class="listSongs">
-      <FavouriteSong />
-      <FavouriteSong />
-      <FavouriteSong />
-      <FavouriteSong />
+      <FavouriteSong v-for="item in music" :key="item.id"
+                     :id-music="item.id"
+                     :number-song="numberSong++"
+                     :album-cover="item.album_cover"
+                     :name-song="item.name_music"
+                     :name-performer="item.name"
+                     :duration-music="item.duration_music"
+                     :url-api="url"
+      />
     </div>
   </div>
 </template>
@@ -79,11 +112,9 @@ button{
 }
 
 .listSongs {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: grid;
   gap: 22px;
-  flex-direction: column;
+  grid-template-columns: 1fr;
   background-color: #202026;
   padding: 20px 12px 12px 20px;
   margin-top: 20px;

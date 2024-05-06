@@ -1,18 +1,19 @@
 <script setup>
-import {inject, ref} from "vue";
+import {inject} from "vue";
 
 
 const props = defineProps({
   idMusic: Number,
   title: String,
   albumCover: String,
-  durationMusic: String
+  durationMusic: String,
+  urlApi: String
 })
 
-const {addToPlayerPopularMusic} = inject('app')
+const {addToPlayerMusic} = inject('app')
 
 const handleClick = async () => {
-  await addToPlayerPopularMusic(props.idMusic)
+  await addToPlayerMusic(props.idMusic, props.urlApi)
 }
 </script>
 

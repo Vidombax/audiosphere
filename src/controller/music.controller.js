@@ -41,6 +41,28 @@ class MusicController {
             'ORDER BY music.count_auditions DESC');
         res.json(music.rows[0]);
     }
+    async getSubscribesMusic(req, res) {
+        const id = req.params.id;
+        const music = await db.query('SELECT\n' +
+            '    music.id,\n' +
+            '    albums.album_cover,\n' +
+            '    music.name_music,\n' +
+            '    users.name,\n' +
+            '    music.duration_music\n' +
+            'FROM\n' +
+            '    following_to_music\n' +
+            '        JOIN\n' +
+            '    music ON following_to_music.id_music = music.id\n' +
+            '        JOIN\n' +
+            '    users ON music.id_performance = users.iduser\n' +
+            '        LEFT JOIN\n' +
+            '    music_in_albums ON music.id = music_in_albums.id_music\n' +
+            '        LEFT JOIN\n' +
+            '    albums ON music_in_albums.id_album = albums.id_album\n' +
+            'WHERE\n' +
+            '    following_to_music.id_user = $1;', [id])
+        res.json(music.rows)
+    }
     async updateMusic(req, res) {
 
     }

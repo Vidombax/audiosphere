@@ -1,7 +1,7 @@
 <script setup>
 import {defineProps, inject} from "vue";
 
-const {addToPlayerPopularMusic} = inject('app')
+const {addToPlayerMusic} = inject('app')
 
 const props = defineProps({
   idMusic: Number,
@@ -14,7 +14,7 @@ const props = defineProps({
 })
 
 const handleClick = async () => {
-  await addToPlayerPopularMusic(props.idMusic)
+  await addToPlayerMusic(props.idMusic, `/api/popular-music-player`)
 }
 </script>
 

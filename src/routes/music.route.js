@@ -8,6 +8,7 @@ router.get("/music", MusicController.getMusic);
 router.get("/music/:id", MusicController.getOneMusic);
 router.get("/popular-music", MusicController.getPopularMusic);
 router.get("/popular-music-player", MusicController.getPopularMusicToPlayer);
+router.get("/subscribe-music/:id", MusicController.getSubscribesMusic);
 router.get("/afisha-music", MusicController.getNewestMusic);
 router.put("/music", MusicController.updateMusic);
 router.delete("/music/:id", MusicController.deleteMusic);

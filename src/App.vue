@@ -12,6 +12,7 @@ let index = 0
 const isPlaying = ref(true)
 const music = ref([])
 let audio = new Audio()
+const volume = ref(1)
 
 const allTimeMusic = ref(200)
 const currentTime = ref(0)
@@ -76,6 +77,7 @@ const pastComposition = () => {
     audio.pause()
 
     audio = new Audio(music.value[index].file_path_music);
+    audio.volume = volume.value
     audio.play()
     audio.onended = () => endTrack()
   }
@@ -88,6 +90,7 @@ const nextComposition = () => {
     audio.pause()
 
     audio = new Audio(music.value[index].file_path_music);
+    audio.volume = volume.value
     audio.play()
     audio.onended = () => endTrack()
   }
@@ -104,6 +107,7 @@ const endTrack = async  () => {
 
     increaseVariable(currentTime)
     audio = new Audio(music.value[index].file_path_music);
+    audio.volume = volume.value
     isPlaying.value = false;
 
     await audio.play();
@@ -127,13 +131,17 @@ const loopMusic = () => {
 
 const volumeChanged = (newVolume) => {
   audio.volume = newVolume / 100;
+  volume.value = audio.volume = newVolume / 100
 }
 
-const addToPlayerPopularMusic = async (id) => {
+const url = ref('')
+
+const addToPlayerMusic = async (id, urlApi) => {
   try {
     audio.pause()
 
-    const response = await axios.get(`/api/popular-music-player`);
+    const response = await axios.get(urlApi);
+    url.value = urlApi
     music.value = response.data;
 
     index = music.value.findIndex(item => item.id === id)
@@ -147,6 +155,7 @@ const addToPlayerPopularMusic = async (id) => {
       audio = new Audio(music.value[index].file_path_music);
       isPlaying.value = false;
 
+      audio.volume = volume.value
       await audio.play();
       audio.onended = () => endTrack()
     }
@@ -157,7 +166,10 @@ const addToPlayerPopularMusic = async (id) => {
 
 const addMusicToList = async () => {
   try {
-    return music.value
+    return {
+      music: music.value,
+      url: url.value
+    }
   }
   catch (err) {
     console.error(err)
@@ -167,7 +179,7 @@ const addMusicToList = async () => {
 provide('app', {
   closeApp,
   openApp,
-  addToPlayerPopularMusic,
+  addToPlayerMusic,
   stopMusic,
   playMusic,
   pastComposition,

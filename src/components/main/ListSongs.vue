@@ -5,9 +5,11 @@ import ListSong from "@/components/main/ListSong.vue";
 const {closeListSongs} = inject('musicPlayer')
 const {addMusicToList} = inject('app')
 const listSong = ref([])
+const url = ref('')
 
 onMounted(async () => {
-  listSong.value = await addMusicToList();
+  listSong.value = (await addMusicToList()).music;
+  url.value = ((await addMusicToList()).url)
 });
 </script>
 
@@ -17,7 +19,13 @@ onMounted(async () => {
       <box-icon name='chevron-right' type='solid' color='#ffffff' style="cursor: pointer" @click="closeListSongs()"></box-icon>
     </div>
     <div class="items">
-      <ListSong v-for="item in listSong" :key="item.id" :id-music="item.id" :album-cover="item.album_cover" :title="item.name_music" :duration-music="item.duration_music" />
+      <ListSong v-for="item in listSong" :key="item.id"
+                :id-music="item.id"
+                :album-cover="item.album_cover"
+                :title="item.name_music"
+                :duration-music="item.duration_music"
+                :url-api="url"
+      />
     </div>
   </div>
   <div class="blackout">
