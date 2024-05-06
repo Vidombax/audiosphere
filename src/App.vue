@@ -156,6 +156,7 @@ const addToPlayerMusic = async (id, urlApi) => {
       isPlaying.value = false;
 
       audio.volume = volume.value
+      console.log(audio.src)
       await audio.play();
       audio.onended = () => endTrack()
     }

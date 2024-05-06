@@ -48,7 +48,8 @@ class MusicController {
             '    albums.album_cover,\n' +
             '    music.name_music,\n' +
             '    users.name,\n' +
-            '    music.duration_music\n' +
+            '    music.duration_music,' +
+            '    music.file_path_music\n' +
             'FROM\n' +
             '    following_to_music\n' +
             '        JOIN\n' +
