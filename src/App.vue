@@ -13,7 +13,7 @@ const isPlaying = ref(true)
 const music = ref([])
 let audio = new Audio()
 
-const allTimeMusic = ref(100)
+const allTimeMusic = ref(200)
 const currentTime = ref(0)
 
 const openApp = () => {
@@ -38,7 +38,7 @@ function playerInformation(index) {
   albumName.value = music.value[index].name_album;
   durationMusic.value = music.value[index].duration_music
 
-  allTimeMusic.value = Math.floor(audio.duration) * 2 - 10
+  allTimeMusic.value = Math.floor(audio.duration) * 2
 }
 
 function increaseVariable(currentTime) {
@@ -77,6 +77,7 @@ const pastComposition = () => {
 
     audio = new Audio(music.value[index].file_path_music);
     audio.play()
+    audio.onended = () => endTrack()
   }
 }
 
@@ -88,15 +89,40 @@ const nextComposition = () => {
 
     audio = new Audio(music.value[index].file_path_music);
     audio.play()
+    audio.onended = () => endTrack()
   }
 }
 
 const endTrack = async  () => {
+  if (index < music.value.length - 1) {
+    audio.pause()
+    allTimeMusic.value = 0
+    currentTime.value = 0
 
+    index++
+    playerInformation(index);
+
+    increaseVariable(currentTime)
+    audio = new Audio(music.value[index].file_path_music);
+    isPlaying.value = false;
+
+    await audio.play();
+    audio.onended = () => endTrack()
+  }
+  else {
+    isPlaying.value = true
+  }
 }
 
 const loopMusic = () => {
-  audio.loop = audio.loop === false;
+  if (audio.loop === false) {
+    audio.loop = true
+    audio.onended = () => console.log('включен цикл')
+  }
+  else {
+    audio.loop = false
+    audio.onended = () => endTrack()
+  }
 }
 
 const volumeChanged = (newVolume) => {
@@ -114,6 +140,7 @@ const addToPlayerPopularMusic = async (id) => {
 
     if (index !== -1) {
       currentTime.value = 0
+      allTimeMusic.value = 0
       playerInformation(index);
 
       increaseVariable(currentTime)
@@ -121,6 +148,7 @@ const addToPlayerPopularMusic = async (id) => {
       isPlaying.value = false;
 
       await audio.play();
+      audio.onended = () => endTrack()
     }
   } catch (err) {
     console.error(err);
@@ -146,13 +174,8 @@ provide('app', {
   nextComposition,
   addMusicToList,
   loopMusic,
-  audio,
   music,
   isPlaying
-})
-
-onMounted( () => {
-  audio.onended = () => console.log('track ended')
 })
 </script>
 
