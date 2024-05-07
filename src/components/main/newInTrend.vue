@@ -1,17 +1,25 @@
 <script setup>
-import {onMounted, ref} from "vue";
+import {inject, onMounted, ref} from "vue";
 import axios from "axios";
 
 const music = ref([])
 
+const url = ref(`/api/afisha-music/`)
+
 const fetchMusic = async () => {
   try {
-    const response = await axios.get('/api/afisha-music')
+    const response = await axios.get(url.value)
     music.value = response.data
   }
   catch (err) {
     console.log(err)
   }
+}
+
+const {addToPlayerMusic} = inject('app')
+
+const handleClick = async () => {
+  await addToPlayerMusic(music.value.id, url.value)
 }
 
 onMounted(async () => {
@@ -28,7 +36,7 @@ onMounted(async () => {
         <p class="name">{{ music.name }}</p>
         <p class="count">{{ music.count_auditions }} прослушиваний</p>
         <div class="buttons">
-          <button>Слушать</button>
+          <button @click="handleClick">Слушать</button>
           <box-icon name='heart' type='solid' color='#ffffff' ></box-icon>
         </div>
       </div>

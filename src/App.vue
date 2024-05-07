@@ -33,11 +33,20 @@ const durationMusic = ref('00:00')
 
 
 function playerInformation(index) {
-  title.value = music.value[index].name_music;
-  author.value = music.value[index].name;
-  albumCover.value = music.value[index].album_cover;
-  albumName.value = music.value[index].name_album;
-  durationMusic.value = music.value[index].duration_music
+  if (index !== -2) {
+    title.value = music.value[index].name_music;
+    author.value = music.value[index].name;
+    albumCover.value = music.value[index].album_cover;
+    albumName.value = music.value[index].name_album;
+    durationMusic.value = music.value[index].duration_music
+  }
+  else {
+    title.value = music.value.name_music;
+    author.value = music.value.name;
+    albumCover.value = music.value.album_cover;
+    albumName.value = music.value.name_album;
+    durationMusic.value = music.value.duration_music
+  }
 
   allTimeMusic.value = Math.floor(audio.duration) * 2
 }
@@ -144,19 +153,37 @@ const addToPlayerMusic = async (id, urlApi) => {
     url.value = urlApi
     music.value = response.data;
 
-    index = music.value.findIndex(item => item.id === id)
+    if (music.value.length > 1) {
+      index = music.value.findIndex(item => item.id === id)
 
-    if (index !== -1) {
+      if (index !== -1) {
+        currentTime.value = 0
+        allTimeMusic.value = 0
+        playerInformation(index);
+
+        increaseVariable(currentTime)
+        audio = new Audio(music.value[index].file_path_music);
+        isPlaying.value = false;
+
+        audio.volume = volume.value
+
+        await audio.play();
+        audio.onended = () => endTrack()
+      }
+    }
+    else {
+      index = -2
       currentTime.value = 0
       allTimeMusic.value = 0
       playerInformation(index);
 
       increaseVariable(currentTime)
-      audio = new Audio(music.value[index].file_path_music);
+
+      audio = new Audio(music.value.file_path_music);
       isPlaying.value = false;
 
       audio.volume = volume.value
-      console.log(audio.src)
+
       await audio.play();
       audio.onended = () => endTrack()
     }

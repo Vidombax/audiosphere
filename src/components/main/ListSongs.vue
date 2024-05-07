@@ -19,11 +19,18 @@ onMounted(async () => {
       <box-icon name='chevron-right' type='solid' color='#ffffff' style="cursor: pointer" @click="closeListSongs()"></box-icon>
     </div>
     <div class="items">
-      <ListSong v-for="item in listSong" :key="item.id"
+      <ListSong v-for="item in listSong" :key="item.id" v-if="listSong.length !== undefined"
                 :id-music="item.id"
                 :album-cover="item.album_cover"
                 :title="item.name_music"
                 :duration-music="item.duration_music"
+                :url-api="url"
+      />
+      <ListSong v-else
+                :id-music="listSong.id"
+                :album-cover="listSong.album_cover"
+                :title="listSong.name_music"
+                :duration-music="listSong.duration_music"
                 :url-api="url"
       />
     </div>
@@ -39,7 +46,7 @@ onMounted(async () => {
   width: 325px;
   background-color: #17171c;
   position: absolute;
-  left: 10%;
+  left: 7.5%;
   height: 60vh;
 }
 
@@ -54,7 +61,7 @@ onMounted(async () => {
   justify-content: space-evenly;
   align-items: center;
   flex-direction: column;
-  height: 400px;
+  height: 395px;
   width: 300px;
   overflow-y: auto;
 }
@@ -62,7 +69,7 @@ onMounted(async () => {
 .blackout {
   position: absolute;
   background-color: rgba(0, 0, 0, 0.45);
-  width: 36px;
+  width: 26px;
   height: 60vh;
 }
 </style>
