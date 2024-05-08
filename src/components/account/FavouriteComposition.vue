@@ -1,19 +1,35 @@
 <script setup>
+import {inject, ref} from "vue";
 
+const props = defineProps({
+  title: String,
+  nameAuthor: String,
+  duration: String,
+  albumCover: String,
+  idMusic: Number,
+})
+
+const id = ref(Number(localStorage.getItem('id')))
+
+const {addToPlayerMusic} = inject('app')
+
+const handleClick = async () => {
+  await addToPlayerMusic(props.idMusic, `api/subscribe-music/${id.value}`)
+}
 </script>
 
 <template>
   <div class="item">
-    <img src="../../assets/albumAfisha.png" alt="albumCover">
+    <p hidden>{{ idMusic }}</p>
+    <img :src="albumCover" alt="albumCover">
     <div class="infoSong">
-      <h4>The Highlights</h4>
-      <h5>The Weeknd</h5>
+      <h4>{{ title }}</h4>
+      <h5>{{ nameAuthor }}</h5>
     </div>
-    <p>00:00</p>
+    <p>{{ duration }}</p>
     <div class="icon">
-      <box-icon name='right-arrow' class="playMusic" type='solid' color='#ffffff' ></box-icon>
+      <box-icon name='right-arrow' class="playMusic" type='solid' color='#ffffff' @click="handleClick"></box-icon>
     </div>
-    <box-icon name='plus-square' type='solid' class="addMusicToFavourite" color='#ffffff' ></box-icon>
   </div>
 </template>
 

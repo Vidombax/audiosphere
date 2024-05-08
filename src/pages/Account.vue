@@ -1,5 +1,5 @@
 <script setup>
-import {onMounted, ref} from "vue";
+import {inject, onMounted, ref} from "vue";
 import axios from "axios";
 
 import FavouriteComposition from "@/components/account/FavouriteComposition.vue";
@@ -8,6 +8,7 @@ import FavouriteAlbum from "@/components/account/FavouriteAlbum.vue";
 
 const id = ref(Number(localStorage.getItem('id')))
 const data = ref([])
+const subMusic = ref([])
 
 const fetchUser = async () => {
   try {
@@ -30,8 +31,20 @@ const exitFromAccount = async () => {
   }
 }
 
+const getMusicByUser = async () => {
+  try {
+    const response = await axios.get(`api/subscribe-music/${id.value}`)
+    subMusic.value = response.data
+    console.log(subMusic.value)
+  }
+  catch (err) {
+    console.log(err)
+  }
+}
+
 onMounted(async () => {
   await fetchUser()
+  await getMusicByUser()
 })
 </script>
 
@@ -82,10 +95,12 @@ onMounted(async () => {
       <a href="">Смотреть все</a>
     </div>
     <div class="items">
-      <FavouriteComposition />
-      <FavouriteComposition />
-      <FavouriteComposition />
-      <FavouriteComposition />
+      <FavouriteComposition v-for="item in subMusic" :key="item.id"
+                            :title="item.name_music"
+                            :id-music="item.id"
+                            :album-cover="item.album_cover"
+                            :duration="item.duration_music"
+      />
     </div>
   </div>
 </template>

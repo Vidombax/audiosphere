@@ -12,7 +12,6 @@
     <div class="icon">
       <box-icon name='right-arrow' class="playMusic" type='solid' color='#ffffff' ></box-icon>
     </div>
-    <box-icon name='plus-square' type='solid' class="addMusicToFavourite" color='#ffffff' ></box-icon>
   </div>
 </template>
 

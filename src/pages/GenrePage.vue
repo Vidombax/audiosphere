@@ -11,7 +11,7 @@ const genres = ref([])
 
 const fetchGenres = async () => {
   try {
-    const response = await axios.get('/api/tag')
+    const response = await axios.get('/api/tags')
     genres.value = response.data
   }
   catch (err) {
@@ -32,7 +32,10 @@ onMounted(async () => {
         <h4>Все жанры</h4>
       </div>
       <div class="items">
-        <PlayGenre v-for="item in genres" :key="item.id" :title="item.name_tag"/>
+        <PlayGenre v-for="item in genres" :key="item.id"
+                   :title="item.name_tag"
+                   :id-tag="item.id"
+        />
       </div>
     </div>
   </div>

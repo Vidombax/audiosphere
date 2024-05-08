@@ -8,6 +8,10 @@ class TagController {
         const tags = await db.query('SELECT * FROM tags LIMIT 10')
         res.json(tags.rows);
     }
+    async getTagsNoLimit(req, res) {
+        const tags = await db.query('SELECT * FROM tags')
+        res.json(tags.rows);
+    }
     async getOneTag(req, res) {
         const id = req.params.id;
         const tag = await db.query('SELECT * FROM tags WHERE id = $1', [id]);

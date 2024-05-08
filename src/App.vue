@@ -87,6 +87,7 @@ const pastComposition = () => {
 
     audio = new Audio(music.value[index].file_path_music);
     audio.volume = volume.value
+    isPlaying.value = false
     audio.play()
     audio.onended = () => endTrack()
   }
@@ -100,6 +101,7 @@ const nextComposition = () => {
 
     audio = new Audio(music.value[index].file_path_music);
     audio.volume = volume.value
+    isPlaying.value = false
     audio.play()
     audio.onended = () => endTrack()
   }
