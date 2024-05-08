@@ -46,7 +46,10 @@ onMounted(async () => {
         <a href="">Смотреть все</a>
       </div>
       <div class="items">
-        <TopAlbumsChart v-for="item in popularAlbums" :key="item.id" :name-album="item.name_album" :album-cover="item.album_cover" :performance="item.name"/>
+        <TopAlbumsChart v-for="item in popularAlbums" :key="item.id"
+                        :name-album="item.name_album" :album-cover="item.album_cover"
+                        :performance="item.name" :id-album="item.id_album"
+        />
       </div>
     </div>
     <div class="newAlbums">
@@ -55,7 +58,10 @@ onMounted(async () => {
         <a href="">Смотреть все</a>
       </div>
       <div class="items">
-        <NewAlbumsChart v-for="item in newAlbums" :key="item.id" :name-album="item.name_album" :album-cover="item.album_cover" :performance="item.name"/>
+        <NewAlbumsChart v-for="item in newAlbums" :key="item.id"
+                        :name-album="item.name_album" :album-cover="item.album_cover"
+                        :performance="item.name" :id-album="item.id_album"
+        />
       </div>
     </div>
   </div>

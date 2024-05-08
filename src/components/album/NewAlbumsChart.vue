@@ -1,16 +1,42 @@
 <script setup>
-defineProps({
+import {inject, ref} from "vue";
+import axios from "axios";
+
+const props = defineProps({
   nameAlbum: String,
   performance: String,
   albumCover: String,
   numberSet: Number,
+  idAlbum: Number,
 })
+
+const url = ref(``)
+const musicByAlbum = ref([])
+
+const getMusicByAlbum = async () => {
+  try {
+    url.value = `/api/music-album/${props.idAlbum}`
+    const response = await axios.get(url.value)
+    musicByAlbum.value = response.data
+    console.log(musicByAlbum.value)
+  }
+  catch (err) {
+    console.error(err)
+  }
+}
+
+const {addToPlayerMusic} = inject('app')
+
+const handleClick = async () => {
+  await getMusicByAlbum()
+  await addToPlayerMusic(musicByAlbum.value[0].id, url.value)
+}
 </script>
 
 <template>
   <div class="item">
+    <p hidden>{{ idAlbum }}</p>
     <div class="info">
-      <p>{{ numberSet }}</p>
       <img :src="albumCover">
       <div class="details">
         <h5>{{ nameAlbum }}</h5>
@@ -19,7 +45,7 @@ defineProps({
     </div>
     <div class="actions">
       <div class="icon">
-        <box-icon name='right-arrow' class="playMusic" type='solid' color='#ffffff' ></box-icon>
+        <box-icon name='right-arrow' class="playMusic" type='solid' color='#ffffff' @click="handleClick"></box-icon>
       </div>
       <box-icon name='plus-square' type='solid' class="addMusicToFavourite" color='#ffffff' ></box-icon>
     </div>

@@ -31,7 +31,7 @@ class AlbumController {
         res.json(music.rows)
     }
     async getPopularAlbums(req, res) {
-        const albums = await db.query('SELECT albums.name_album, albums.album_cover, users.name, albums.count_auditions, albums.count_followers FROM albums\n' +
+        const albums = await db.query('SELECT albums.id_album, albums.name_album, albums.album_cover, users.name, albums.count_auditions, albums.count_followers FROM albums\n' +
             '             JOIN users ON albums.id_performance = users.iduser\n' +
             '            ORDER BY albums.count_auditions DESC, albums.count_followers DESC LIMIT 4')
         res.json(albums.rows)
