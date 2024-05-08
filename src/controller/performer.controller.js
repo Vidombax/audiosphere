@@ -18,6 +18,15 @@ class PerformerController {
             'ORDER BY iduser DESC LIMIT 4');
         res.json(performers.rows);
     }
+    async getMusicByPerformer(req, res) {
+        const id = req.params.id;
+        const music = await db.query('SELECT music.id, music.name_music, users.name, albums.album_cover, albums.date_publication, music.count_auditions, music.duration_music, music.file_path_music FROM music\n' +
+            '                JOIN music_in_albums ON music.id = music_in_albums.id_music\n' +
+            '                JOIN albums ON music_in_albums.id_album = albums.id_album\n' +
+            '                JOIN users ON music.id_performance = users.iduser\n' +
+            '                WHERE music.id_performance = $1', [id])
+        res.json(music.rows)
+    }
     async getOnePerformer(req, res) {
         const id = req.params.id;
         const performer = await db.query('SELECT * FROM users WHERE id = $1 AND is_performance = true', [id]);

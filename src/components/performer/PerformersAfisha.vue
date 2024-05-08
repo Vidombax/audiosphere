@@ -1,8 +1,10 @@
 <script setup>
-import {onMounted, ref} from "vue";
+import {inject, onMounted, ref} from "vue";
 import axios from "axios";
 
 const newPerformer = ref([])
+const musicByPerformer = ref([])
+const url = ref(``)
 
 const fetchNewPerformer = async () => {
   try {
@@ -14,8 +16,27 @@ const fetchNewPerformer = async () => {
   }
 }
 
+const getMusicByAlbum = async () => {
+  try {
+    url.value = `/api/music-performer/${newPerformer.value.iduser}`
+    const response = await axios.get(url.value)
+    musicByPerformer.value = response.data
+    console.log(musicByPerformer.value)
+  }
+  catch (err) {
+    console.error(err)
+  }
+}
+
+const {addToPlayerMusic} = inject('app')
+
+const handleClick = async () => {
+  await addToPlayerMusic(musicByPerformer.value[0].id, url.value)
+}
+
 onMounted(async () => {
   await fetchNewPerformer()
+  await getMusicByAlbum()
 })
 </script>
 
@@ -26,7 +47,7 @@ onMounted(async () => {
       <div class="info">
         <h2>{{ newPerformer.name }}</h2>
         <div class="buttons">
-          <button>Слушать</button>
+          <button @click="handleClick">Слушать</button>
         </div>
       </div>
     </div>

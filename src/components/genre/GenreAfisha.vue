@@ -44,7 +44,6 @@ onMounted(async () => {
     <div class="left">
       <h3>Новый жанр</h3>
       <div class="info">
-        <p hidden>{{ tag.id }}</p>
         <h2>{{ tag.name_tag }}</h2>
         <div class="buttons">
           <button @click="handleClick">Слушать</button>
