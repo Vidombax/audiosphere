@@ -1,14 +1,41 @@
 <script setup>
-  defineProps({
+  import axios from "axios";
+  import {inject, ref} from "vue";
+
+  const props = defineProps({
     name: String,
     image: String,
+    idPerformance: Number,
   })
+
+  const musicByPerformer = ref([])
+  const url = ref(``)
+
+  const getMusicByAlbum = async () => {
+    try {
+      url.value = `/api/music-performer/${props.idPerformance}`
+      const response = await axios.get(url.value)
+      musicByPerformer.value = response.data
+    }
+    catch (err) {
+      console.error(err)
+    }
+  }
+
+  const {addToPlayerMusic} = inject('app')
+
+  const handleClick = async () => {
+    await getMusicByAlbum()
+    await addToPlayerMusic(musicByPerformer.value[0].id, url.value)
+  }
 </script>
 
 <template>
   <div class="item">
+    <p hidden>{{ idPerformance }}</p>
     <img :src="image" class="performerImg" alt="performerImg">
     <a href="">{{ name }}</a>
+    <box-icon name='right-arrow' class="playMusic" type='solid' color='#ffffff' @click="handleClick"></box-icon>
   </div>
 </template>
 
@@ -21,9 +48,9 @@
 .genres .items .item,
 .performers .popularPerformers .items .item,
 .performers .newPerformers .items .item{
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 4fr 1fr;
   align-items: center;
-  justify-content: space-evenly;
   padding: 10px;
   border-radius: 12px;
 }

@@ -21,7 +21,6 @@ const getMusicByAlbum = async () => {
     url.value = `/api/music-performer/${newPerformer.value.iduser}`
     const response = await axios.get(url.value)
     musicByPerformer.value = response.data
-    console.log(musicByPerformer.value)
   }
   catch (err) {
     console.error(err)

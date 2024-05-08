@@ -57,7 +57,10 @@ onMounted(async () => {
         <a href="#">Смотреть все</a>
       </div>
       <div class="items">
-        <PerformerCard v-for="item in subPerformers" :key="item.id" :name="item.name" :image="item.profile_picture" />
+        <PerformerCard v-for="item in subPerformers" :key="item.id"
+                       :name="item.name" :image="item.profile_picture"
+                       :id-performance="item.iduser"
+        />
       </div>
     </div>
     <div class="performers">
@@ -67,7 +70,10 @@ onMounted(async () => {
           <a href="">Смотреть все</a>
         </div>
         <div class="items">
-          <PerformerCard v-for="item in popularPerformers" :key="item.id" :name="item.name" :image="item.profile_picture" />
+          <PerformerCard v-for="item in popularPerformers" :key="item.id"
+                         :name="item.name" :image="item.profile_picture"
+                         :id-performance="item.iduser"
+          />
         </div>
       </div>
       <div class="newPerformers">
@@ -76,7 +82,10 @@ onMounted(async () => {
           <a href="">Смотреть все</a>
         </div>
         <div class="items">
-          <PerformerCard v-for="item in newPerformers" :key="item.id" :name="item.name" :image="item.profile_picture" />
+          <PerformerCard v-for="item in newPerformers" :key="item.id"
+                         :name="item.name" :image="item.profile_picture"
+                         :id-performance="item.iduser"
+          />
         </div>
       </div>
     </div>

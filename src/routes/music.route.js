@@ -11,7 +11,7 @@ router.get("/popular-music-player", MusicController.getPopularMusicToPlayer);
 router.get("/subscribe-music/:id", MusicController.getSubscribesMusic);
 router.get("/afisha-music", MusicController.getNewestMusic);
 router.get("/music-tag/:tag", MusicController.getMusicByTag);
-router.put("/music", MusicController.updateMusic);
+router.put("/music-auditions", MusicController.updateMusicAuditions);
 router.delete("/music/:id", MusicController.deleteMusic);
 
 export default router;

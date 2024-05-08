@@ -14,7 +14,7 @@ const music = ref([])
 let audio = new Audio()
 const volume = ref(1)
 
-const allTimeMusic = ref(200)
+const allTimeMusic = ref(250)
 const currentTime = ref(0)
 
 const openApp = () => {
@@ -108,6 +108,14 @@ const nextComposition = () => {
 }
 
 const endTrack = async  () => {
+  const id = ref(music.value[index].id)
+  const auditions = ref(music.value[index].count_auditions + 1)
+  console.log('id: ', id)
+  console.log('auditions: ', auditions)
+  await axios.put('api/music-auditions', {
+    id: id.value,
+    newCount: auditions.value
+  })
   if (index < music.value.length - 1) {
     audio.pause()
     allTimeMusic.value = 0

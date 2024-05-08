@@ -58,6 +58,7 @@ class MusicController {
             '    albums.album_cover,\n' +
             '    music.name_music,\n' +
             '    users.name,\n' +
+            '    music.count_auditions,\n' +
             '    music.duration_music,' +
             '    music.file_path_music\n' +
             'FROM\n' +
@@ -74,8 +75,11 @@ class MusicController {
             '    following_to_music.id_user = $1;', [id])
         res.json(music.rows)
     }
-    async updateMusic(req, res) {
-
+    async updateMusicAuditions(req, res) {
+        const id = req.body.id;
+        const newCount = req.body.newCount;
+        const music = await db.query('UPDATE music SET count_auditions = $1 WHERE id= $2', [newCount, id])
+        res.json(music.rows[0])
     }
     async deleteMusic(req, res) {
         const id = req.params.id;
