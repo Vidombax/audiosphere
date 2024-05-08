@@ -13,6 +13,10 @@ class TagController {
         const tag = await db.query('SELECT * FROM tags WHERE id = $1', [id]);
         res.json(tag.rows[0]);
     }
+    async getNewestTag(req, res) {
+        const tag = await db.query('SELECT * FROM tags ORDER BY id DESC');
+        res.json(tag.rows[0]);
+    }
     async updateTag(req, res) {
 
     }

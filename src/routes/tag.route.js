@@ -6,6 +6,7 @@ const router = new Router();
 router.post("/tag", TagController.createTag);
 router.get("/tag", TagController.getTags);
 router.get("/tag/:id", TagController.getOneTag);
+router.get('/newest-tag', TagController.getNewestTag);
 router.put("/tag", TagController.updateTag);
 router.delete("/tag/:id", TagController.deleteTag);
 

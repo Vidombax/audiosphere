@@ -1,5 +1,42 @@
 <script setup>
+import {ref, onMounted, inject} from 'vue'
+import axios from "axios";
 
+const tag = ref([])
+const musicByTag = ref([])
+const url = ref(``)
+
+const getNewestTag = async () => {
+  try {
+    const response = await axios.get('api/newest-tag')
+    tag.value = response.data
+  }
+  catch (err) {
+    console.log(err)
+  }
+}
+
+const getMusicByTag = async () => {
+  try {
+    url.value = `/api/music-tag/${tag.value.id}`
+    const response = await axios.get(url.value)
+    musicByTag.value = response.data
+  }
+  catch (err) {
+    console.error(err)
+  }
+}
+
+const {addToPlayerMusic} = inject('app')
+
+const handleClick = async () => {
+  await addToPlayerMusic(musicByTag.value[0].id, url.value)
+}
+
+onMounted(async () => {
+  await getNewestTag()
+  await getMusicByTag()
+})
 </script>
 
 <template>
@@ -7,13 +44,14 @@
     <div class="left">
       <h3>Новый жанр</h3>
       <div class="info">
-        <h2>Классика</h2>
+        <p hidden>{{ tag.id }}</p>
+        <h2>{{ tag.name_tag }}</h2>
         <div class="buttons">
-          <button>Слушать</button>
+          <button @click="handleClick">Слушать</button>
         </div>
       </div>
     </div>
-    <img src='../../assets/genrePhoto.png'>
+    <img :src='tag.genre_photo'>
   </div>
 </template>
 

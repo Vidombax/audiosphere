@@ -153,7 +153,7 @@ const addToPlayerMusic = async (id, urlApi) => {
     url.value = urlApi
     music.value = response.data;
 
-    if (music.value.length > 1) {
+    if (music.value.length >= 1) {
       index = music.value.findIndex(item => item.id === id)
 
       if (index !== -1) {
