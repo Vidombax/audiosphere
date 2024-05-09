@@ -9,13 +9,16 @@ const props = defineProps({
   albumName: String,
   currentTime: Number,
   allTimeMusic: Number,
-  durationMusic: String
+  durationMusic: String,
+  idMusic: Number,
+  isAdded: Boolean,
 })
 
 const listSongsOpen = ref(false)
 const isLooping = ref(true)
 
-const {stopMusic, playMusic, pastComposition, nextComposition, loopMusic, volumeChanged, isPlaying} = inject('app')
+const {stopMusic, playMusic, pastComposition, nextComposition, loopMusic,
+  volumeChanged, isPlaying, addToFavouriteClick, removeFromFavouriteClick} = inject('app')
 
 const volume = ref(100)
 
@@ -50,6 +53,7 @@ provide('musicPlayer', {
 
 <template>
   <div class="music-player">
+    <p hidden>{{ idMusic }}</p>
     <ListSongs v-if="listSongsOpen"/>
     <div class="top-section">
       <div class="header">
@@ -79,7 +83,8 @@ provide('musicPlayer', {
         <box-icon name='play-circle' @click="playMusic" v-if="isPlaying" color='#ffffff' style="cursor: pointer;"></box-icon>
         <box-icon name='pause-circle' @click="stopMusic" v-else color='#ffffff' style="cursor: pointer"></box-icon>
         <box-icon name='last-page' @click="nextComposition" color='#ffffff' style="cursor: pointer;"></box-icon>
-        <box-icon name='plus' color='#ffffff' style="cursor: pointer"></box-icon>
+        <box-icon name='plus' color='#ffffff' style="cursor: pointer" v-if="isAdded" @click="addToFavouriteClick(idMusic)"></box-icon>
+        <box-icon name='heart' type='solid' v-else color='#ffffff' @click="removeFromFavouriteClick(idMusic)"></box-icon>
       </div>
       <div class="volumeChange">
         <box-icon name='volume-low' color='#ffffff' ></box-icon>

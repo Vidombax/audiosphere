@@ -16,7 +16,46 @@ const fetchMusic = async () => {
   }
 }
 
-const {addToPlayerMusic} = inject('app')
+const favMusic = ref([])
+const isAdded = ref(true)
+
+const checkFavourite = async () => {
+  try {
+    const idUser = ref(Number(localStorage.getItem('id')) || 0)
+    if (idUser.value !== 0) {
+      const response = await axios.get(`api/subscribe-music/${idUser.value}`)
+      let index = ref(0)
+      favMusic.value = response.data
+
+      if (favMusic.value.length >= 1) {
+        index = favMusic.value.findIndex(item => item.id === music.value.id)
+        if (index !== -1) {
+          isAdded.value = false
+        }
+      }
+    }
+    else {
+      isAdded.value = true
+    }
+  }
+  catch (err) {
+    console.error(err)
+  }
+}
+
+
+const addToFavouriteClick = async (idMusic) => {
+  isAdded.value = false
+  await addToFavourite(idMusic)
+
+}
+
+const removeFromFavouriteClick = async (idMusic) => {
+  isAdded.value = true
+  await removeFromFavourite(idMusic)
+}
+
+const {addToPlayerMusic, addToFavourite, removeFromFavourite} = inject('app')
 
 const handleClick = async () => {
   await addToPlayerMusic(music.value.id, url.value)
@@ -24,6 +63,7 @@ const handleClick = async () => {
 
 onMounted(async () => {
   await fetchMusic()
+  await checkFavourite()
 })
 </script>
 
@@ -32,12 +72,14 @@ onMounted(async () => {
     <div class="left">
       <h3>Новые тренды</h3>
       <div class="info">
+        <p hidden>{{ music.id }}</p>
         <h2>{{ music.name_music }}</h2>
         <p class="name">{{ music.name }}</p>
         <p class="count">{{ music.count_auditions }} прослушиваний</p>
         <div class="buttons">
           <button @click="handleClick">Слушать</button>
-          <box-icon name='heart' type='solid' color='#ffffff' ></box-icon>
+          <box-icon name='plus' color='#ffffff' style="cursor: pointer" v-if="isAdded" @click="addToFavouriteClick(music.id)"></box-icon>
+          <box-icon name='heart' type='solid' v-else color='#ffffff' @click="removeFromFavouriteClick(music.id)"></box-icon>
         </div>
       </div>
     </div>

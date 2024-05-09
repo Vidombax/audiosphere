@@ -1,7 +1,10 @@
 <script setup>
-import {defineProps, inject} from "vue";
+import {defineProps, inject, onMounted, ref} from "vue";
+import axios from "axios";
 
-const {addToPlayerMusic} = inject('app')
+const {addToPlayerMusic, addToFavourite, removeFromFavourite} = inject('app')
+const isAdded = ref(true)
+const favMusic = ref([])
 
 const props = defineProps({
   idMusic: Number,
@@ -10,12 +13,51 @@ const props = defineProps({
   namePerformance: String,
   albumCover: String,
   durationMusic: String,
-  sendMessage: Function
+  sendMessage: Function,
 })
+
+const checkFavourite = async () => {
+  try {
+    const idUser = ref(Number(localStorage.getItem('id')) || 0)
+     if (idUser.value !== 0) {
+       const response = await axios.get(`api/subscribe-music/${idUser.value}`)
+       let index = ref(0)
+       favMusic.value = response.data
+
+       if (favMusic.value.length >= 1) {
+         index = favMusic.value.findIndex(item => item.id === props.idMusic)
+         if (index !== -1) {
+           isAdded.value = false
+         }
+       }
+     }
+     else {
+       isAdded.value = true
+     }
+  }
+  catch (err) {
+    console.error(err)
+  }
+}
 
 const handleClick = async () => {
   await addToPlayerMusic(props.idMusic, `/api/popular-music-player`)
 }
+
+const addToFavouriteClick = async () => {
+  isAdded.value = false
+  await addToFavourite(props.idMusic)
+
+}
+
+const removeFromFavouriteClick = async () => {
+  isAdded.value = true
+  await removeFromFavourite(props.idMusic)
+}
+
+onMounted(async () => {
+  await checkFavourite()
+})
 </script>
 
 
@@ -35,7 +77,8 @@ const handleClick = async () => {
       <div class="icon">
         <box-icon name='right-arrow' class="playMusic" type='solid' color='#ffffff' @click="handleClick"></box-icon>
       </div>
-      <box-icon name='plus-square' type='solid' class="addMusicToFavourite" color='#ffffff'></box-icon>
+      <box-icon name='plus-square' v-if="isAdded" type='solid' class="addMusicToFavourite" color='#ffffff' @click="addToFavouriteClick"></box-icon>
+      <box-icon name='heart' type='solid' v-else color='#ffffff' @click="removeFromFavouriteClick"></box-icon>
     </div>
   </div>
 </template>

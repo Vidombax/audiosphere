@@ -9,5 +9,7 @@ router.get("/user/:id", UserController.getOneUser);
 router.get("/user/:username/:password", UserController.checkUserAuthorization);
 router.put("/user", UserController.updateUser);
 router.delete("/user/:id", UserController.deleteUser);
+router.post("/add-favourite", UserController.addToFavourite);
+router.delete("/del-favourite/:user/:music", UserController.removeFromFavourite);
 
 export default router;

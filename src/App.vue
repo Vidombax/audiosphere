@@ -30,6 +30,7 @@ const author = ref('-')
 const albumCover = ref('/defaultPlaylistPhoto.png')
 const albumName = ref('')
 const durationMusic = ref('00:00')
+const idMusic = ref(0)
 
 
 function playerInformation(index) {
@@ -39,6 +40,7 @@ function playerInformation(index) {
     albumCover.value = music.value[index].album_cover;
     albumName.value = music.value[index].name_album;
     durationMusic.value = music.value[index].duration_music
+    idMusic.value = music.value[index].id
   }
   else {
     title.value = music.value.name_music;
@@ -46,6 +48,7 @@ function playerInformation(index) {
     albumCover.value = music.value.album_cover;
     albumName.value = music.value.name_album;
     durationMusic.value = music.value.duration_music
+    idMusic.value = music.value.id
   }
 
   allTimeMusic.value = Math.floor(audio.duration) * 2
@@ -83,6 +86,7 @@ const pastComposition = () => {
   if (index !== 0) {
     index--
     playerInformation(index);
+    checkFavourite()
     audio.pause()
 
     audio = new Audio(music.value[index].file_path_music);
@@ -97,6 +101,7 @@ const nextComposition = () => {
   if (index !== music.value.length - 1) {
     index++
     playerInformation(index);
+    checkFavourite()
     audio.pause()
 
     audio = new Audio(music.value[index].file_path_music);
@@ -110,8 +115,6 @@ const nextComposition = () => {
 const endTrack = async  () => {
   const id = ref(music.value[index].id)
   const auditions = ref(music.value[index].count_auditions + 1)
-  console.log('id: ', id)
-  console.log('auditions: ', auditions)
   await axios.put('api/music-auditions', {
     id: id.value,
     newCount: auditions.value
@@ -123,6 +126,7 @@ const endTrack = async  () => {
 
     index++
     playerInformation(index);
+    await checkFavourite()
 
     increaseVariable(currentTime)
     audio = new Audio(music.value[index].file_path_music);
@@ -167,6 +171,8 @@ const addToPlayerMusic = async (id, urlApi) => {
       index = music.value.findIndex(item => item.id === id)
 
       if (index !== -1) {
+        await checkFavourite()
+
         currentTime.value = 0
         allTimeMusic.value = 0
         playerInformation(index);
@@ -214,6 +220,80 @@ const addMusicToList = async () => {
   }
 }
 
+const isAdded = ref(true)
+const favMusic = ref([])
+
+const checkFavourite = async () => {
+  try {
+    const idUser = ref(Number(localStorage.getItem('id')) || 0)
+    if (idUser.value !== 0) {
+      const response = await axios.get(`api/subscribe-music/${idUser.value}`)
+      favMusic.value = response.data
+
+      let indexFav = ref(0)
+      if (favMusic.value.length >= 1) {
+        indexFav = favMusic.value.findIndex(item => item.id === music.value[index].id)
+        if (indexFav !== -1) {
+          isAdded.value = false
+        }
+        else {
+          isAdded.value = true
+        }
+      }
+    }
+    else {
+      console.log('Пользователь не зарегистрирован')
+    }
+  }
+  catch (err) {
+    console.error(err)
+  }
+}
+
+const addToFavouriteClick = async (idMusic) => {
+  isAdded.value = false
+  await addToFavourite(idMusic)
+
+}
+
+const removeFromFavouriteClick = async (idMusic) => {
+  isAdded.value = true
+  await removeFromFavourite(idMusic)
+}
+
+const addToFavourite = async (idMusic) => {
+  try {
+    const idUser = ref(Number(localStorage.getItem('id')) || 0)
+    if (idUser.value !== 0) {
+      await axios.post(`api/add-favourite`, {
+        idUser: idUser.value,
+        idMusic: idMusic
+      })
+    }
+    else {
+      console.log('Пользователь не зарегистрирован')
+    }
+  }
+  catch (err) {
+    console.error(err)
+  }
+}
+
+const removeFromFavourite = async (idMusic) => {
+  try {
+    const idUser = ref(Number(localStorage.getItem('id')) || 0)
+    if (idUser.value !== 0) {
+      await axios.delete(`api/del-favourite/${idUser.value}/${idMusic}`)
+    }
+    else {
+      console.log('Пользователь не зарегистрирован')
+    }
+  }
+  catch (err) {
+    console.error(err)
+  }
+}
+
 provide('app', {
   closeApp,
   openApp,
@@ -225,7 +305,11 @@ provide('app', {
   addMusicToList,
   loopMusic,
   music,
-  isPlaying
+  isPlaying,
+  addToFavourite,
+  removeFromFavourite,
+  addToFavouriteClick,
+  removeFromFavouriteClick
 })
 </script>
 
@@ -244,7 +328,10 @@ provide('app', {
           :title="title" :author="author"
           :album-cover="albumCover" :album-name="albumName"
           :duration-music="durationMusic"
-          @volume-change="volumeChanged"/>
+          @volume-change="volumeChanged"
+          :id-music="idMusic"
+          :is-added="isAdded"
+      />
     </div>
   </div>
   <div class="containerRegistration" v-else>

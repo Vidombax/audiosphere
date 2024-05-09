@@ -31,6 +31,18 @@ class UserController {
         const user = await db.query('DELETE FROM users WHERE id = $1', [id]);
         res.json(user.rows[0]);
     }
+    async addToFavourite(req, res) {
+        const idUser = req.body.idUser;
+        const idMusic = req.body.idMusic;
+        const favourite = await db.query('INSERT INTO following_to_music (id_user, id_music, date_following) VALUES ($1, $2, CURRENT_DATE)', [idUser, idMusic]);
+        res.json(favourite.rows[0])
+    }
+    async removeFromFavourite(req, res) {
+        const idUser = req.params.user;
+        const idMusic = req.params.music;
+        const favourite = await db.query('DELETE FROM following_to_music WHERE id_user = $1 AND id_music = $2 RETURNING *', [idUser, idMusic])
+        res.json(favourite.rows[0])
+    }
 }
 
 export default new UserController();
