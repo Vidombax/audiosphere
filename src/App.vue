@@ -31,6 +31,8 @@ const albumCover = ref('/defaultPlaylistPhoto.png')
 const albumName = ref('')
 const durationMusic = ref('00:00')
 const idMusic = ref(0)
+const idPerformer = ref(0)
+const urlPerformer = ref(``)
 
 
 function playerInformation(index) {
@@ -41,6 +43,8 @@ function playerInformation(index) {
     albumName.value = music.value[index].name_album;
     durationMusic.value = music.value[index].duration_music
     idMusic.value = music.value[index].id
+    idPerformer.value = music.value[index].id_performance
+    urlPerformer.value = `/performer/${idPerformer.value}`
   }
   else {
     title.value = music.value.name_music;
@@ -49,6 +53,8 @@ function playerInformation(index) {
     albumName.value = music.value.name_album;
     durationMusic.value = music.value.duration_music
     idMusic.value = music.value.id
+    idPerformer.value = music.value.id_performance
+    urlPerformer.value = `/performer/${idPerformer.value}`
   }
 
   allTimeMusic.value = Math.floor(audio.duration) * 2
@@ -331,6 +337,8 @@ provide('app', {
           @volume-change="volumeChanged"
           :id-music="idMusic"
           :is-added="isAdded"
+          :id-performer="idPerformer"
+          :url-performer="urlPerformer"
       />
     </div>
   </div>

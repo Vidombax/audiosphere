@@ -16,6 +16,7 @@ import SubscribesPage from "@/pages/SubscribesPage.vue";
 import SettingsPage from "@/pages/SettingsPage.vue";
 import PlaylistPage from "@/pages/PlaylistPage.vue";
 import RegistrationPage from "@/pages/RegistrationPage.vue";
+import PerformerAccountPage from "@/pages/PerformerAccountPage.vue";
 
 const app = createApp(App)
 
@@ -31,6 +32,7 @@ const routes = [
     { path: '/settings', name: 'Settings', component: SettingsPage },
     { path: '/playlist', name: 'Playlist', component: PlaylistPage },
     { path: '/registration', name: 'Registration', component: RegistrationPage },
+    { path: '/performer/:id', name: 'Performer', component: PerformerAccountPage },
 ]
 
 app.component('box-icons');

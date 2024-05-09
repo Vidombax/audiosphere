@@ -1,5 +1,5 @@
 <script setup>
-import {ref, provide, inject, defineEmits} from "vue";
+import {ref, provide, inject, defineEmits, onMounted} from "vue";
 import ListSongs from "@/components/main/ListSongs.vue";
 
 const props = defineProps({
@@ -12,6 +12,8 @@ const props = defineProps({
   durationMusic: String,
   idMusic: Number,
   isAdded: Boolean,
+  idPerformer: Number,
+  urlPerformer: String,
 })
 
 const listSongsOpen = ref(false)
@@ -53,6 +55,7 @@ provide('musicPlayer', {
 
 <template>
   <div class="music-player">
+    <p hidden>{{ idPerformer }}</p>
     <p hidden>{{ idMusic }}</p>
     <ListSongs v-if="listSongsOpen"/>
     <div class="top-section">
@@ -64,7 +67,7 @@ provide('musicPlayer', {
         <img :src="albumCover">
         <div class="description">
           <h4>{{ title }}</h4>
-          <h5><a href="">{{ author }}</a></h5>
+          <h5><router-link :to="urlPerformer">{{ author }}</router-link></h5>
           <a href="">{{ albumName }}</a>
         </div>
       </div>

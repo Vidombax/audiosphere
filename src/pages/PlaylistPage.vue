@@ -1,6 +1,8 @@
 <script setup>
 
-import FavouriteSong from "@/components/favourite/FavouriteSong.vue";
+
+
+import PlaylistSong from "@/components/playlist/PlaylistSong.vue";
 
 document.title = 'AudioSphere | Название плейлиста'
 </script>
@@ -18,10 +20,7 @@ document.title = 'AudioSphere | Название плейлиста'
       </div>
     </div>
     <div class="listSongs">
-      <FavouriteSong />
-      <FavouriteSong />
-      <FavouriteSong />
-      <FavouriteSong />
+      <PlaylistSong />
     </div>
   </div>
 </template>

@@ -8,6 +8,7 @@ router.get("/sub-performer", PerformersController.getSubPerformers);
 router.get("/popular-performer", PerformersController.getPopularPerformers);
 router.get("/new-performer", PerformersController.getNewPerformers);
 router.get("/music-performer/:id", PerformersController.getMusicByPerformer);
+router.get("/albums-performer/:id", PerformersController.getAlbumsByPerformer);
 router.get("/performer/:id", PerformersController.getOnePerformer);
 router.put("/performer", PerformersController.updatePerformer);
 router.delete("/performer/:id", PerformersController.deletePerformer);

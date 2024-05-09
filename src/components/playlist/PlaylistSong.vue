@@ -1,30 +1,30 @@
 <script setup>
-  import {inject} from "vue";
+import {inject} from "vue";
 
-  const props = defineProps({
-    nameSong: String,
-    namePerformer: String,
-    durationMusic: String,
-    albumCover: String,
-    idMusic: Number,
-    numberSong: Number,
-    urlApi: String
-  })
+const props = defineProps({
+  nameSong: String,
+  namePerformer: String,
+  durationMusic: String,
+  albumCover: String,
+  idMusic: Number,
+  numberSong: Number,
+  urlApi: String
+})
 
-  const {addToPlayerMusic} = inject('app')
+const {addToPlayerMusic} = inject('app')
 
-  const handleClick = async () => {
-    await addToPlayerMusic(props.idMusic, props.urlApi)
-  }
+const handleClick = async () => {
+  await addToPlayerMusic(props.idMusic, props.urlApi)
+}
 </script>
 
 <template>
   <div class="item">
     <p hidden>{{ props.idMusic }}</p>
-    <p v-if="props.numberSong">{{ numberSong }}</p>
+    <p>{{ numberSong }}</p>
     <img :src="props.albumCover" alt="songImg">
     <p>{{ props.nameSong }}</p>
-    <p v-if="props.namePerformer">{{ props.namePerformer }}</p>
+    <p>{{ props.namePerformer }}</p>
     <p>{{ props.durationMusic }}</p>
     <div class="icon">
       <box-icon name='right-arrow' class="playMusic" type='solid' color='#ffffff' @click="handleClick"></box-icon>
@@ -42,8 +42,8 @@ p {
 
 .item {
   display: grid;
-  gap: 24px;
-  grid-template-columns: 5px 50px 150px 100px 50px 40px 50px;
+  gap: 36px;
+  grid-template-columns:5px 50px 150px 100px 50px 40px 50px;
   align-items: center;
   justify-content: space-between;
 }

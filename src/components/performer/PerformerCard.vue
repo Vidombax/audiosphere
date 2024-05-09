@@ -10,6 +10,7 @@
 
   const musicByPerformer = ref([])
   const url = ref(``)
+  const urlPerfomer = ref(`/performer/${props.idPerformance}`)
 
   const getMusicByAlbum = async () => {
     try {
@@ -28,13 +29,14 @@
     await getMusicByAlbum()
     await addToPlayerMusic(musicByPerformer.value[0].id, url.value)
   }
+
 </script>
 
 <template>
   <div class="item">
     <p hidden>{{ idPerformance }}</p>
     <img :src="image" class="performerImg" alt="performerImg">
-    <a href="">{{ name }}</a>
+    <router-link :to="urlPerfomer">{{ name }}</router-link>
     <box-icon name='right-arrow' class="playMusic" type='solid' color='#ffffff' @click="handleClick"></box-icon>
   </div>
 </template>

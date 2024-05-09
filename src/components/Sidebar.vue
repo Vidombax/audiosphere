@@ -47,12 +47,12 @@ import Playlist from "@/components/Playlist.vue";
     <div class="menu">
       <h5>Библиотека</h5>
       <ul>
-        <li>
-          <box-icon name='album' type='solid' color='#ffffff' ></box-icon>
-          <router-link to="/favourite-albums">
-            <p>Ваши альбомы</p>
-          </router-link>
-        </li>
+<!--        <li>-->
+<!--          <box-icon name='album' type='solid' color='#ffffff' ></box-icon>-->
+<!--          <router-link to="/favourite-albums">-->
+<!--            <p>Ваши альбомы</p>-->
+<!--          </router-link>-->
+<!--        </li>-->
         <li>
           <box-icon name='heart' type='solid' color='#ffffff' ></box-icon>
           <router-link to="/favourites">

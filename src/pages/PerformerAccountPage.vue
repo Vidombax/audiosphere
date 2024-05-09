@@ -1,16 +1,21 @@
 <script setup>
 import {onMounted, ref} from "vue";
 import axios from "axios";
+import { useRoute } from 'vue-router'
 
-import FavouriteComposition from "@/components/account/FavouriteComposition.vue";
-import FavouritePerfomance from "@/components/account/FavouritePerfomance.vue";
 import FavouriteAlbum from "@/components/account/FavouriteAlbum.vue";
+import FavouriteSong from "@/components/favourite/FavouriteSong.vue";
 
-const id = ref(Number(localStorage.getItem('id')))
+const route = useRoute()
+
+const id = ref(Number(route.params.id))
+
 const data = ref([])
-const subMusic = ref([])
+const performerMusic = ref([])
+const performerAlbums = ref([])
+const isAdded = ref(true)
 
-const fetchUser = async () => {
+const fetchPerformer = async () => {
   try {
     const response = await axios.get(`/api/user/${id.value}`)
     data.value = response.data
@@ -21,30 +26,33 @@ const fetchUser = async () => {
   }
 }
 
-const exitFromAccount = async () => {
+const url = ref(``)
+
+const getMusicByPerformer = async () => {
   try {
-    localStorage.clear()
-    location.replace('/')
+    url.value = `/api/music-performer/${id.value}`
+    const response = await axios.get(url.value)
+    performerMusic.value = response.data
   }
   catch (err) {
     console.log(err)
   }
 }
 
-const getMusicByUser = async () => {
+const getAlbumsByPerformer = async () => {
   try {
-    const response = await axios.get(`api/subscribe-music/${id.value}`)
-    subMusic.value = response.data
-    console.log(subMusic.value)
+    const response = await axios.get(`/api/albums-performer/${id.value}`)
+    performerAlbums.value = response.data
   }
   catch (err) {
-    console.log(err)
+    console.error(err)
   }
 }
 
 onMounted(async () => {
-  await fetchUser()
-  await getMusicByUser()
+  await fetchPerformer()
+  await getMusicByPerformer()
+  await getAlbumsByPerformer()
 })
 </script>
 
@@ -58,48 +66,33 @@ onMounted(async () => {
       <img :src="data.profile_picture" alt="photoProfile">
       <h1>{{ data.name }}</h1>
     </div>
-    <div class="exit" @click="exitFromAccount">
-      <img src="../assets/exitAccount.png" alt="exit">
-      <h3>выход</h3>
+    <div class="exit">
+        <box-icon name='plus' color='#ffffff' style="cursor: pointer" v-if="isAdded"></box-icon>
+        <box-icon name='heart' type='solid' v-else color='#ffffff'></box-icon>
+        <h3 v-if="isAdded">подписаться</h3>
+        <h3 v-else>отписаться</h3>
     </div>
   </div>
-  <div class="favourites">
-    <div class="favouritesAlbums">
-      <div class="header">
-        <h4>Любимые альбомы</h4>
-        <a href="">Смотреть все</a>
-      </div>
-      <div class="items">
-        <FavouriteAlbum />
-        <FavouriteAlbum />
-        <FavouriteAlbum />
-        <FavouriteAlbum />
-      </div>
+  <div class="favouritesAlbums">
+    <div class="header">
+      <h4>Альбомы исполнителя</h4>
     </div>
-    <div class="favouritesPerformances">
-      <div class="header">
-        <h4>Любимые исполнители</h4>
-        <a href="">Смотреть все</a>
-      </div>
-      <div class="items">
-        <FavouritePerfomance />
-        <FavouritePerfomance />
-        <FavouritePerfomance />
-        <FavouritePerfomance />
-      </div>
+    <div class="items">
+      <FavouriteAlbum v-for="item in performerAlbums" :key="item.id"
+                      :album-cover="item.album_cover" :id-album="item.id_album"
+                      :name-album="item.name_album" :name-author="item.name"
+      />
     </div>
   </div>
   <div class="favouritesComposition">
     <div class="header">
-      <h4>Любимые композиции</h4>
-      <a href="">Смотреть все</a>
+      <h4>Композиции автора</h4>
     </div>
     <div class="items">
-      <FavouriteComposition v-for="item in subMusic" :key="item.id"
-                            :title="item.name_music"
-                            :id-music="item.id"
-                            :album-cover="item.album_cover"
-                            :duration="item.duration_music"
+      <FavouriteSong v-for="item in performerMusic" :key="item.id"
+                     :name-song="item.name_music" :id-music="item.id"
+                     :album-cover="item.album_cover" :duration-music="item.duration_music"
+                     :url-api="url"
       />
     </div>
   </div>
@@ -168,11 +161,10 @@ img{
 }
 
 .favouritesAlbums {
-  width: 60%;
+  width: 100%;
 }
 
-.favouritesAlbums,
-.favouritesPerformances {
+.favouritesAlbums {
   display: flex;
   flex-direction: column;
   background-color: #202026;
@@ -192,15 +184,13 @@ img{
 
 .favouritesComposition .items {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 32px;
+  grid-template-columns: 1fr;
+  gap: 12px;
 }
 
 .favouritesAlbums .items {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 32px;
 }
 
@@ -209,23 +199,26 @@ img{
   grid-template-columns: 1fr;
 }
 
-.item {
-  display: flex;
-  gap: 32px;
+.favouritesAlbums .items .item {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: 50px 130px 50px;
+  align-items: center;
+}
+
+.favouritesComposition .items .item {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: 50px 140px 30px 50px 40px;
   align-items: center;
 }
 
 .favouritesAlbums .header,
-.favouritesPerformances .header,
 .favouritesComposition .header{
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 30px;
-}
-
-.favouritesPerformances {
-  width: 45%;
 }
 
 .header a {

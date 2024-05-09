@@ -27,6 +27,13 @@ class PerformerController {
             '                WHERE music.id_performance = $1', [id])
         res.json(music.rows)
     }
+    async getAlbumsByPerformer(req, res) {
+        const id = req.params.id;
+        const albums = await db.query('SELECT albums.id_album, albums.name_album, albums.album_cover, users.name FROM albums\n' +
+            'JOIN public.users on users.iduser = albums.id_performance\n' +
+            'WHERE id_performance = $1', [id])
+        res.json(albums.rows)
+    }
     async getOnePerformer(req, res) {
         const id = req.params.id;
         const performer = await db.query('SELECT * FROM users WHERE id = $1 AND is_performance = true', [id]);

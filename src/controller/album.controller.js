@@ -23,7 +23,7 @@ class AlbumController {
     }
     async getMusicByAlbum(req, res) {
         const id = req.params.id;
-        const music = await db.query('SELECT music.id, music.name_music, users.name, albums.album_cover, albums.date_publication, music.count_auditions, music.duration_music, music.file_path_music FROM music\n' +
+        const music = await db.query('SELECT music.id, music.name_music, users.name, albums.album_cover, albums.date_publication, music.count_auditions, music.duration_music, music.id_performance, music.file_path_music FROM music\n' +
             '                JOIN music_in_albums ON music.id = music_in_albums.id_music\n' +
             '                JOIN albums ON music_in_albums.id_album = albums.id_album\n' +
             '                JOIN users ON music.id_performance = users.iduser\n' +

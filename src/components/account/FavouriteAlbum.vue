@@ -1,16 +1,46 @@
 <script setup>
+  import axios from "axios";
+  import {inject, ref} from "vue";
 
+  const props = defineProps({
+    nameAlbum: String,
+    nameAuthor: String,
+    albumCover: String,
+    idAlbum: Number,
+  })
+
+  const musicByAlbum = ref([])
+  const url = ref(``)
+
+  const getMusicByAlbum = async () => {
+    try {
+      url.value = `/api/music-album/${props.idAlbum}`
+      const response = await axios.get(url.value)
+      musicByAlbum.value = response.data
+      console.log(musicByAlbum.value)
+    }
+    catch (err) {
+      console.error(err)
+    }
+  }
+
+  const {addToPlayerMusic} = inject('app')
+
+  const handleClick = async () => {
+    await getMusicByAlbum()
+    await addToPlayerMusic(musicByAlbum.value[0].id, url.value)
+  }
 </script>
 
 <template>
   <div class="item">
-    <img src="../../assets/albumAfisha.png" alt="albumCover">
+    <img :src="albumCover" alt="albumCover">
     <div class="infoSong">
-      <h4>The Highlights</h4>
-      <h5>The Weeknd</h5>
+      <h4>{{ nameAlbum }}</h4>
+      <h5>{{ nameAuthor }}</h5>
     </div>
     <div class="icon">
-      <box-icon name='right-arrow' class="playMusic" type='solid' color='#ffffff' ></box-icon>
+      <box-icon name='right-arrow' class="playMusic" type='solid' color='#ffffff' @click="handleClick"></box-icon>
     </div>
   </div>
 </template>

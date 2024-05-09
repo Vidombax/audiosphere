@@ -14,7 +14,7 @@ class MusicController {
         res.json(music.rows[0]);
     }
     async getPopularMusic(req, res) {
-        const music = await db.query('SELECT music.id, music.name_music, music.count_auditions, music.count_likes, albums.album_cover, albums.name_album, users.name, music.duration_music, music.file_path_music\n' +
+        const music = await db.query('SELECT music.id, music.name_music, music.id_performance, music.count_auditions, music.count_likes, albums.album_cover, albums.name_album, users.name, music.duration_music, music.file_path_music\n' +
             'FROM music\n' +
             '         JOIN music_in_albums ON music.id = music_in_albums.id_music\n' +
             '         JOIN albums ON music_in_albums.id_album = albums.id_album\n' +
@@ -24,7 +24,7 @@ class MusicController {
         res.json(music.rows)
     }
     async getPopularMusicToPlayer(req, res) {
-        const music = await db.query('SELECT music.id, music.name_music, music.count_auditions, music.count_likes, albums.album_cover, albums.name_album, users.name, music.duration_music, music.file_path_music\n' +
+        const music = await db.query('SELECT music.id, music.name_music, music.count_auditions, music.id_performance, music.count_likes, albums.album_cover, albums.name_album, users.name, music.duration_music, music.file_path_music\n' +
             'FROM music\n' +
             '         JOIN music_in_albums ON music.id = music_in_albums.id_music\n' +
             '         JOIN albums ON music_in_albums.id_album = albums.id_album\n' +
@@ -33,7 +33,7 @@ class MusicController {
         res.json(music.rows)
     }
     async getNewestMusic(req, res) {
-        const music = await db.query('SELECT music.id, music.name_music, users.name, albums.album_cover, albums.date_publication, music.count_auditions, music.duration_music, music.file_path_music FROM music\n' +
+        const music = await db.query('SELECT music.id, music.name_music, music.id_performance, users.name, albums.album_cover, albums.date_publication, music.count_auditions, music.duration_music, music.file_path_music FROM music\n' +
             '    JOIN music_in_albums ON music.id = music_in_albums.id_music\n' +
             '    JOIN albums ON music_in_albums.id_album = albums.id_album\n' +
             '    JOIN users ON music.id_performance = users.iduser\n' +
@@ -43,7 +43,7 @@ class MusicController {
     }
     async getMusicByTag(req, res) {
         const tag = req.params.tag;
-        const music = await db.query('SELECT music.id, music.name_music, music.count_auditions, music.count_likes, albums.album_cover, albums.name_album, users.name, music.duration_music, music.file_path_music, music.id_tag\n' +
+        const music = await db.query('SELECT music.id, music.name_music, music.id_performance, music.count_auditions, music.count_likes, albums.album_cover, albums.name_album, users.name, music.duration_music, music.file_path_music, music.id_tag\n' +
             'FROM music\n' +
             '         JOIN music_in_albums ON music.id = music_in_albums.id_music\n' +
             '         JOIN albums ON music_in_albums.id_album = albums.id_album\n' +
@@ -60,6 +60,7 @@ class MusicController {
             '    users.name,\n' +
             '    music.count_auditions,\n' +
             '    music.duration_music,' +
+            '    music.id_performance,' +
             '    music.file_path_music\n' +
             'FROM\n' +
             '    following_to_music\n' +

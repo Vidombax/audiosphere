@@ -59,7 +59,7 @@ onMounted(async () => {
   </div>
 </template>
 
-<style scoped>
+<style>
 h1,
 h3,
 p {
@@ -119,5 +119,14 @@ button{
   padding: 20px 12px 12px 20px;
   margin-top: 20px;
   border-radius: 12px;
+}
+
+.listSongs .item {
+  display: grid;
+  gap: 32px;
+  grid-template-columns: 5px 50px 100px 50px 50px 40px 40px;
+  align-items: center;
+  justify-content: space-between;
+
 }
 </style>
