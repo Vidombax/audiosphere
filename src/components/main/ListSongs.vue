@@ -47,7 +47,7 @@ onMounted(async () => {
   background-color: #17171c;
   position: absolute;
   left: 7.5%;
-  height: 60vh;
+  height: 50vh;
 }
 
 .listSongs .header {

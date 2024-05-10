@@ -47,7 +47,7 @@ const handleClick = async () => {
       <div class="icon">
         <box-icon name='right-arrow' class="playMusic" type='solid' color='#ffffff' @click="handleClick"></box-icon>
       </div>
-      <box-icon name='plus-square' type='solid' class="addMusicToFavourite" color='#ffffff' ></box-icon>
+<!--      <box-icon name='plus-square' type='solid' class="addMusicToFavourite" color='#ffffff' ></box-icon>-->
     </div>
   </div>
 </template>

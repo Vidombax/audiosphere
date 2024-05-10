@@ -43,6 +43,24 @@ class UserController {
         const favourite = await db.query('DELETE FROM following_to_music WHERE id_user = $1 AND id_music = $2 RETURNING *', [idUser, idMusic])
         res.json(favourite.rows[0])
     }
+    async subToPerformer(req, res) {
+        const idUser = req.body.idUser;
+        const idPerformer = req.body.idPerformer;
+        const subscribe = await db.query('INSERT INTO followings (id_follower, date_following, id_following) VALUES ($1, CURRENT_DATE, $2)', [idUser, idPerformer])
+        res.json(subscribe.rows[0])
+    }
+    async unsubToPerformer(req, res) {
+        const idUser = req.params.user;
+        const idPerformer = req.params.performer;
+        const subscribe = await db.query('DELETE FROM followings WHERE id_follower = $1 AND id_following = $2 RETURNING *', [idUser, idPerformer])
+        res.json(subscribe.rows[0])
+    }
+    async getSubscribes(req, res) {
+        const idUser = req.params.user;
+        const idPerformer = req.params.performer;
+        const subscribe = await db.query('SELECT * FROM followings WHERE id_follower = $1 AND id_following = $2', [idUser, idPerformer])
+        res.json(subscribe.rows)
+    }
 }
 
 export default new UserController();

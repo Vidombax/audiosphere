@@ -121,7 +121,7 @@ const nextComposition = () => {
 const endTrack = async  () => {
   const id = ref(music.value[index].id)
   const auditions = ref(music.value[index].count_auditions + 1)
-  await axios.put('api/music-auditions', {
+  await axios.put('/api/music-auditions', {
     id: id.value,
     newCount: auditions.value
   })
@@ -315,7 +315,7 @@ provide('app', {
   addToFavourite,
   removeFromFavourite,
   addToFavouriteClick,
-  removeFromFavouriteClick
+  removeFromFavouriteClick,
 })
 </script>
 

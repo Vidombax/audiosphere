@@ -39,6 +39,20 @@ const getMusicByPerformer = async () => {
   }
 }
 
+const getSubscribe = async () => {
+  try {
+    const idUser = ref(Number(localStorage.getItem('id')) || 0)
+    const idPerformer = ref(Number(data.value.iduser))
+    const response = await axios.get(`/api/subscribe-performer/${idUser.value}/${idPerformer.value}`)
+    if (response.data.length > 0) {
+      isAdded.value = false
+    }
+  }
+  catch (err) {
+    console.error(err)
+  }
+}
+
 const getAlbumsByPerformer = async () => {
   try {
     const response = await axios.get(`/api/albums-performer/${id.value}`)
@@ -49,8 +63,52 @@ const getAlbumsByPerformer = async () => {
   }
 }
 
+const subscribesToPerformer = async (idPerformer) => {
+  try {
+    const idUser = ref(Number(localStorage.getItem('id')) || 0)
+    if (idUser.value !== 0) {
+      await axios.post(`/api/sub-performer`, {
+        idUser: idUser.value,
+        idPerformer: idPerformer
+      })
+    }
+    else {
+      console.log('Пользователь не зарегистрирован')
+    }
+  }
+  catch (err) {
+    console.error(err)
+  }
+}
+
+const unsubscribesToPerformer = async (idPerformer) => {
+  try {
+    const idUser = ref(Number(localStorage.getItem('id')) || 0)
+    if (idUser.value !== 0) {
+      await axios.delete(`/api/unsub-performer/${idUser.value}/${idPerformer}`)
+    }
+    else {
+      console.log('Пользователь не зарегистрирован')
+    }
+  }
+  catch (err) {
+    console.error(err)
+  }
+}
+
+const subClick = async () => {
+  isAdded.value = false
+  await subscribesToPerformer(data.value.iduser)
+}
+
+const unsubClick = async () => {
+  isAdded.value = true;
+  await unsubscribesToPerformer(data.value.iduser)
+}
+
 onMounted(async () => {
   await fetchPerformer()
+  await getSubscribe()
   await getMusicByPerformer()
   await getAlbumsByPerformer()
 })
@@ -67,8 +125,8 @@ onMounted(async () => {
       <h1>{{ data.name }}</h1>
     </div>
     <div class="exit">
-        <box-icon name='plus' color='#ffffff' style="cursor: pointer" v-if="isAdded"></box-icon>
-        <box-icon name='heart' type='solid' v-else color='#ffffff'></box-icon>
+        <box-icon name='plus' color='#ffffff' style="cursor: pointer" v-if="isAdded" @click="subClick"></box-icon>
+        <box-icon name='heart' type='solid' v-else color='#ffffff' @click="unsubClick"></box-icon>
         <h3 v-if="isAdded">подписаться</h3>
         <h3 v-else>отписаться</h3>
     </div>
@@ -148,7 +206,7 @@ img{
 .name img {
   margin-top: -25%;
   width: 245px;
-  height: 208px;
+  height: 245px;
   border-radius: 32px;
   margin-bottom: 12px;
 }
