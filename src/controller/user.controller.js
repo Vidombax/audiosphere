@@ -24,7 +24,12 @@ class UserController {
         res.json(user.rows[0]);
     }
     async updateUser(req, res) {
-
+        const id = req.body.id;
+        const name = req.body.name;
+        const mail = req.body.mail;
+        const password = req.body.password;
+        const user = await db.query('UPDATE users SET name = $1, mail = $2, password = $3 WHERE iduser = $4', [name, mail, password, id]);
+        res.json('user is updated');
     }
     async deleteUser(req, res) {
         const id = req.params.id;

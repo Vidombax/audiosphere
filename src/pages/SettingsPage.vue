@@ -7,16 +7,50 @@ document.title = 'AudioSphere | Настройки'
 const id = ref(Number(localStorage.getItem('id')))
 const data = ref([])
 
+const name = ref('');
+const mail = ref('');
+const password = ref('');
+
 const fetchUser = async () => {
   try {
-    const response = await axios.get(`/api/user/${id.value}`)
-    data.value = response.data
+    const response = await axios.get(`/api/user/${id.value}`);
+    data.value = response.data;
 
+    name.value = data.value.name;
+    mail.value = data.value.mail;
+    password.value = data.value.password;
   }
   catch (err) {
     console.log(err)
   }
 }
+
+const updateUser = async () => {
+  try {
+    const response = await axios.put('/api/update-user', {
+      id: id.value,
+      name: name.value,
+      mail: mail.value,
+      password: password.value,
+    })
+    location.reload();
+  }
+  catch (err) {
+    console.error(err);
+  }
+}
+
+const handleNameChange = (event) => {
+  name.value = event.target.value;
+};
+
+const handleMailChange = (event) => {
+  mail.value = event.target.value;
+};
+
+const handlePasswordChange = (event) => {
+  password.value = event.target.value;
+};
 
 onMounted(async () => {
   await fetchUser()
@@ -33,16 +67,15 @@ onMounted(async () => {
           <h3>Поменять аватарку</h3>
           <div>
             <box-icon name='upload' color='#ffffff' ></box-icon>
-            <box-icon name='trash' color='#ffffff' ></box-icon>
           </div>
           <h3>Поменять никнейм</h3>
-          <input type="text" :value="data.name">
+          <input type="text" :value="data.name" @change="handleNameChange">
           <h3>Поменять почту</h3>
-          <input type="text" :value="data.mail">
+          <input type="text" :value="data.mail" @change="handleMailChange">
           <h3>Поменять пароль</h3>
-          <input type="text" :value="data.password">
+          <input type="text" :value="data.password" @change="handlePasswordChange">
         </div>
-        <button>Сохранить</button>
+        <button @click="updateUser">Сохранить</button>
       </div>
   </div>
 </template>
