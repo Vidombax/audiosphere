@@ -42,6 +42,11 @@ class PerformerController {
     async updatePerformer(req, res) {
 
     }
+    async countFollowers(req, res) {
+        const id = req.params.id;
+        const count = await db.query('SELECT COUNT(*) FROM followings WHERE id_following = $1;', [id]);
+        res.json(count.rows[0]);
+    }
     async deletePerformer(req, res) {
         const id = req.params.id;
         const performer = await db.query('DELETE FROM users WHERE id = $1 AND is_performance = true', [id]);

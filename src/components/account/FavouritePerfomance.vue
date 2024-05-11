@@ -1,13 +1,42 @@
 <script setup>
+import {inject, ref} from "vue";
+import axios from "axios";
 
+const props = defineProps({
+  namePerformer: String,
+  photoPerformer: String,
+  idPerformer: Number,
+})
+
+const musicByPerformer = ref([])
+const url = ref(``)
+const urlPerfomer = ref(`/performer/${props.idPerformer}`)
+
+const getMusicByAlbum = async () => {
+  try {
+    url.value = `/api/music-performer/${props.idPerformer}`
+    const response = await axios.get(url.value)
+    musicByPerformer.value = response.data
+  }
+  catch (err) {
+    console.error(err)
+  }
+}
+
+const {addToPlayerMusic} = inject('app')
+
+const handleClick = async () => {
+  await getMusicByAlbum()
+  await addToPlayerMusic(musicByPerformer.value[0].id, url.value)
+}
 </script>
 
 <template>
   <div class="item">
-    <img src="../../assets/newPerfomer.png" class="performerImg">
-    <a href=""><h2>Хаски</h2></a>
+    <img :src="photoPerformer" class="performerImg">
+    <router-link :to="urlPerfomer"><h2>{{ namePerformer }}</h2></router-link>
     <div class="icon">
-      <box-icon name='right-arrow' class="playMusic" type='solid' color='#ffffff' ></box-icon>
+      <box-icon name='right-arrow' class="playMusic" type='solid' color='#ffffff' @click="handleClick"></box-icon>
     </div>
   </div>
 </template>

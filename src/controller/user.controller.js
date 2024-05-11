@@ -58,7 +58,12 @@ class UserController {
     async getSubscribes(req, res) {
         const idUser = req.params.user;
         const idPerformer = req.params.performer;
-        const subscribe = await db.query('SELECT * FROM followings WHERE id_follower = $1 AND id_following = $2', [idUser, idPerformer])
+        const subscribe = await db.query('SELECT followings.id_follower, followings.date_following, followings.id_following FROM followings WHERE id_follower = $1 AND id_following = $2', [idUser, idPerformer])
+        res.json(subscribe.rows)
+    }
+    async getSubscribesToProfile(req, res) {
+        const idUser = req.params.user;
+        const subscribe = await db.query('SELECT followings.id_follower, followings.id_following, users.iduser, users.name, users.profile_picture FROM followings JOIN users on users.iduser = followings.id_following WHERE id_follower = $1', [idUser])
         res.json(subscribe.rows)
     }
 }

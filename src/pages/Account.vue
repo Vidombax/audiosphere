@@ -35,7 +35,18 @@ const getMusicByUser = async () => {
   try {
     const response = await axios.get(`api/subscribe-music/${id.value}`)
     subMusic.value = response.data
-    console.log(subMusic.value)
+  }
+  catch (err) {
+    console.log(err)
+  }
+}
+
+const subPerformer = ref([]);
+const getSubPerformer = async () => {
+  try {
+    const response = await axios.get(`/api/subscribes-performer/${id.value}`)
+    subPerformer.value = response.data;
+    console.log(subPerformer.value)
   }
   catch (err) {
     console.log(err)
@@ -45,6 +56,7 @@ const getMusicByUser = async () => {
 onMounted(async () => {
   await fetchUser()
   await getMusicByUser()
+  await getSubPerformer()
 })
 </script>
 
@@ -67,32 +79,28 @@ onMounted(async () => {
     <div class="favouritesAlbums">
       <div class="header">
         <h4>Любимые альбомы</h4>
-        <a href="">Смотреть все</a>
       </div>
       <div class="items">
-        <FavouriteAlbum />
-        <FavouriteAlbum />
-        <FavouriteAlbum />
-        <FavouriteAlbum />
+<!--        <FavouriteAlbum />-->
       </div>
     </div>
     <div class="favouritesPerformances">
       <div class="header">
         <h4>Любимые исполнители</h4>
-        <a href="">Смотреть все</a>
       </div>
       <div class="items">
-        <FavouritePerfomance />
-        <FavouritePerfomance />
-        <FavouritePerfomance />
-        <FavouritePerfomance />
+        <FavouritePerfomance v-if="subPerformer.length > 0" v-for="item in subPerformer" :key="item.id" :id-performer="item.iduser"
+                             :name-performer="item.name" :photo-performer="item.profile_picture"
+        />
+        <div class="item" v-else style="height: 50px;">
+          <h4>Подписок нет</h4>
+        </div>
       </div>
     </div>
   </div>
   <div class="favouritesComposition">
     <div class="header">
       <h4>Любимые композиции</h4>
-      <a href="">Смотреть все</a>
     </div>
     <div class="items">
       <FavouriteComposition v-for="item in subMusic" :key="item.id"
@@ -136,10 +144,6 @@ img{
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.subscribers {
-  margin-left: 24px;
 }
 
 .exit {

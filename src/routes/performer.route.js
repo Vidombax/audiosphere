@@ -11,6 +11,7 @@ router.get("/music-performer/:id", PerformersController.getMusicByPerformer);
 router.get("/albums-performer/:id", PerformersController.getAlbumsByPerformer);
 router.get("/performer/:id", PerformersController.getOnePerformer);
 router.put("/performer", PerformersController.updatePerformer);
+router.get("/follower-count/:id", PerformersController.countFollowers);
 router.delete("/performer/:id", PerformersController.deletePerformer);
 
 export default router;

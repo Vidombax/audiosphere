@@ -26,6 +26,17 @@ const fetchPerformer = async () => {
   }
 }
 
+const countFollower = ref(0)
+const fetchSubscribes = async () => {
+  try {
+    const response = await axios.get(`/api/follower-count/${id.value}`);
+    countFollower.value = response.data
+  }
+  catch (err) {
+    console.error(err)
+  }
+}
+
 const url = ref(``)
 
 const getMusicByPerformer = async () => {
@@ -108,6 +119,7 @@ const unsubClick = async () => {
 
 onMounted(async () => {
   await fetchPerformer()
+  await fetchSubscribes()
   await getSubscribe()
   await getMusicByPerformer()
   await getAlbumsByPerformer()
@@ -117,8 +129,9 @@ onMounted(async () => {
 <template>
   <div class="profile">
     <div class="subscribers">
-      <h2>{{ data.count_follower }}</h2>
-      <h3>подписчиков</h3>
+      <h2>{{ countFollower.count }}</h2>
+      <h3 v-if="countFollower.count !== 5">подписчик(-а)</h3>
+      <h3 v-else>подписчиков</h3>
     </div>
     <div class="name">
       <img :src="data.profile_picture" alt="photoProfile">

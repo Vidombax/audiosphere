@@ -14,5 +14,6 @@ router.delete("/del-favourite/:user/:music", UserController.removeFromFavourite)
 router.post("/sub-performer", UserController.subToPerformer);
 router.delete("/unsub-performer/:user/:performer", UserController.unsubToPerformer);
 router.get("/subscribe-performer/:user/:performer", UserController.getSubscribes);
+router.get("/subscribes-performer/:user", UserController.getSubscribesToProfile);
 
 export default router;
