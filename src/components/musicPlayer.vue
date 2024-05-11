@@ -262,6 +262,15 @@ input[type="range"]::-ms-thumb {
   cursor: pointer;
 }
 
+@media screen and (min-width: 1540px) {
+  .music-player {
+    width: 450px;
+  }
+  .song-info {
+    margin-top: 100px;
+  }
+}
+
 @media screen and (max-width: 1540px) {
   .music-player {
     margin-left: 5px;

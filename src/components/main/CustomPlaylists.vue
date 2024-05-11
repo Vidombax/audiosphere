@@ -108,6 +108,12 @@ import Song from "@/components/main/Song.vue";
   margin-bottom: 10px;
 }
 
+@media screen and (min-width: 1450px) {
+  .headerItem {
+    width: 438px;
+  }
+}
+
 @media screen and (max-width: 1450px) {
   .customPlaylists .items {
     grid-template-columns: 1fr;

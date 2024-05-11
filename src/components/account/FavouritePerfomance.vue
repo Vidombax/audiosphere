@@ -51,11 +51,6 @@ h2 {
   height: 55px;
 }
 
-.playBtn {
-  width: 32px;
-  height: 32px;
-}
-
 .favouritesPerformances .items .item{
   display: flex;
   align-items: center;

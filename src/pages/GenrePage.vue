@@ -80,6 +80,15 @@ onMounted(async () => {
   padding: 12px;
 }
 
+@media screen and (min-width: 1540px) {
+  .genres .items {
+    gap: 24px;
+  }
+  .genres {
+    width: 800px;
+  }
+}
+
 @media screen and (max-width: 1540px) {
   .genres .items {
     gap: 6px;

@@ -41,6 +41,20 @@ onMounted(async () => {
 </template>
 
 <style scoped>
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #ffffff;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #5773ff;
+  border-radius: 5px;
+}
+
 .listSongs {
   padding: 15px;
   width: 325px;
@@ -71,5 +85,25 @@ onMounted(async () => {
   background-color: rgba(0, 0, 0, 0.45);
   width: 26px;
   height: 60vh;
+}
+
+@media screen and (min-width: 1540px) {
+  .listSongs {
+    height: 65vh;
+    left: 5.8%;
+    width: 425px;
+    margin-top: 0;
+  }
+  .blackout {
+    height: 65vh;
+  }
+  .listSongs .header {
+    margin-bottom: 0;
+  }
+  .listSongs .items {
+    width: 370px;
+    height: 500px;
+    margin-top: -10px;
+  }
 }
 </style>
