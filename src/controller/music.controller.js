@@ -87,6 +87,15 @@ class MusicController {
         const music = await db.query('DELETE FROM music WHERE id = $1', [id]);
         res.json(music.rows[0]);
     }
+    async getMusicBySearch(req, res) {
+        const search = req.params.search;
+        const music = await db.query('SELECT music.name_music, users.name, music.id_performance, music.id, music.file_path_music, music.duration_music, albums.album_cover, albums.name_album FROM music\n' +
+            '    JOIN music_in_albums ON music.id = music_in_albums.id_music\n' +
+            '    JOIN albums ON music_in_albums.id_album = albums.id_album\n' +
+            '    JOIN users ON music.id_performance = users.iduser\n' +
+            'WHERE LOWER(music.name_music) LIKE LOWER($1)', ['%' + search + '%']);
+        res.json(music.rows);
+    }
 }
 
 export default new MusicController();

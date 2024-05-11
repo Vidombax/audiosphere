@@ -6,5 +6,4 @@ const db = new pg.Pool({
     database: 'audiosphere',
 })
 
-
 export default db;

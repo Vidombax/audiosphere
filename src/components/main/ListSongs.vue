@@ -106,4 +106,24 @@ onMounted(async () => {
     margin-top: -10px;
   }
 }
+
+@media screen and (max-width: 1530px) {
+  .listSongs {
+    width: 320px;
+    left: 7.5%;
+    margin-top: 0;
+    height: 450px;
+  }
+  .blackout {
+    height: 60vh;
+  }
+  .listSongs .header {
+    margin-bottom: 0;
+  }
+  .listSongs .items {
+    width: 295px;
+    height: 500px;
+    margin-top: -10px;
+  }
+}
 </style>

@@ -15,6 +15,7 @@ const props = defineProps({
   durationMusic: String,
   sendMessage: Function,
   idPerformance: Number,
+  searchText: String,
 })
 
 const urlPerfomer = ref(`/performer/${props.idPerformance}`)
@@ -22,21 +23,21 @@ const urlPerfomer = ref(`/performer/${props.idPerformance}`)
 const checkFavourite = async () => {
   try {
     const idUser = ref(Number(localStorage.getItem('id')) || 0)
-     if (idUser.value !== 0) {
-       const response = await axios.get(`api/subscribe-music/${idUser.value}`)
-       let index = ref(0)
-       favMusic.value = response.data
+    if (idUser.value !== 0) {
+      const response = await axios.get(`api/subscribe-music/${idUser.value}`)
+      let index = ref(0)
+      favMusic.value = response.data
 
-       if (favMusic.value.length >= 1) {
-         index = favMusic.value.findIndex(item => item.id === props.idMusic)
-         if (index !== -1) {
-           isAdded.value = false
-         }
-       }
-     }
-     else {
-       isAdded.value = true
-     }
+      if (favMusic.value.length >= 1) {
+        index = favMusic.value.findIndex(item => item.id === props.idMusic)
+        if (index !== -1) {
+          isAdded.value = false
+        }
+      }
+    }
+    else {
+      isAdded.value = true
+    }
   }
   catch (err) {
     console.error(err)
@@ -44,7 +45,7 @@ const checkFavourite = async () => {
 }
 
 const handleClick = async () => {
-  await addToPlayerMusic(props.idMusic, `/api/popular-music-player`)
+  await addToPlayerMusic(props.idMusic, `api/music-search/${props.searchText}`)
 }
 
 const addToFavouriteClick = async () => {
@@ -68,7 +69,6 @@ onMounted(async () => {
   <div class="item">
     <div class="info">
       <p hidden>{{ idMusic }}</p>
-      <p>{{ numberSet }}</p>
       <img :src="albumCover">
       <div class="details">
         <h5>{{ nameSong }}</h5>
@@ -76,7 +76,6 @@ onMounted(async () => {
       </div>
     </div>
     <div class="actions">
-      <p>{{ durationMusic }}</p>
       <div class="icon">
         <box-icon name='right-arrow' class="playMusic" type='solid' color='#ffffff' @click="handleClick"></box-icon>
       </div>
@@ -88,14 +87,23 @@ onMounted(async () => {
 
 
 <style scoped>
-.container main .playlist .music-list .items .item{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 20px;
+h5 {
+  color: white;
+  font-size: larger;
 }
 
-.container main .playlist .music-list .items .item:last-child{
+.item{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-bottom: 10px;
+  margin-left: 22%;
+}
+
+.item:first-child {
+  margin-top: 100px;
+}
+
+.item:last-child{
   margin-bottom: 0;
 }
 
@@ -111,37 +119,37 @@ onMounted(async () => {
   cursor: pointer;
 }
 
-.container main .playlist .music-list .items .item .info,
-.container main .playlist .music-list .items .item .actions{
+.item .info,
+.item .actions{
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 50px;
 }
 
-.container main .playlist .music-list .items .item .info p{
+.item .info p{
   color: #919191;
-  font-size: 12px;
+  font-size: 16px;
   font-weight: bold;
   margin-top: 6px;
   transition: .3s linear;
 }
 
-.container main .playlist .music-list .items .item .info p:hover {
+.item .info p:hover {
   color: #5773ff;
 }
 
-.container main .playlist .music-list .items .item .info img{
-  width: 50px;
-  height: 50px;
+img{
+  width: 70px;
+  height: 70px;
   border-radius: 6px;
 }
 
-.container main .playlist .music-list .items .item .actions p{
+.item .actions p{
   font-size: 13px;
   font-weight: bold;
 }
 
-.container main .playlist .music-list .items .item .actions .icon{
+.item .actions .icon{
   display: flex;
   align-items: center;
   justify-content: center;
@@ -151,7 +159,10 @@ onMounted(async () => {
   border-radius: 6px;
 }
 
-.container main .playlist .music-list .items .item .actions i{
-  color: #919191;
+@media screen and (max-width: 1540px) {
+  .item {
+    margin-left: 15%;
+    grid-template-columns: 1.5fr 1fr;
+  }
 }
 </style>

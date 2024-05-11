@@ -114,12 +114,12 @@ import Song from "@/components/main/Song.vue";
   }
 }
 
-@media screen and (max-width: 1450px) {
+@media screen and (max-width: 1550px) {
   .customPlaylists .items {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
   }
   .customPlaylists {
-    width: 82.5%;
+    width: 100%;
   }
   .customPlaylists .items .item {
     width: 100%;

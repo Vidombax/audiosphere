@@ -271,7 +271,7 @@ input[type="range"]::-ms-thumb {
   }
 }
 
-@media screen and (max-width: 1540px) {
+@media screen and (max-width: 1550px) {
   .music-player {
     margin-left: 5px;
     width: 350px;

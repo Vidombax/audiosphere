@@ -13,5 +13,6 @@ router.get("/afisha-music", MusicController.getNewestMusic);
 router.get("/music-tag/:tag", MusicController.getMusicByTag);
 router.put("/music-auditions", MusicController.updateMusicAuditions);
 router.delete("/music/:id", MusicController.deleteMusic);
+router.get("/music-search/:search", MusicController.getMusicBySearch);
 
 export default router;

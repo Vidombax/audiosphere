@@ -76,6 +76,7 @@ onMounted(async () => {
              :name-performance="item.name"
              :album-cover="item.album_cover"
              :duration-music="item.duration_music"
+            :id-performance="item.id_performance"
         />
       </div>
     </div>
