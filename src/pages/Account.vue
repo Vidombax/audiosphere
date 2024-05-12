@@ -53,10 +53,21 @@ const getSubPerformer = async () => {
   }
 }
 
+const subPlaylist = ref([]);
+const getSubPlaylist = async () => {
+  try {
+    
+  }
+  catch (err) {
+    
+  }
+}
+
 onMounted(async () => {
   await fetchUser()
   await getMusicByUser()
   await getSubPerformer()
+  await getSubPlaylist()
 })
 </script>
 
@@ -78,10 +89,13 @@ onMounted(async () => {
   <div class="favourites">
     <div class="favouritesAlbums">
       <div class="header">
-        <h4>Любимые альбомы</h4>
+        <h4>Любимые плейлисты</h4>
       </div>
-      <div class="items">
+      <div class="items" v-if="getSubPlaylist.length > 0">
 <!--        <FavouriteAlbum />-->
+      </div>
+      <div class="items" style="height: 220px;">
+        <h4>Плейлистов нет</h4>
       </div>
     </div>
     <div class="favouritesPerformances">
@@ -102,13 +116,16 @@ onMounted(async () => {
     <div class="header">
       <h4>Любимые композиции</h4>
     </div>
-    <div class="items">
+    <div class="items" v-if="subMusic.length > 0">
       <FavouriteComposition v-for="item in subMusic" :key="item.id"
                             :title="item.name_music"
                             :id-music="item.id"
                             :album-cover="item.album_cover"
                             :duration="item.duration_music"
       />
+    </div>
+    <div class="items" v-else style="height: 100px; display: flex; justify-content: center; align-items: center;">
+      <h4>Композиций нет</h4>
     </div>
   </div>
 </template>
@@ -183,6 +200,8 @@ img{
   padding: 20px 12px 12px 20px;
   margin-top: 20px;
   border-radius: 12px;
+  height: 450px;
+  overflow-y: auto;
 }
 
 .favouritesComposition {

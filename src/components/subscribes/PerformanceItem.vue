@@ -1,13 +1,22 @@
 <script setup>
+import {ref} from 'vue';
 
+const props = defineProps({
+  idPerformer: Number,
+  photoProfile: String,
+  name: String
+})
+
+const urlPerformer = ref(`/performer/${props.idPerformer}`);
 </script>
 
 <template>
-  <div class="item">
-    <img src="../../assets/newPerfomer.png" alt="performanceImg">
-    <h2>Хаски</h2>
-    <p>1111 подписчиков</p>
-  </div>
+  <router-link :to="urlPerformer">
+    <div class="item">
+      <img :src="photoProfile" alt="performanceImg">
+      <h2>{{ name }}</h2>
+    </div>
+  </router-link>
 </template>
 
 <style scoped>

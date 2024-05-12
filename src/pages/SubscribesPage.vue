@@ -1,7 +1,31 @@
 <script setup>
+import {ref, onMounted} from "vue";
+import axios from "axios";
 
 import PerformanceItem from "@/components/subscribes/PerformanceItem.vue";
 import UserItem from "@/components/subscribes/UserItem.vue";
+
+document.title = 'AudioSphere | Подписки'
+
+const performersSub = ref([]);
+const usersSub = ref([]);
+const idUser = ref(Number(localStorage.getItem('id')) || 0)
+
+const getSubscribes = async () => {
+  try {
+    if (idUser.value !== 0) {
+      const response = await axios.get(`/api/subscribes-performer/${idUser.value}`);
+      performersSub.value = response.data;
+    }
+  }
+  catch (err) {
+    console.error(err);
+  }
+}
+
+onMounted(async () => {
+  await getSubscribes()
+})
 </script>
 
 <template>
@@ -11,10 +35,10 @@ import UserItem from "@/components/subscribes/UserItem.vue";
         <h4>Исполнители на которых вы подписаны</h4>
       </div>
       <div class="items">
-        <PerformanceItem />
-        <PerformanceItem />
-        <PerformanceItem />
-        <PerformanceItem />
+        <PerformanceItem v-for="item in performersSub" :key="item.id"
+                         :photo-profile="item.profile_picture" :name="item.name"
+                         :id-performer="item.iduser"
+        />
       </div>
     </div>
     <div class="userSubscribes">
@@ -67,6 +91,7 @@ h2 {
 .userSubscribes .items {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 32px;
 }
 
 .performanceSubscribes .item,
@@ -88,5 +113,51 @@ h2 {
 .userSubscribes .item p {
   color: #676767;
   font-size: 14px;
+}
+
+@media screen and (max-width: 1340px) {
+  .performanceSubscribes .items ,
+  .userSubscribes .items {
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+}
+
+@media screen and (max-width: 1020px) {
+  .performanceSubscribes,
+  .userSubscribes {
+    width: 170%;
+  }
+}
+
+@media screen and (max-width: 850px) {
+  .performanceSubscribes,
+  .userSubscribes {
+    width: 120%;
+  }
+}
+
+@media screen and (max-width: 660px) {
+  .performanceSubscribes .items ,
+  .userSubscribes .items {
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 24px;
+  }
+  .performanceSubscribes,
+  .userSubscribes {
+    width: 110%;
+  }
+}
+
+@media screen and (max-width: 510px) {
+  .performanceSubscribes .items ,
+  .userSubscribes .items {
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  .performanceSubscribes,
+  .userSubscribes {
+    width: 130%;
+  }
 }
 </style>

@@ -1,5 +1,5 @@
 <script setup>
-import {ref, provide, onUnmounted, onMounted} from "vue";
+import {ref, provide} from "vue";
 import axios from "axios";
 
 import MusicPlayer from "@/components/musicPlayer.vue";
@@ -119,7 +119,6 @@ const nextComposition = () => {
 }
 
 const endTrack = async  () => {
-  console.log(music.value)
   const id = ref(music.value[index].id)
   const auditions = ref(music.value[index].count_auditions + 1)
   await axios.put('/api/music-auditions', {

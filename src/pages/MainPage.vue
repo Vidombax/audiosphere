@@ -1,6 +1,6 @@
 <script setup>
 
-import {onMounted, provide, ref} from "vue";
+import {onMounted, ref} from "vue";
 import axios from "axios";
 
 import Genre from "@/components/genre/Genre.vue";
@@ -53,7 +53,7 @@ onMounted(async () => {
     <div class="genres">
       <div class="header">
         <h5>Жанры</h5>
-        <a href="#">Смотреть все</a>
+        <router-link to="/genres"><a href="#">Смотреть все</a></router-link>
       </div>
 
       <div class="items">

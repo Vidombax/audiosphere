@@ -24,7 +24,7 @@ const handleClick = async () => {
     <img :src="albumCover" alt="albumCover">
     <div class="infoSong">
       <h4>{{ title }}</h4>
-      <h5>{{ nameAuthor }}</h5>
+      <h5 v-if="props.nameAuthor">{{ nameAuthor }}</h5>
     </div>
     <p>{{ duration }}</p>
     <div class="icon">
@@ -41,9 +41,6 @@ img{
   color: #fff;
 }
 
-.infoSong h4 {
-  margin-bottom: 8px;
-}
 
 .infoSong {
   width: 110px;
@@ -53,9 +50,16 @@ img{
   font-weight: normal;
 }
 
-.favouritesComposition items {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.infoSong {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .favouritesComposition .items .item img {

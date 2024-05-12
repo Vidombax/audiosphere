@@ -41,19 +41,6 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-::-webkit-scrollbar {
-  width: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background-color: #ffffff;
-  border-radius: 5px;
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: #5773ff;
-  border-radius: 5px;
-}
 
 .listSongs {
   padding: 15px;

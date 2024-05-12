@@ -1,5 +1,5 @@
 <script setup>
-  import {inject} from "vue";
+  import {inject, ref} from "vue";
 
   const props = defineProps({
     nameSong: String,
@@ -11,17 +11,24 @@
     urlApi: String
   })
 
-  const {addToPlayerMusic} = inject('app')
+  const {addToPlayerMusic, removeFromFavourite} = inject('app')
+
+  const url = ref(window.location.pathname)
+  const emit = defineEmits(['del-music'])
 
   const handleClick = async () => {
     await addToPlayerMusic(props.idMusic, props.urlApi)
+  }
+
+  const clickRemoveFromFavourite = async () => {
+    await removeFromFavourite(props.idMusic)
+    emit('del-music', props.idMusic)
   }
 </script>
 
 <template>
   <div class="item">
     <p hidden>{{ props.idMusic }}</p>
-    <p v-if="props.numberSong">{{ numberSong }}</p>
     <img :src="props.albumCover" alt="songImg">
     <p>{{ props.nameSong }}</p>
     <p v-if="props.namePerformer">{{ props.namePerformer }}</p>
@@ -29,7 +36,8 @@
     <div class="icon">
       <box-icon name='right-arrow' class="playMusic" type='solid' color='#ffffff' @click="handleClick"></box-icon>
     </div>
-    <box-icon name='heart' type='solid' color='#ffffff' ></box-icon>
+    <div v-if="url.includes('/performer/')" ></div>
+    <box-icon name='heart' type='solid' color='#ffffff' @click="clickRemoveFromFavourite" v-else></box-icon>
   </div>
 </template>
 

@@ -25,7 +25,27 @@ const fetchSubscribeMusic = async () => {
 const {addToPlayerMusic} = inject('app')
 
 const handleClick = async () => {
-  await addToPlayerMusic(music.value[0].id, url.value)
+  if (music.value.length > 0) {
+    await addToPlayerMusic(music.value[0].id, url.value)
+  }
+  else {
+    console.log('Любимых композиций нет');
+  }
+}
+
+const deleteMusic = async (idMusic) => {
+  if (id.value !== 0) {
+    if (music.value.length > 0) {
+      const index = music.value.findIndex(item => item.id === idMusic);
+
+      if (index !== -1) {
+        music.value.splice(index, 1);
+      }
+      else {
+        console.error('Элемент не найден в массиве.')
+      }
+    }
+  }
 }
 
 onMounted(async () => {
@@ -41,11 +61,12 @@ onMounted(async () => {
         <h1>Любимые треки</h1>
         <div class="buttons">
           <button @click="handleClick">Слушать</button>
-          <p>{{ music.length }} трек(ов)</p>
+          <p v-if="music.length > 0">{{ music.length }} трек(ов)</p>
+          <p v-else>Треков нет</p>
         </div>
       </div>
     </div>
-    <div class="listSongs">
+    <div class="listSongs" v-if="music.length > 0">
       <FavouriteSong v-for="item in music" :key="item.id"
                      :id-music="item.id"
                      :number-song="numberSong++"
@@ -54,7 +75,11 @@ onMounted(async () => {
                      :name-performer="item.name"
                      :duration-music="item.duration_music"
                      :url-api="url"
+                     @del-music="deleteMusic"
       />
+    </div>
+    <div class="listSongs" v-else style="height: 300px; display: flex; justify-content: center; align-items: center;">
+      <h4 style="color: white;">Любимых треков нет</h4>
     </div>
   </div>
 </template>
@@ -124,7 +149,7 @@ button{
 .listSongs .item {
   display: grid;
   gap: 32px;
-  grid-template-columns: 5px 50px 100px 50px 50px 40px 40px;
+  grid-template-columns: 5px 50px 100px 50px 50px 40px;
   align-items: center;
   justify-content: space-between;
 
