@@ -1,8 +1,11 @@
 <script setup>
-import {onMounted, ref} from 'vue'
+import {inject, onMounted, ref} from 'vue'
 import axios from 'axios'
 
 const newAlbums = ref([])
+const musicByAlbum = ref([])
+const url = ref(``)
+const index = ref(0)
 
 const fetchNewAlbums = async () => {
   try {
@@ -12,6 +15,24 @@ const fetchNewAlbums = async () => {
   catch (err) {
     console.log(err)
   }
+}
+
+const getMusicByAlbum = async (id_album) => {
+  try {
+    url.value = `/api/music-album/${id_album}`
+    const response = await axios.get(url.value)
+    musicByAlbum.value = response.data
+  }
+  catch (err) {
+    console.error(err)
+  }
+}
+
+const {addToPlayerMusic} = inject('app')
+
+const handleClick = async (id_album) => {
+  await getMusicByAlbum(id_album)
+  await addToPlayerMusic(musicByAlbum.value[0].id, url.value)
 }
 
 onMounted(async () => {
@@ -25,8 +46,12 @@ onMounted(async () => {
       <h4>Новые альбомы</h4>
     </div>
     <div class="items">
-      <div class="item" v-for="item in newAlbums" :key="item.id">
-          <img :src="item.album_cover" alt="albumCover">
+      <div class="item" v-for="item in newAlbums" :key="item.id" @click="() => handleClick(item.id_album)">
+        <p hidden id="idAlbum">item.id_album</p>
+        <div class="imgPlay">
+          <img :src="item.album_cover" class="albumImg" alt="albumCover">
+          <img src="/play.png" class="playMusic" style="cursor: pointer">
+        </div>
           <p>{{ item.name_album }}</p>
       </div>
     </div>
@@ -62,7 +87,7 @@ onMounted(async () => {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   padding: 12px;
-  gap: 12px;
+  gap: 24px;
 }
 
 .newAlbums .items .item {
@@ -70,6 +95,7 @@ onMounted(async () => {
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  cursor: pointer;
 }
 
 .newAlbums .items .item p {
@@ -77,13 +103,42 @@ onMounted(async () => {
   color: #fff;
 }
 
-.newAlbums .items .item img {
+.newAlbums .items .item .albumImg {
   width: 200px;
   height: 200px;
 }
 
+.imgPlay {
+  position: relative;
+  transition: .1s linear;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.imgPlay:hover {
+  background-color: #000000;
+}
+
+.imgPlay:hover .playMusic {
+  opacity: 1;
+}
+
+.imgPlay:hover .albumImg {
+  opacity: 0.6;
+}
+
+.playMusic {
+  position: absolute;
+  transition: .1s linear;
+  opacity: 0;
+  width: 54px;
+  height: 54px;
+}
+
 @media screen and (max-width: 1540px) {
-  .newAlbums .items .item img {
+  .newAlbums .items .item .albumImg {
     width: 150px;
     height: 150px;
   }
@@ -93,7 +148,7 @@ onMounted(async () => {
   .newAlbums {
     width: 82.5%;
   }
-  .newAlbums .items .item img {
+  .newAlbums .items .item .albumImg {
     width: 100px;
     height: 100px;
   }
@@ -109,7 +164,7 @@ onMounted(async () => {
   .newAlbums {
     width: 140%;
   }
-  .newAlbums .items .item img {
+  .newAlbums .items .item .albumImg {
     width: 130px;
     height: 130px;
   }

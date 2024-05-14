@@ -8,6 +8,11 @@ class UserController {
         const newUser = await db.query('INSERT INTO users (name, mail, password, count_following, count_follower, date_registration, profile_picture, is_performance) VALUES ($1, $2, $3, 0, 0, CURRENT_DATE, \'/profilePictures/defaultProfilePicture.png\', false) RETURNING *', [name, mail, password])
         res.json(newUser.rows[0])
     }
+    async createApplication(req, res) {
+        const id = req.body.id;
+        const newApplication = await db.query('INSERT INTO performer_application (id_user, date_application) VALUES ($1, CURRENT_DATE) RETURNING *', [id]);
+        res.json(newApplication.rows[0]);
+    }
     async getUsers(req, res) {
         const users = await db.query('SELECT * FROM users');
         res.json(users.rows);
@@ -30,6 +35,12 @@ class UserController {
         const password = req.body.password;
         const user = await db.query('UPDATE users SET name = $1, mail = $2, password = $3 WHERE iduser = $4', [name, mail, password, id]);
         res.json('user is updated');
+    }
+    async updateUserPhoto(req, res) {
+        const id = req.body.id;
+        const photoName = req.body.photoName;
+        const user = await db.query('UPDATE users SET profile_picture = $1  WHERE iduser = $2', [photoName, id]);
+        res.json('photo updated');
     }
     async deleteUser(req, res) {
         const id = req.params.id;

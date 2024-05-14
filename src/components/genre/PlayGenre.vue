@@ -1,16 +1,31 @@
 <script setup>
-  import {inject} from "vue";
+import {inject, ref} from "vue";
+import axios from "axios";
 
-  const props = defineProps({
-    title: String,
-    idTag: Number,
-  })
+const props = defineProps({
+  title: String,
+  idTag: Number,
+})
 
-  const {addToPlayerMusic} = inject('app')
+const musicByTag = ref([]);
 
-  const handleClick = async () => {
-    await addToPlayerMusic(props.idTag, `/api/music-tag/${props.idTag}`)
+const {addToPlayerMusic} = inject('app')
+
+const getMusicByTag = async () => {
+  try {
+    const response = await axios.get(`/api/music-tag/${props.idTag}`)
+    musicByTag.value = response.data
+    console.log(musicByTag.value)
   }
+  catch (err) {
+    console.error(err)
+  }
+}
+
+const handleClick = async () => {
+  await getMusicByTag()
+  await addToPlayerMusic(musicByTag.value[0].id, `/api/music-tag/${props.idTag}`)
+}
 </script>
 
 <template>

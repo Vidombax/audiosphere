@@ -63,16 +63,21 @@ function playerInformation(index) {
     urlPerformer.value = `/performer/${idPerformer.value}`;
   }
 
-  allTimeMusic.value = Math.floor(audio.duration) * 2;
+  allTimeMusic.value = audio.duration;
 }
 
+let intervalId = ref()
+
 function increaseVariable(currentTime) {
+  clearInterval(intervalId);
 
-  const intervalId = setInterval(() => {
+  intervalId = setInterval(() => {
     currentTime.value++;
+    if (currentTime.value === Math.round(audio.duration)) {
+      setTimeout(() => {
+        clearInterval(intervalId)
 
-    if (currentTime.value === allTimeMusic.value) {
-      clearInterval(intervalId);
+      })
     }
   }, 1000);
 }
@@ -133,24 +138,38 @@ const endTrack = async  () => {
   })
   if (index < music.value.length - 1) {
     audio.pause()
+    audio.currentTime = 0
     allTimeMusic.value = 0
-    currentTime.value = 0
 
     index++
     playerInformation(index);
     await checkFavourite()
 
-    increaseVariable(currentTime)
     audio = new Audio(music.value[index].file_path_music);
     audio.volume = volume.value
     isPlaying.value = false;
 
-    await audio.play();
+    audio.onloadedmetadata = () => {
+
+      audio.currentTime = 0;
+      currentTime.value = audio.currentTime
+      allTimeMusic.value = Math.round(audio.duration)
+
+      increaseVariable(currentTime);
+
+      audio.play();
+    };
+
     audio.onended = () => endTrack()
   }
   else {
     isPlaying.value = true
   }
+}
+
+const changeAudioTime = (audioTime) => {
+  currentTime.value = audioTime;
+  audio.currentTime = audioTime;
 }
 
 const loopMusic = () => {
@@ -189,13 +208,24 @@ const addToPlayerMusic = async (id, urlApi) => {
         allTimeMusic.value = 0
         playerInformation(index);
 
-        increaseVariable(currentTime)
         audio = new Audio(music.value[index].file_path_music);
+
+        audio.currentTime = 0;
+
+        audio.onloadedmetadata = () => {
+
+          audio.currentTime = 0;
+          currentTime.value = audio.currentTime
+          allTimeMusic.value = Math.round(audio.duration)
+          increaseVariable(currentTime);
+
+          audio.play();
+        };
+
         isPlaying.value = false;
 
         audio.volume = volume.value
 
-        await audio.play();
         audio.onended = () => endTrack()
       }
     }
@@ -316,6 +346,8 @@ provide('app', {
   playMusic,
   pastComposition,
   nextComposition,
+  changeAudioTime,
+  intervalId,
   addMusicToList,
   loopMusic,
   music,

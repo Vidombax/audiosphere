@@ -280,7 +280,7 @@ img{
 .favouritesComposition .items .item {
   display: grid;
   gap: 24px;
-  grid-template-columns: 50px 140px 30px 50px 40px;
+  grid-template-columns: 50px 140px 30px 50px;
   align-items: center;
 }
 
@@ -296,4 +296,4 @@ img{
   color: #919191;
   font-size: 12px;
 }
-</style>
+</style scoped>

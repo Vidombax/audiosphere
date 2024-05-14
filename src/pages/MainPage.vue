@@ -57,7 +57,7 @@ onMounted(async () => {
       </div>
 
       <div class="items">
-        <Genre v-for="item in genres" :key="item.id" :title="item.name_tag"/>
+        <Genre v-for="item in genres" :key="item.id" :title="item.name_tag" :id-tag="item.id"/>
       </div>
     </div>
 

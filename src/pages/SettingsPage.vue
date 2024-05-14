@@ -10,6 +10,7 @@ const data = ref([])
 const name = ref('');
 const mail = ref('');
 const password = ref('');
+const fileInput = ref(null);
 
 const fetchUser = async () => {
   try {
@@ -40,6 +41,27 @@ const updateUser = async () => {
   }
 }
 
+const uploadFile = async () => {
+  try {
+    const file = fileInput.value.files[0];
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const response = await axios.post('/api/upload-photo', formData);
+    const fileName = ref('/profilePictures/' + response.data.filename);
+
+    const responseUpdate = await axios.put('/api/update-user-photo', {
+      id: id.value,
+      photoName: fileName.value,
+    })
+
+    location.reload();
+
+  } catch (error) {
+    console.error('Error uploading file:', error);
+  }
+}
+
 const handleNameChange = (event) => {
   name.value = event.target.value;
 };
@@ -66,7 +88,7 @@ onMounted(async () => {
         <div class="settingsUser">
           <h3>Поменять аватарку</h3>
           <div>
-            <box-icon name='upload' color='#ffffff' ></box-icon>
+            <input type="file" ref="fileInput" @change="uploadFile" class="inputFile">
           </div>
           <h3>Поменять никнейм</h3>
           <input type="text" :value="data.name" @change="handleNameChange">
@@ -144,5 +166,11 @@ button{
   font-weight: bold;
   cursor: pointer;
   font-size: x-large;
+}
+
+.inputFile {
+  color: transparent;
+  position: relative;
+  left: 26%;
 }
 </style>

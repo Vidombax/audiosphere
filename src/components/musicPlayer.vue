@@ -20,9 +20,10 @@ const listSongsOpen = ref(false)
 const isLooping = ref(true)
 
 const {stopMusic, playMusic, pastComposition, nextComposition, loopMusic,
-  volumeChanged, isPlaying, addToFavouriteClick, removeFromFavouriteClick} = inject('app')
+  volumeChanged, isPlaying, changeAudioTime, addToFavouriteClick, removeFromFavouriteClick} = inject('app')
 
 const volume = ref(100)
+const audioTime = ref(0)
 
 const emit = defineEmits(['volume-change'])
 
@@ -45,6 +46,10 @@ const loopMusicBtn = () => {
 const handlerLoop = async () => {
   loopMusicBtn()
   await loopMusic()
+}
+
+const changeTime = async () => {
+  await changeAudioTime(audioTime.value)
 }
 
 provide('musicPlayer', {
@@ -73,7 +78,7 @@ provide('musicPlayer', {
       </div>
       <div class="progress">
         <p>00:00</p>
-        <input type="range" :value="currentTime" :max="allTimeMusic">
+        <input v-model="audioTime" :max="allTimeMusic" :value="currentTime" type="range" @input="changeTime">
         <p>{{ durationMusic }}</p>
       </div>
     </div>

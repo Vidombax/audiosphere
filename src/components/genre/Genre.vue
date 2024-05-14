@@ -1,12 +1,21 @@
 <script setup>
-  defineProps({
+  import {inject} from "vue";
+
+  const props = defineProps({
     title: String,
+    idTag: Number,
   })
+
+  const {addToPlayerMusic} = inject('app')
+
+  const handleClick = async () => {
+    await addToPlayerMusic(props.idTag, `/api/music-tag/${props.idTag}`)
+  }
 </script>
 
 <template>
   <div class="item">
-    <p>{{ title }}</p>
+    <p @click="handleClick">{{ title }}</p>
   </div>
 </template>
 

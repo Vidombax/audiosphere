@@ -4,16 +4,17 @@ import axios from "axios";
 
 import FavouriteComposition from "@/components/account/FavouriteComposition.vue";
 import FavouritePerfomance from "@/components/account/FavouritePerfomance.vue";
-import FavouriteAlbum from "@/components/account/FavouriteAlbum.vue";
 
 const id = ref(Number(localStorage.getItem('id')))
 const data = ref([])
 const subMusic = ref([])
+const isAuthor = ref(false)
 
 const fetchUser = async () => {
   try {
     const response = await axios.get(`/api/user/${id.value}`)
     data.value = response.data
+    isAuthor.value = data.value.is_performance
     document.title = 'AudioSphere | ' + response.data.name[0].toUpperCase() + response.data.name.slice(1)
   }
   catch (err) {
@@ -58,7 +59,31 @@ const getSubPlaylist = async () => {
     
   }
   catch (err) {
-    
+    console.error(err)
+  }
+}
+
+const isOpened = ref(false)
+
+const openModalBecomePerformer = () => {
+  isOpened.value = true;
+}
+
+const closeModalBecomePerformer = () => {
+  isOpened.value = false;
+}
+
+const createApplication = async () => {
+  try {
+    const response = await axios.post(`/api/user-application`, {
+      id: id.value
+    });
+    alert('Заявка отправлена!');
+    isOpened.value = false;
+    isAuthor.value = true;
+  }
+  catch (err) {
+    console.error(err)
   }
 }
 
@@ -125,6 +150,19 @@ onMounted(async () => {
     </div>
     <div class="items" v-else style="height: 100px; display: flex; justify-content: center; align-items: center;">
       <h4>Композиций нет</h4>
+    </div>
+  </div>
+  <div class="verificationPerformer" v-if="isAuthor === false">
+    <h5 @click="openModalBecomePerformer">Стать исполнителем</h5>
+  </div>
+  <div class="modalBecomePerformer" v-if="isOpened">
+    <div class="header">
+      <h4>Форма отправки заявки на получение статуса исполнителя</h4>
+      <h5 @click="closeModalBecomePerformer">Закрыть окно</h5>
+    </div>
+    <div class="items">
+      <h4>Вы хотите оставить заявку на получение статуса исполнителя на платформе?</h4>
+      <button @click="createApplication">Оставить заявку</button>
     </div>
   </div>
 </template>
@@ -199,7 +237,7 @@ img{
   padding: 20px 12px 12px 20px;
   margin-top: 20px;
   border-radius: 12px;
-  height: 450px;
+  height: 350px;
   overflow-y: auto;
 }
 
@@ -239,7 +277,8 @@ img{
 
 .favouritesAlbums .header,
 .favouritesPerformances .header,
-.favouritesComposition .header{
+.favouritesComposition .header,
+.modalBecomePerformer .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -253,5 +292,54 @@ img{
 .header a {
   color: #919191;
   font-size: 12px;
+}
+
+.verificationPerformer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.verificationPerformer h5 {
+  color: #464748;
+  cursor: pointer;
+  transition: .3s linear;
+}
+
+.verificationPerformer h5:hover {
+  color: #919191;
+}
+
+.modalBecomePerformer {
+  display: flex;
+  flex-direction: column;
+  background-color: #202026;
+  padding: 20px 12px 12px 20px;
+  margin-top: 20px;
+  border-radius: 12px;
+}
+
+.modalBecomePerformer .header h5 {
+  color: #464748;
+  cursor: pointer;
+  transition: .3s linear;
+}
+
+.modalBecomePerformer .header h5:hover {
+  color: #919191;
+}
+
+.modalBecomePerformer .items {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.modalBecomePerformer .items button {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  width: 200px;
 }
 </style>
