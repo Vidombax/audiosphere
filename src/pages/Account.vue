@@ -46,7 +46,6 @@ const getSubPerformer = async () => {
   try {
     const response = await axios.get(`/api/subscribes-performer/${id.value}`)
     subPerformer.value = response.data;
-    console.log(subPerformer.value)
   }
   catch (err) {
     console.log(err)
@@ -189,7 +188,7 @@ img{
 }
 
 .favouritesAlbums {
-  width: 60%;
+  width: 50%;
 }
 
 .favouritesAlbums,

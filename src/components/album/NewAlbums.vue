@@ -23,14 +23,11 @@ onMounted(async () => {
   <div class="newAlbums">
     <div class="header">
       <h4>Новые альбомы</h4>
-      <a href="#">Смотреть все</a>
     </div>
     <div class="items">
       <div class="item" v-for="item in newAlbums" :key="item.id">
-        <a href="#">
           <img :src="item.album_cover" alt="albumCover">
           <p>{{ item.name_album }}</p>
-        </a>
       </div>
     </div>
   </div>
@@ -55,7 +52,7 @@ onMounted(async () => {
   color: #fff;
 }
 
-.newAlbums .header a {
+.newAlbums .header {
   color: #919191;
   font-size: 12px;
   padding-right: 5px;
@@ -68,25 +65,25 @@ onMounted(async () => {
   gap: 12px;
 }
 
-.newAlbums .items .item a {
+.newAlbums .items .item {
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
 }
 
-.newAlbums .items .item a p {
+.newAlbums .items .item p {
   margin-top: 8px;
   color: #fff;
 }
 
-.newAlbums .items .item a img {
+.newAlbums .items .item img {
   width: 200px;
   height: 200px;
 }
 
 @media screen and (max-width: 1540px) {
-  .newAlbums .items .item a img {
+  .newAlbums .items .item img {
     width: 150px;
     height: 150px;
   }
@@ -96,14 +93,14 @@ onMounted(async () => {
   .newAlbums {
     width: 82.5%;
   }
-  .newAlbums .items .item a img {
+  .newAlbums .items .item img {
     width: 100px;
     height: 100px;
   }
   .newAlbums .items {
     grid-template-columns: repeat(4, 26%);
   }
-  .newAlbums .items .item a p {
+  .newAlbums .items .item p {
     font-size: small;
   }
 }
@@ -112,7 +109,7 @@ onMounted(async () => {
   .newAlbums {
     width: 140%;
   }
-  .newAlbums .items .item a img {
+  .newAlbums .items .item img {
     width: 130px;
     height: 130px;
   }

@@ -54,6 +54,7 @@ p {
   grid-template-columns: 5px 50px 150px 100px 50px 40px 50px;
   align-items: center;
   justify-content: space-between;
+  text-align: center;
 }
 
 .item p {

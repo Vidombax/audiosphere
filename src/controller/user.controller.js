@@ -46,19 +46,21 @@ class UserController {
         const idUser = req.params.user;
         const idMusic = req.params.music;
         const favourite = await db.query('DELETE FROM following_to_music WHERE id_user = $1 AND id_music = $2 RETURNING *', [idUser, idMusic])
-        res.json(favourite.rows[0])
+        res.json(favourite.rows[0]);
     }
     async subToPerformer(req, res) {
         const idUser = req.body.idUser;
         const idPerformer = req.body.idPerformer;
-        const subscribe = await db.query('INSERT INTO followings (id_follower, date_following, id_following) VALUES ($1, CURRENT_DATE, $2)', [idUser, idPerformer])
-        res.json(subscribe.rows[0])
+        const subscribe = await db.query('INSERT INTO followings (id_follower, date_following, id_following) VALUES ($1, CURRENT_DATE, $2)', [idUser, idPerformer]);
+        const update = await db.query('UPDATE users SET count_follower = count_follower + 1 WHERE iduser = $1 RETURNING count_follower', [idPerformer]);
+        res.json(subscribe.rows[0]);
     }
     async unsubToPerformer(req, res) {
         const idUser = req.params.user;
         const idPerformer = req.params.performer;
-        const subscribe = await db.query('DELETE FROM followings WHERE id_follower = $1 AND id_following = $2 RETURNING *', [idUser, idPerformer])
-        res.json(subscribe.rows[0])
+        const subscribe = await db.query('DELETE FROM followings WHERE id_follower = $1 AND id_following = $2 RETURNING *', [idUser, idPerformer]);
+        const update = await db.query('UPDATE users SET count_follower = count_follower - 1 WHERE iduser = $1', [idPerformer]);
+        res.json(subscribe.rows[0]);
     }
     async getSubscribes(req, res) {
         const idUser = req.params.user;

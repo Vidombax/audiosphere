@@ -30,7 +30,7 @@ const routes = [
     { path: '/account', name: 'Account', component: Account },
     { path: '/subscribes', name: 'Subscribes', component: SubscribesPage },
     { path: '/settings', name: 'Settings', component: SettingsPage },
-    { path: '/playlist', name: 'Playlist', component: PlaylistPage },
+    { path: '/playlist/:id', name: 'Playlist', component: PlaylistPage },
     { path: '/registration', name: 'Registration', component: RegistrationPage },
     { path: '/performer/:id', name: 'Performer', component: PerformerAccountPage },
 ]

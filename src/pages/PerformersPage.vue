@@ -10,11 +10,18 @@ document.title = 'AudioSphere | Исполнители'
 const subPerformers = ref([])
 const newPerformers = ref([])
 const popularPerformers = ref([])
+const idUser = ref(Number(localStorage.getItem('id')) || 0)
 
 const fetchSubPerformers = async () => {
   try {
-    const response = await axios.get('/api/sub-performer')
+    const response = await axios.get(`/api/subscribes-performer/${idUser.value}`)
     subPerformers.value = response.data
+    if (subPerformers.value.length <= 4) {
+
+    }
+    else {
+      subPerformers.value.length = 4;
+    }
   }
   catch (err) {
     console.log(err)
@@ -23,8 +30,9 @@ const fetchSubPerformers = async () => {
 
 const fetchNewPerformers = async () => {
   try {
-    const response = await axios.get('/api/new-performer')
-    newPerformers.value = response.data
+    const response = await axios.get('/api/new-performer');
+    newPerformers.value = response.data;
+    newPerformers.value.length = 4;
   }
   catch (err) {
     console.log(err)
@@ -34,7 +42,8 @@ const fetchNewPerformers = async () => {
 const fetchPopularPerformers = async () => {
   try {
     const response = await axios.get('/api/popular-performer')
-    popularPerformers.value = response.data
+    popularPerformers.value = response.data;
+    popularPerformers.value.length = 4;
   }
   catch (err) {
     console.log(err)
@@ -53,8 +62,8 @@ onMounted(async () => {
     <PerformersAfisha />
     <div class="genres">
       <div class="header">
-        <h5>Ваши исполнители</h5>
-        <a href="#">Смотреть все</a>
+        <h5>Ваши любимые исполнители</h5>
+        <router-link to="/account">Смотреть все</router-link>
       </div>
       <div class="items">
         <PerformerCard v-for="item in subPerformers" :key="item.id"

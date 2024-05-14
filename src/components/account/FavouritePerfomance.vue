@@ -34,7 +34,7 @@ const handleClick = async () => {
 <template>
   <div class="item">
     <img :src="photoPerformer" class="performerImg">
-    <router-link :to="urlPerfomer"><h2>{{ namePerformer }}</h2></router-link>
+    <router-link :to="urlPerfomer"><h3>{{ namePerformer }}</h3></router-link>
     <div class="icon">
       <box-icon name='right-arrow' class="playMusic" type='solid' color='#ffffff' @click="handleClick"></box-icon>
     </div>
@@ -42,7 +42,7 @@ const handleClick = async () => {
 </template>
 
 <style scoped>
-h2 {
+h3 {
   font-weight: normal;
 }
 

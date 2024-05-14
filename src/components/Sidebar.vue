@@ -12,7 +12,7 @@ import Playlist from "@/components/Playlist.vue";
       <button class="menu-btn" id="menu-close">
         <box-icon name='log-out-circle' type='solid' ></box-icon>
       </button>
-      <p>AudioSphere</p>
+      <router-link to="/"><p>AudioSphere</p></router-link>
     </div>
 
     <div class="menu">

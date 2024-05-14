@@ -50,6 +50,9 @@ const searchQuery = async () => {
                     :name-song="item.name_music" :name-performance="item.name"
         />
       </div>
+      <div class="items" v-else-if="searchData.length === 0" style="margin-top: -10px; display: flex; justify-content: center; align-items: center;">
+        <h4 style="color: white;">Треков не найдено</h4>
+      </div>
       <div class="items" v-else style="margin-top: -80px">
         <SearchSong v-for="item in searchData" :key="item.id"
                     :id-performance="item.id_performance" :album-cover="item.album_cover"

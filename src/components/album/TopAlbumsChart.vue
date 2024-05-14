@@ -8,17 +8,18 @@ const props = defineProps({
   albumCover: String,
   numberSet: Number,
   idAlbum: Number,
+  idPerformance: Number,
 })
 
 const url = ref(``)
 const musicByAlbum = ref([])
+const urlPerformer = ref(`/performer/${props.idPerformance}`);
 
 const getMusicByAlbum = async () => {
   try {
     url.value = `/api/music-album/${props.idAlbum}`
     const response = await axios.get(url.value)
     musicByAlbum.value = response.data
-    console.log(musicByAlbum.value)
   }
   catch (err) {
     console.error(err)
@@ -40,7 +41,7 @@ const handleClick = async () => {
       <img :src="albumCover">
       <div class="details">
         <h5>{{ nameAlbum }}</h5>
-        <p>{{ performance }}</p>
+        <router-link :to="urlPerformer">{{ performance }}</router-link>
       </div>
     </div>
     <div class="actions">
@@ -83,11 +84,16 @@ const handleClick = async () => {
   gap: 20px;
 }
 
-.container main .albums .popularAlbums .items .item .info p{
+.container main .albums .popularAlbums .items .item .info a{
   color: #919191;
   font-size: 12px;
   font-weight: bold;
   margin-top: 6px;
+  transition: .2s linear;
+}
+
+.container main .albums .popularAlbums .items .item .info a:hover{
+  color: #5773ff;
 }
 
 .container main .albums .popularAlbums .items .item .info img{

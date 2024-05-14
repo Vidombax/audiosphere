@@ -4,11 +4,11 @@ import axios from "axios";
 
 const newPerformer = ref([])
 const musicByPerformer = ref([])
-const url = ref(``)
+const url = ref(`/api/new-performer`)
 
 const fetchNewPerformer = async () => {
   try {
-    const response = await axios.get('/api/new-performer')
+    const response = await axios.get(url.value)
     newPerformer.value = response.data[0]
   }
   catch (err) {

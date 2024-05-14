@@ -59,7 +59,6 @@ onMounted(async () => {
 
 .listSongs .items {
   display: flex;
-  justify-content: space-evenly;
   align-items: center;
   flex-direction: column;
   height: 395px;
@@ -74,7 +73,7 @@ onMounted(async () => {
   height: 60vh;
 }
 
-@media screen and (min-width: 1540px) {
+@media screen and (min-width: 1550px) {
   .listSongs {
     height: 65vh;
     left: 5.8%;
@@ -94,12 +93,12 @@ onMounted(async () => {
   }
 }
 
-@media screen and (max-width: 1530px) {
+@media screen and (max-width: 1540px) {
   .listSongs {
-    width: 320px;
-    left: 7.5%;
+    width: 325px;
+    left: 7.3%;
     margin-top: 0;
-    height: 450px;
+    height: 59vh;
   }
   .blackout {
     height: 60vh;

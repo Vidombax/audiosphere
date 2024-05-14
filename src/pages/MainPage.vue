@@ -64,7 +64,7 @@ onMounted(async () => {
     <div class="music-list">
       <div class="header">
         <h5>Топ песен</h5>
-        <a href="#">Смотреть все</a>
+        <router-link to="/playlist/top-songs">Смотреть все</router-link>
       </div>
       <div class="items">
         <TopChartMusic

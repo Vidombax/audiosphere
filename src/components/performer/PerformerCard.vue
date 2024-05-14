@@ -57,27 +57,35 @@
   border-radius: 12px;
 }
 
-.genres .items .item:nth-child(1),
-.performers .popularPerformers .items .item:nth-child(1),
-.performers .newPerformers .items .item:nth-child(1){
+.item a {
+  transition: .1s linear;
+}
+
+.item a:hover {
+  color: #c6c8cc;
+}
+
+.genres .items .item:nth-child(4n+1),
+.performers .popularPerformers .items .item:nth-child(4n+1),
+.performers .newPerformers .items .item:nth-child(4n+1){
   background-color: #0D4045;
 }
 
-.genres .items .item:nth-child(2),
-.performers .popularPerformers .items .item:nth-child(2),
-.performers .newPerformers .items .item:nth-child(2){
+.genres .items .item:nth-child(4n+2),
+.performers .popularPerformers .items .item:nth-child(4n+2),
+.performers .newPerformers .items .item:nth-child(4n+2){
   background-color: #A69984;
 }
 
-.genres .items .item:nth-child(3),
-.performers .popularPerformers .items .item:nth-child(3),
-.performers .newPerformers .items .item:nth-child(3){
+.genres .items .item:nth-child(4n+3),
+.performers .popularPerformers .items .item:nth-child(4n+3),
+.performers .newPerformers .items .item:nth-child(4n+3){
   background-color: #a24c34;
 }
 
-.genres .items .item:nth-child(4),
-.performers .popularPerformers .items .item:nth-child(4),
-.performers .newPerformers .items .item:nth-child(4){
+.genres .items .item:nth-child(4n+4),
+.performers .popularPerformers .items .item:nth-child(4n+4),
+.performers .newPerformers .items .item:nth-child(4n+4){
   background-color: #5547a5;
 }
 

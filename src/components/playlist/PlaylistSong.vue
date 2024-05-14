@@ -8,7 +8,7 @@ const props = defineProps({
   albumCover: String,
   idMusic: Number,
   numberSong: Number,
-  urlApi: String
+  urlApi: String,
 })
 
 const {addToPlayerMusic} = inject('app')
@@ -29,7 +29,6 @@ const handleClick = async () => {
     <div class="icon">
       <box-icon name='right-arrow' class="playMusic" type='solid' color='#ffffff' @click="handleClick"></box-icon>
     </div>
-    <box-icon name='heart' type='solid' color='#ffffff' ></box-icon>
   </div>
 </template>
 
@@ -43,7 +42,7 @@ p {
 .item {
   display: grid;
   gap: 36px;
-  grid-template-columns:5px 50px 150px 100px 50px 40px 50px;
+  grid-template-columns:5px 50px 250px 150px 50px 40px;
   align-items: center;
   justify-content: space-between;
 }

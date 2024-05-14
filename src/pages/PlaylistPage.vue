@@ -1,26 +1,64 @@
 <script setup>
-
-
+import {useRoute} from "vue-router";
+import {inject, onMounted, ref} from "vue";
 
 import PlaylistSong from "@/components/playlist/PlaylistSong.vue";
+import axios from "axios";
 
-document.title = 'AudioSphere | Название плейлиста'
+const route = useRoute();
+
+const id = ref(route.params.id);
+const namePlaylist = ref('');
+const urlApi = ref(``);
+const dataArray = ref([]);
+const photoPlaylist = ref('/defaultPlaylistPhoto.png');
+const index = 1;
+
+if (id.value === 'top-songs') {
+  document.title = 'AudioSphere | Популярные песни';
+  namePlaylist.value = 'Популярные песни';
+  urlApi.value = `/api/popular-music-player`;
+}
+
+const getMusic = async () => {
+  try {
+    const response = await axios.get(urlApi.value);
+    dataArray.value = response.data;
+  }
+  catch (err) {
+    console.log(err);
+  }
+}
+
+const {addToPlayerMusic} = inject('app')
+
+const handleClick = async () => {
+  await addToPlayerMusic(dataArray.value[0].id, urlApi.value)
+}
+
+onMounted(async () => {
+  await getMusic()
+})
 </script>
 
 <template>
   <div class="containerPlaylist">
     <div class="playlist">
-      <img src="../assets/defaultPlaylistPhoto.png" alt="playlistImg">
+      <img :src="photoPlaylist" alt="playlistImg">
       <div class="infoPlaylist">
-        <h1>Название плейлиста</h1>
+        <h1>{{ namePlaylist }}</h1>
         <div class="buttons">
-          <button>Слушать</button>
-          <p>20 треков</p>
+          <button @click="handleClick">Слушать</button>
+          <p>{{ dataArray.length }} треков</p>
         </div>
       </div>
     </div>
     <div class="listSongs">
-      <PlaylistSong />
+      <PlaylistSong v-for="item in dataArray" :key="item.id"
+                    :duration-music="item.duration_music" :name-song="item.name_music"
+                    :id-music="item.id" :album-cover="item.album_cover"
+                    :name-performer="item.name" :url-api="urlApi" :number-song="index++"
+      />
     </div>
   </div>
 </template>

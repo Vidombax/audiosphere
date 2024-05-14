@@ -41,23 +41,29 @@ function playerInformation(index) {
     author.value = music.value[index].name;
     albumCover.value = music.value[index].album_cover;
     albumName.value = music.value[index].name_album;
-    durationMusic.value = music.value[index].duration_music
-    idMusic.value = music.value[index].id
-    idPerformer.value = music.value[index].id_performance
-    urlPerformer.value = `/performer/${idPerformer.value}`
+    durationMusic.value = music.value[index].duration_music;
+    idMusic.value = music.value[index].id;
+    idPerformer.value = music.value[index].id_performance;
+    if (idPerformer.value === undefined) {
+      idPerformer.value = music.value[index].iduser;
+    }
+    urlPerformer.value = `/performer/${idPerformer.value}`;
   }
   else {
     title.value = music.value.name_music;
     author.value = music.value.name;
     albumCover.value = music.value.album_cover;
     albumName.value = music.value.name_album;
-    durationMusic.value = music.value.duration_music
-    idMusic.value = music.value.id
-    idPerformer.value = music.value.id_performance
-    urlPerformer.value = `/performer/${idPerformer.value}`
+    durationMusic.value = music.value.duration_music;
+    idMusic.value = music.value.id;
+    idPerformer.value = music.value.id_performance;
+    if (idPerformer.value === undefined) {
+      idPerformer.value = music.value.iduser;
+    }
+    urlPerformer.value = `/performer/${idPerformer.value}`;
   }
 
-  allTimeMusic.value = Math.floor(audio.duration) * 2
+  allTimeMusic.value = Math.floor(audio.duration) * 2;
 }
 
 function increaseVariable(currentTime) {
@@ -233,8 +239,10 @@ const checkFavourite = async () => {
   try {
     const idUser = ref(Number(localStorage.getItem('id')) || 0)
     if (idUser.value !== 0) {
-      const response = await axios.get(`api/subscribe-music/${idUser.value}`)
+      // console.log(idUser.value)
+      const response = await axios.get(`/api/subscribe-music/${idUser.value}`)
       favMusic.value = response.data
+      // console.log(favMusic.value) тут какого то хрена бывает api бесоебит починить когда будет время
 
       let indexFav = ref(0)
       if (favMusic.value.length >= 1) {

@@ -15,6 +15,7 @@ const fetchNewAlbums = async () => {
   try {
     const response = await axios.get('/api/new-albums')
     newAlbums.value = response.data
+    console.log(newAlbums.value)
   }
   catch (err) {
     console.log(err)
@@ -25,6 +26,7 @@ const fetchPopularAlbums = async () => {
   try {
     const response = await axios.get('/api/popular-albums')
     popularAlbums.value = response.data
+    console.log(popularAlbums.value)
   }
   catch (err) {
     console.log(err)
@@ -43,24 +45,24 @@ onMounted(async () => {
     <div class="popularAlbums">
       <div class="header">
         <h5>Популярные альбомы</h5>
-        <a href="">Смотреть все</a>
       </div>
       <div class="items">
         <TopAlbumsChart v-for="item in popularAlbums" :key="item.id"
                         :name-album="item.name_album" :album-cover="item.album_cover"
                         :performance="item.name" :id-album="item.id_album"
+                        :id-performance="item.iduser"
         />
       </div>
     </div>
     <div class="newAlbums">
       <div class="header">
         <h5>Новые альбомы</h5>
-        <a href="">Смотреть все</a>
       </div>
       <div class="items">
         <NewAlbumsChart v-for="item in newAlbums" :key="item.id"
                         :name-album="item.name_album" :album-cover="item.album_cover"
                         :performance="item.name" :id-album="item.id_album"
+                        :id-performance="item.iduser"
         />
       </div>
     </div>
@@ -109,6 +111,9 @@ onMounted(async () => {
     display: grid;
     grid-template-columns: 1fr;
     gap: 10px;
+    overflow-y: auto;
+    height: 500px;
+    padding-right: 24px;
   }
   
   @media screen and (max-width: 1250px) {

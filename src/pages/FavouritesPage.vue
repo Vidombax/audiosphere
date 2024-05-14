@@ -149,7 +149,7 @@ button{
 .listSongs .item {
   display: grid;
   gap: 32px;
-  grid-template-columns: 5px 50px 100px 50px 50px 40px;
+  grid-template-columns: 50px 250px 100px 50px 50px 40px;
   align-items: center;
   justify-content: space-between;
 
