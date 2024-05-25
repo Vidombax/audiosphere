@@ -11,6 +11,7 @@ const fetchNewAlbums = async () => {
   try {
     const response = await axios.get('/api/new-albums')
     newAlbums.value = response.data
+    newAlbums.value.length = 8
   }
   catch (err) {
     console.log(err)

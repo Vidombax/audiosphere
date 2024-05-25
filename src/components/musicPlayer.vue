@@ -140,6 +140,7 @@ provide('musicPlayer', {
 
 .container .right-section .music-player .description{
   margin-bottom: 12px;
+  width: 379px;
 }
 
 .container .right-section .music-player .description h4{

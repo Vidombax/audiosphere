@@ -19,6 +19,7 @@ class MusicController {
             '         JOIN music_in_albums ON music.id = music_in_albums.id_music\n' +
             '         JOIN albums ON music_in_albums.id_album = albums.id_album\n' +
             '         JOIN users ON music.id_performance = users.iduser\n' +
+            'WHERE albums.is_playlist = false ' +
             'ORDER BY music.count_auditions DESC, music.count_likes DESC\n' +
             'LIMIT 5')
         res.json(music.rows)
@@ -29,6 +30,7 @@ class MusicController {
             '         JOIN music_in_albums ON music.id = music_in_albums.id_music\n' +
             '         JOIN albums ON music_in_albums.id_album = albums.id_album\n' +
             '         JOIN users ON music.id_performance = users.iduser\n' +
+            'WHERE albums.is_playlist = false ' +
             'ORDER BY music.count_auditions DESC, music.count_likes DESC')
         res.json(music.rows)
     }
@@ -37,7 +39,7 @@ class MusicController {
             '    JOIN music_in_albums ON music.id = music_in_albums.id_music\n' +
             '    JOIN albums ON music_in_albums.id_album = albums.id_album\n' +
             '    JOIN users ON music.id_performance = users.iduser\n' +
-            '    WHERE EXTRACT(MONTH FROM date_publication) = EXTRACT(MONTH FROM CURRENT_DATE)\n' +
+            '    WHERE EXTRACT(MONTH FROM date_publication) = EXTRACT(MONTH FROM CURRENT_DATE) AND albums.is_playlist = false\n' +
             'ORDER BY music.count_auditions DESC');
         res.json(music.rows[0]);
     }
@@ -73,13 +75,22 @@ class MusicController {
             '        LEFT JOIN\n' +
             '    albums ON music_in_albums.id_album = albums.id_album\n' +
             'WHERE\n' +
-            '    following_to_music.id_user = $1;', [id])
+            '    following_to_music.id_user = $1' +
+            ' AND albums.is_playlist = false;', [id])
         res.json(music.rows)
     }
     async updateMusicAuditions(req, res) {
         const id = req.body.id;
         const newCount = req.body.newCount;
-        const music = await db.query('UPDATE music SET count_auditions = $1 WHERE id= $2', [newCount, id])
+        const music = await db.query('UPDATE music SET count_auditions = $1 WHERE id = $2', [newCount, id])
+        const getAlbumId = await db.query('SELECT id_album FROM music_in_albums WHERE id_music = $1', [id])
+        const album = await db.query('UPDATE albums\n' +
+            'SET count_auditions = count_auditions + 1\n' +
+            'WHERE id_album = $1 AND EXISTS (\n' +
+            '    SELECT 1\n' +
+            '    FROM music_in_albums\n' +
+            '    WHERE id_album = $1 AND id_music = $2\n' +
+            ')', [getAlbumId.rows[0].id_album, id])
         res.json(music.rows[0])
     }
     async deleteMusic(req, res) {
@@ -89,11 +100,11 @@ class MusicController {
     }
     async getMusicBySearch(req, res) {
         const search = req.params.search;
-        const music = await db.query('SELECT music.name_music, users.name, music.id_performance, music.id, music.file_path_music, music.duration_music, albums.album_cover, albums.name_album FROM music\n' +
+        const music = await db.query('SELECT music.name_music, users.name, music.id_performance, music.id, music.file_path_music, music.duration_music, albums.id_album, albums.album_cover, albums.name_album FROM music\n' +
             '    JOIN music_in_albums ON music.id = music_in_albums.id_music\n' +
             '    JOIN albums ON music_in_albums.id_album = albums.id_album\n' +
             '    JOIN users ON music.id_performance = users.iduser\n' +
-            'WHERE LOWER(music.name_music) LIKE LOWER($1)', ['%' + search + '%']);
+            'WHERE LOWER(music.name_music) LIKE LOWER($1) AND albums.is_playlist = false', ['%' + search + '%']);
         res.json(music.rows);
     }
 }

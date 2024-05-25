@@ -20,10 +20,25 @@ if (id.value === 'top-songs') {
   urlApi.value = `/api/popular-music-player`;
 }
 
+const getPlaylist = async () => {
+  try {
+    const response = await axios.get(`/api/album/${id.value}`);
+
+    document.title = `AudioSphere | ${response.data.name_album}`;
+    namePlaylist.value = response.data.name_album;
+    urlApi.value = `/api/music-album/${id.value}`;
+    photoPlaylist.value = response.data.album_cover;
+  }
+  catch (err) {
+    console.error(err)
+  }
+}
+
 const getMusic = async () => {
   try {
     const response = await axios.get(urlApi.value);
     dataArray.value = response.data;
+    console.log(dataArray.value)
   }
   catch (err) {
     console.log(err);
@@ -37,7 +52,13 @@ const handleClick = async () => {
 }
 
 onMounted(async () => {
-  await getMusic()
+  if (id.value !== 'top-songs') {
+    await getPlaylist()
+    await getMusic()
+  }
+  else {
+    await getMusic()
+  }
 })
 </script>
 

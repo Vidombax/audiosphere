@@ -16,7 +16,11 @@ const props = defineProps({
   sendMessage: Function,
   idPerformance: Number,
   searchText: String,
+  typeSearch: String,
+  idAlbum: Number,
 })
+
+const {musicToPlaylist} = inject('createPlaylist')
 
 const urlPerfomer = ref(`/performer/${props.idPerformance}`)
 
@@ -51,13 +55,35 @@ const handleClick = async () => {
 const addToFavouriteClick = async () => {
   isAdded.value = false
   await addToFavourite(props.idMusic)
-
 }
 
 const removeFromFavouriteClick = async () => {
   isAdded.value = true
   await removeFromFavourite(props.idMusic)
 }
+
+const addToPlaylist = async () => {
+  musicToPlaylist.value.push({
+    "id_music": props.idMusic,
+    "id_album": props.idAlbum,
+  })
+  isAdded.value = false
+}
+
+// NOT WORKING
+const removeFromPlaylist = async () => {
+  let indexFav = ref(0)
+  if (musicToPlaylist.value.length >= 1) {
+    indexFav = musicToPlaylist.value.findIndex(item => item.id === props.idMusic)
+    if (indexFav !== -1) {
+      isAdded.value = false
+    }
+    else {
+      isAdded.value = true
+    }
+  }
+}
+// NOT WORKING
 
 onMounted(async () => {
   await checkFavourite()
@@ -75,12 +101,16 @@ onMounted(async () => {
         <router-link :to="urlPerfomer"><p>{{ namePerformance }}</p></router-link>
       </div>
     </div>
-    <div class="actions">
+    <div class="actions" v-if="typeSearch !== 'createPlaylist'">
       <div class="icon">
         <box-icon name='right-arrow' class="playMusic" type='solid' color='#ffffff' @click="handleClick"></box-icon>
       </div>
       <box-icon name='plus-square' v-if="isAdded" type='solid' class="addMusicToFavourite" color='#ffffff' @click="addToFavouriteClick"></box-icon>
       <box-icon name='heart' type='solid' v-else color='#ffffff' @click="removeFromFavouriteClick"></box-icon>
+    </div>
+    <div class="actions" v-else-if="typeSearch === 'createPlaylist'">
+      <box-icon name='plus-square' v-if="isAdded" type='solid' class="addMusicToFavourite" color='#ffffff' @click="addToPlaylist"></box-icon>
+      <box-icon name='heart' type='solid' v-else color='#ffffff' @click="removeFromPlaylist"></box-icon>
     </div>
   </div>
 </template>
@@ -123,7 +153,7 @@ h5 {
 .item .actions{
   display: flex;
   align-items: center;
-  gap: 50px;
+  gap: 60px;
 }
 
 .item .info p{

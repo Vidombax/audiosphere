@@ -1,6 +1,35 @@
 <script setup>
+import {onMounted, ref} from "vue";
 
 import Playlist from "@/components/Playlist.vue";
+import CreatePlaylist from "@/components/CreatePlaylist.vue";
+import axios from "axios";
+
+const isOpened = ref(false);
+const id = ref(Number(localStorage.getItem('id')));
+const playlists = ref([]);
+
+const getPlaylistsByUser = async () => {
+  try {
+    const response = await axios.get(`api/get-playlists/${id.value}`);
+    playlists.value = response.data;
+  }
+  catch (err) {
+    console.error(err)
+  }
+}
+
+const openCreatePlaylist = () => {
+  isOpened.value = true
+}
+
+const closeCreatePlaylist = () => {
+  isOpened.value = false
+}
+
+onMounted(async () => {
+  await getPlaylistsByUser()
+})
 </script>
 
 <template>
@@ -66,14 +95,17 @@ import Playlist from "@/components/Playlist.vue";
     <div class="menu">
       <h5>Плейлисты</h5>
       <ul>
-        <li>
+        <li @click="openCreatePlaylist">
           <box-icon name='plus-square' type='solid' color='#ffffff' ></box-icon>
           <p class="createNewPlaylistBtn">Создать новый</p>
         </li>
-        <Playlist />
+        <Playlist v-for="item in playlists" :key="item.id"
+                  :name-playlist="item.name_album" :id-album="item.id_album"
+        />
       </ul>
     </div>
   </aside>
+  <CreatePlaylist v-if="isOpened" :close-modal="closeCreatePlaylist"/>
 </template>
 
 <style scoped>

@@ -1,12 +1,19 @@
 <script setup>
+import {ref} from 'vue';
 
+const props = defineProps({
+  namePlaylist: String,
+  idAlbum: Number,
+})
+
+const urlPlaylist = ref(`/playlist/${props.idAlbum}`);
 </script>
 
 <template>
-  <router-link to="/playlist">
+  <router-link :to="urlPlaylist">
     <li>
       <box-icon name='caret-right-circle' type='solid' color='#ffffff' ></box-icon>
-      <p>Лучшее за 2023</p>
+      <p>{{ namePlaylist }}</p>
     </li>
   </router-link>
 </template>
