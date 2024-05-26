@@ -1,6 +1,23 @@
 <script setup>
+import {onMounted, ref} from 'vue';
+import CustomPlaylist from "@/components/main/CustomPlaylist.vue";
+import axios from "axios";
 
-import Song from "@/components/main/Song.vue";
+const playlists = ref([]);
+
+const getPlaylists = async () => {
+  try {
+    const response = await axios.get('api/get-playlists');
+    playlists.value = response.data;
+  }
+  catch (err) {
+    console.error(err);
+  }
+}
+
+onMounted(async () => {
+  await getPlaylists();
+})
 </script>
 
 <template>
@@ -10,32 +27,10 @@ import Song from "@/components/main/Song.vue";
       <a href="#">Смотреть все</a>
     </div>
     <div class="items">
-      <div class="item">
-        <div class="headerItem">
-          <a href="#">
-            <p>Название альбома</p>
-          </a>
-            <p>Ник автора</p>
-        </div>
-        <div class="songs">
-          <Song />
-          <Song />
-          <Song />
-        </div>
-      </div>
-      <div class="item">
-        <div class="headerItem">
-          <a href="#">
-            <p>Название альбома</p>
-          </a>
-            <p>Ник автора</p>
-        </div>
-        <div class="songs">
-          <Song />
-          <Song />
-          <Song />
-        </div>
-      </div>
+      <CustomPlaylist v-for="item in playlists" :key="item.id"
+                      :id-playlist="item.id_album" :id-performance="item.id_performance"
+                      :name-playlist="item.name_album" :name-user="item.name"
+      />
     </div>
   </div>
 </template>
@@ -72,42 +67,6 @@ import Song from "@/components/main/Song.vue";
   gap: 10px;
 }
 
-.customPlaylists .items .item {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  border-radius: 12px;
-}
-
-.customPlaylists .items .item {
-  border: 2px solid #5773ff;
-}
-
-.headerItem {
-  display: flex;
-  flex-direction: column;
-  width: 360px;
-  margin-bottom: 20px;
-  border-radius: 8px;
-  padding: 20px;
-  background-color: #5773ff;
-}
-
-.headerItem a {
-  font-size: large;
-  margin-bottom: 5px;
-}
-
-.songs {
-  display: flex;
-  flex-direction: column;
-  width: 360px;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
 @media screen and (min-width: 1450px) {
   .headerItem {
     width: 438px;
@@ -121,12 +80,6 @@ import Song from "@/components/main/Song.vue";
   .customPlaylists {
     width: 100%;
   }
-  .customPlaylists .items .item {
-    width: 100%;
-  }
-  .headerItem {
-    width: 100%;
-  }
 }
 
 @media screen and (max-width: 1250px) {
@@ -138,12 +91,6 @@ import Song from "@/components/main/Song.vue";
 @media screen and (max-width: 950px) {
   .customPlaylists {
     width: 98%;
-  }
-  .customPlaylists .items .item:first-child {
-    margin-bottom: 12px;
-  }
-  .customPlaylists .items .item {
-    width: 87%;
   }
 }
 </style>

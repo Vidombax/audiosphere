@@ -24,7 +24,7 @@ class PerformerController {
             '                JOIN music_in_albums ON music.id = music_in_albums.id_music\n' +
             '                JOIN albums ON music_in_albums.id_album = albums.id_album\n' +
             '                JOIN users ON music.id_performance = users.iduser\n' +
-            '                WHERE music.id_performance = $1', [id])
+            '                WHERE music.id_performance = $1 AND albums.is_playlist = false', [id])
         res.json(music.rows)
     }
     async getAlbumsByPerformer(req, res) {

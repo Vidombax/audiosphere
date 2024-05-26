@@ -1,63 +1,47 @@
 <script setup>
+  import {inject, ref} from "vue";
 
+  const props = defineProps({
+    idMusic: Number,
+    nameSong: String,
+    namePerformance: String,
+    durationSong: String,
+    idPlaylist: Number,
+    idPerformer: String,
+  })
+
+  const {addToPlayerMusic} = inject('app');
+  const urlApi = ref(`/api/music-album/${props.idPlaylist}`);
+  const urlPerformer = ref(`/performer/${props.idPerformer}`);
+
+  const handleClick = async () => {
+    await addToPlayerMusic(props.idMusic, urlApi.value);
+  }
 </script>
 
 <template>
   <div class="song">
-    <div class="imgPlay">
-      <img src="../../assets/song-3.png" class="albumImg" alt="AlbumCover">
-      <img src="../../assets/playOnImage.png" class="playMusic" style="cursor: pointer">
-    </div>
     <div class="songInfo">
-      <p>Название песни</p>
-      <p><a href="">Имя автора</a></p>
+      <p>{{ nameSong }}</p>
+      <p><router-link :to="urlPerformer">{{ namePerformance }}</router-link></p>
     </div>
-    <p class="timeSong">00:00</p>
+    <p class="timeSong">{{ durationSong }}</p>
+    <div class="icon">
+      <box-icon name='right-arrow' class="playMusic" type='solid' color='#ffffff' @click="handleClick"></box-icon>
+    </div>
   </div>
 </template>
 
 <style scoped>
 .song {
-  display: flex;
-  gap: 24px;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: 250px 50px 50px;
   align-items: center;
   margin-bottom: 16px;
 }
 
 .song:last-child {
   margin-bottom: 4px;
-}
-
-.song img {
-  width: 50px;
-  height: 50px;
-}
-
-.imgPlay {
-  position: relative;
-  transition: .1s linear;
-  border-radius: 9px;
-  height: 50px;
-}
-
-.imgPlay:hover {
-  background-color: #000000;
-}
-
-.imgPlay:hover .playMusic {
-  opacity: 1;
-}
-
-.imgPlay:hover .albumImg {
-  opacity: 0.6;
-}
-
-.playMusic {
-  position: absolute;
-  transition: .1s linear;
-  opacity: 0;
-  left: 3px;
 }
 
 .songInfo {
@@ -85,5 +69,15 @@
   color: #cfcccc;
   font-size: small;
   font-weight: bold;
+}
+
+.icon{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #32323d;
+  padding: 6px;
+  border: 2px solid #464748;
+  border-radius: 6px;
 }
 </style>

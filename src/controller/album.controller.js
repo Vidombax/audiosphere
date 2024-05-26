@@ -21,8 +21,13 @@ class AlbumController {
     }
     async getPlaylistsByUser(req, res) {
         const id = req.params.id;
-        const albums = await db.query('SELECT * FROM albums WHERE id_performance = $1', [id]);
-        res.json(albums.rows);
+        const playlists = await db.query('SELECT * FROM albums WHERE id_performance = $1', [id]);
+        res.json(playlists.rows);
+    }
+    async getPlaylists(req, res) {
+        const id = req.params.id;
+        const playlists = await db.query('SELECT albums.id_album, albums.name_album, albums.album_cover, albums.id_performance, users.name FROM albums JOIN users ON albums.id_performance = users.iduser WHERE is_playlist = true ORDER BY id_album DESC LIMIT 2');
+        res.json(playlists.rows);
     }
     async getAlbums(req, res) {
         const users = await db.query('SELECT * FROM albums');
