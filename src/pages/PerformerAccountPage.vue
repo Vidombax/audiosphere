@@ -38,6 +38,7 @@ const fetchSubscribes = async () => {
 }
 
 const url = ref(``)
+const idCurrentUser = ref(Number(localStorage.getItem('id')) || 0)
 
 const getMusicByPerformer = async () => {
   try {
@@ -137,7 +138,7 @@ onMounted(async () => {
       <img :src="data.profile_picture" alt="photoProfile">
       <h1>{{ data.name }}</h1>
     </div>
-    <div class="exit">
+    <div class="exit" v-if="data.iduser !== idCurrentUser">
         <box-icon name='plus' color='#ffffff' style="cursor: pointer" v-if="isAdded" @click="subClick"></box-icon>
         <box-icon name='heart' type='solid' v-else color='#ffffff' @click="unsubClick"></box-icon>
         <h3 v-if="isAdded">подписаться</h3>
@@ -146,7 +147,8 @@ onMounted(async () => {
   </div>
   <div class="favouritesAlbums">
     <div class="header">
-      <h4>Альбомы исполнителя</h4>
+      <h4 v-if="data.is_performance === true">Альбомы исполнителя</h4>
+      <h4 v-else>Плейлисты пользователя</h4>
     </div>
     <div class="items">
       <FavouriteAlbum v-for="item in performerAlbums" :key="item.id"
@@ -157,7 +159,8 @@ onMounted(async () => {
   </div>
   <div class="favouritesComposition">
     <div class="header">
-      <h4>Композиции автора</h4>
+      <h4 v-if="data.is_performance === true">Композиции автора</h4>
+      <h4 v-else>Любимые композиции</h4>
     </div>
     <div class="items">
       <FavouriteSong v-for="item in performerMusic" :key="item.id"

@@ -4,6 +4,7 @@ import axios from "axios";
 
 import FavouriteComposition from "@/components/account/FavouriteComposition.vue";
 import FavouritePerfomance from "@/components/account/FavouritePerfomance.vue";
+import FavouriteAlbum from "@/components/account/FavouriteAlbum.vue";
 
 const id = ref(Number(localStorage.getItem('id')))
 const data = ref([])
@@ -56,7 +57,9 @@ const getSubPerformer = async () => {
 const subPlaylist = ref([]);
 const getSubPlaylist = async () => {
   try {
-    
+    const response = await axios.get(`api/get-playlists/${id.value}`);
+    subPlaylist.value = response.data;
+    console.log(subPlaylist.value)
   }
   catch (err) {
     console.error(err)
@@ -113,12 +116,15 @@ onMounted(async () => {
   <div class="favourites">
     <div class="favouritesAlbums">
       <div class="header">
-        <h4>Любимые плейлисты</h4>
+        <h4>Ваши плейлисты</h4>
       </div>
-      <div class="items" v-if="getSubPlaylist.length > 0">
-<!--        <FavouriteAlbum />-->
+      <div class="items" v-if="subPlaylist.length > 0">
+        <FavouriteAlbum v-for="item in subPlaylist" :key="item.id"
+                        :id-album="item.id_album" :name-album="item.name_album"
+                        :album-cover="item.album_cover" :name-author="item.name"
+        />
       </div>
-      <div class="items" style="height: 220px;">
+      <div class="items" v-else style="height: 220px;">
         <h4>Плейлистов нет</h4>
       </div>
     </div>

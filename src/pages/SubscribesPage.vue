@@ -16,6 +16,11 @@ const getSubscribes = async () => {
     if (idUser.value !== 0) {
       const response = await axios.get(`/api/subscribes-performer/${idUser.value}`);
       performersSub.value = response.data;
+      console.log(performersSub.value)
+
+      const response_user = await axios.get(`/api/subscribes-user/${idUser.value}`);
+      usersSub.value = response_user.data;
+      console.log(usersSub.value)
     }
   }
   catch (err) {
@@ -46,10 +51,10 @@ onMounted(async () => {
         <h4>Пользователи на которых вы подписаны</h4>
       </div>
       <div class="items">
-        <UserItem />
-        <UserItem />
-        <UserItem />
-        <UserItem />
+        <UserItem v-for="item in usersSub" :key="item.id"
+                  :photo-profile="item.profile_picture" :name="item.name"
+                  :id-user="item.iduser"
+        />
       </div>
     </div>
   </div>

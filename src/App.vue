@@ -88,6 +88,7 @@ const playMusic = async () => {
     audio.pause()
     isPlaying.value = false
     await audio.play()
+    increaseVariable({ value: Math.round(audio.currentTime) })
   }
   catch (err) {
     console.error(err)
@@ -97,6 +98,7 @@ const playMusic = async () => {
 const stopMusic = () => {
   isPlaying.value = true
   audio.pause()
+  clearInterval(intervalId)
 }
 
 const pastComposition = () => {

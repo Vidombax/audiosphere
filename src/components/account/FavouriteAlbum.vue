@@ -53,6 +53,11 @@ img{
   color: #fff;
 }
 
+.item {
+  display: flex;
+  gap: 64px;
+}
+
 .infoSong h4 {
   margin-bottom: 8px;
 }

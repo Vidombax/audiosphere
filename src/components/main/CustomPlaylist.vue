@@ -19,7 +19,6 @@ const getMusicByPlaylist = async () => {
     const response = await axios.get(`api/music-album/${props.idPlaylist}`);
     music.value = response.data;
     music.value.length = 3;
-    console.log(music.value)
   }
   catch (err) {
     console.error(err);
