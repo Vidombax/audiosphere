@@ -13,8 +13,7 @@ class PerformerController {
         res.json(performers.rows);
     }
     async getNewPerformers(req, res) {
-        const performers = await db.query('SELECT * FROM users WHERE is_performance = true AND ' +
-            'EXTRACT(MONTH FROM date_registration) = EXTRACT(MONTH FROM CURRENT_DATE) ' +
+        const performers = await db.query('SELECT * FROM users WHERE is_performance = true ' +
             'ORDER BY iduser DESC');
         res.json(performers.rows);
     }

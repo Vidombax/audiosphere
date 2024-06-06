@@ -1,5 +1,5 @@
 <script setup>
-import {ref, provide} from "vue";
+import {ref, provide, onMounted} from "vue";
 import axios from "axios";
 
 import MusicPlayer from "@/components/musicPlayer.vue";
@@ -19,6 +19,15 @@ const currentTime = ref(0)
 
 const openApp = () => {
   visibleComponent.value = true
+}
+
+const checkAdminPage = async () => {
+  if (location.href === 'http://localhost:5173/admin') {
+    visibleComponent.value = false
+  }
+  else {
+    visibleComponent.value = true
+  }
 }
 
 const closeApp = () => {
@@ -358,6 +367,10 @@ provide('app', {
   removeFromFavourite,
   addToFavouriteClick,
   removeFromFavouriteClick,
+})
+
+onMounted(async () => {
+  await checkAdminPage()
 })
 </script>
 

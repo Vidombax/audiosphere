@@ -39,7 +39,7 @@ class MusicController {
             '    JOIN music_in_albums ON music.id = music_in_albums.id_music\n' +
             '    JOIN albums ON music_in_albums.id_album = albums.id_album\n' +
             '    JOIN users ON music.id_performance = users.iduser\n' +
-            '    WHERE EXTRACT(MONTH FROM date_publication) = EXTRACT(MONTH FROM CURRENT_DATE) AND albums.is_playlist = false\n' +
+            '    WHERE albums.is_playlist = false\n' +
             'ORDER BY music.count_auditions DESC');
         res.json(music.rows[0]);
     }
@@ -106,6 +106,18 @@ class MusicController {
             '    JOIN users ON music.id_performance = users.iduser\n' +
             'WHERE LOWER(music.name_music) LIKE LOWER($1) AND albums.is_playlist = false', ['%' + search + '%']);
         res.json(music.rows);
+    }
+    async getCommentsFromMusic(req, res) {
+        const id = req.params.id;
+        const comments = await db.query('SELECT comments.id_user, comments.id_music, comments.comment, users.profile_picture, users.name FROM comments JOIN users ON comments.id_user = users.iduser WHERE comments.id_music = $1 ORDER BY id DESC', [id]);
+        res.json(comments.rows);
+    }
+    async createComment(req, res) {
+        const id_music = req.body.idMusic;
+        const comment = req.body.comment;
+        const id_user = req.body.idUser;
+        const new_comment = await db.query('INSERT INTO comments (id_user, id_music, comment) VALUES ($1, $2, $3)', [id_user, id_music, comment]);
+        res.json('comment create');
     }
 }
 

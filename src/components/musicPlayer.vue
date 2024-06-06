@@ -1,6 +1,7 @@
 <script setup>
 import {ref, provide, inject, defineEmits, onMounted} from "vue";
 import ListSongs from "@/components/main/ListSongs.vue";
+import ListComments from "@/components/ListComments.vue";
 
 const props = defineProps({
   title: String,
@@ -17,6 +18,7 @@ const props = defineProps({
 })
 
 const listSongsOpen = ref(false)
+const listCommentsOpen = ref(false)
 const isLooping = ref(true)
 
 const {stopMusic, playMusic, pastComposition, nextComposition, loopMusic,
@@ -39,6 +41,14 @@ const closeListSongs = () => {
   listSongsOpen.value = false
 }
 
+const openCommentSong = () => {
+  listCommentsOpen.value = true
+}
+
+const closeCommentSong = () => {
+  listCommentsOpen.value = false
+}
+
 const loopMusicBtn = () => {
   isLooping.value = isLooping.value !== true;
 }
@@ -54,7 +64,10 @@ const changeTime = async () => {
 
 provide('musicPlayer', {
   closeListSongs,
-  listSongsOpen
+  listSongsOpen,
+  closeCommentSong,
+  listCommentsOpen,
+  props
 })
 </script>
 
@@ -63,6 +76,7 @@ provide('musicPlayer', {
     <p hidden>{{ idPerformer }}</p>
     <p hidden>{{ idMusic }}</p>
     <ListSongs v-if="listSongsOpen"/>
+    <ListComments v-if="listCommentsOpen"/>
     <div class="top-section">
       <div class="header">
         <h5>Плеер</h5>
@@ -93,6 +107,7 @@ provide('musicPlayer', {
         <box-icon name='last-page' @click="nextComposition" color='#ffffff' style="cursor: pointer;"></box-icon>
         <box-icon name='plus' color='#ffffff' style="cursor: pointer" v-if="isAdded" @click="addToFavouriteClick(idMusic)"></box-icon>
         <box-icon name='heart' type='solid' v-else color='#ffffff' @click="removeFromFavouriteClick(idMusic)"></box-icon>
+        <box-icon name='chat' type='solid' color='#ffffff' @click="openCommentSong"></box-icon>
       </div>
       <div class="volumeChange">
         <box-icon name='volume-low' color='#ffffff' ></box-icon>

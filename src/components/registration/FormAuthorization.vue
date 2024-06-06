@@ -2,11 +2,12 @@
 import {inject, ref} from 'vue'
 import axios from "axios";
 
-const {openRegistrationForm} = inject('registr')
 
 defineProps({
   button: Object,
 })
+
+const {openRegistrationForm} = inject('registr')
 
 const username = ref( localStorage.getItem('username') || '')
 const password = ref(localStorage.getItem('password') || '')

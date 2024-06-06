@@ -17,6 +17,7 @@ import SettingsPage from "@/pages/SettingsPage.vue";
 import PlaylistPage from "@/pages/PlaylistPage.vue";
 import RegistrationPage from "@/pages/RegistrationPage.vue";
 import PerformerAccountPage from "@/pages/PerformerAccountPage.vue";
+import AdminPage from "@/pages/AdminPage.vue";
 
 const app = createApp(App)
 
@@ -33,6 +34,7 @@ const routes = [
     { path: '/playlist/:id', name: 'Playlist', component: PlaylistPage },
     { path: '/registration', name: 'Registration', component: RegistrationPage },
     { path: '/performer/:id', name: 'Performer', component: PerformerAccountPage },
+    { path: '/admin', name: 'Admin', component: AdminPage },
 ]
 
 app.component('box-icons');

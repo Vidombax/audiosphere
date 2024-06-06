@@ -41,7 +41,7 @@ class AlbumController {
     async getNewAlbums(req, res) {
         const albums = await db.query('SELECT albums.id_album, albums.name_album, albums.album_cover, users.name, users.iduser FROM albums\n' +
             '    JOIN users ON albums.id_performance = users.iduser\n' +
-            'WHERE EXTRACT(MONTH FROM albums.date_publication) = EXTRACT(MONTH FROM CURRENT_DATE) AND is_playlist = false ORDER BY albums.id_album DESC')
+            'WHERE is_playlist = false ORDER BY albums.id_album DESC')
         res.json(albums.rows);
     }
     async getMusicByAlbum(req, res) {

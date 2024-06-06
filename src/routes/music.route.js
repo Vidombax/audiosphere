@@ -14,5 +14,7 @@ router.get("/music-tag/:tag", MusicController.getMusicByTag);
 router.put("/music-auditions", MusicController.updateMusicAuditions);
 router.delete("/music/:id", MusicController.deleteMusic);
 router.get("/music-search/:search", MusicController.getMusicBySearch);
+router.get("/get-comments/:id", MusicController.getCommentsFromMusic);
+router.post("/create-comment", MusicController.createComment);
 
 export default router;
