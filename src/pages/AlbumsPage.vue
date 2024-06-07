@@ -15,7 +15,6 @@ const fetchNewAlbums = async () => {
   try {
     const response = await axios.get('/api/new-albums')
     newAlbums.value = response.data
-    console.log(newAlbums.value)
   }
   catch (err) {
     console.log(err)
@@ -26,7 +25,6 @@ const fetchPopularAlbums = async () => {
   try {
     const response = await axios.get('/api/popular-albums')
     popularAlbums.value = response.data
-    console.log(popularAlbums.value)
   }
   catch (err) {
     console.log(err)

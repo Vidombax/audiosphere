@@ -1,8 +1,15 @@
 import db from '../db.js';
+import {json} from "express";
 
 class MusicController {
     async createMusic(req, res) {
-
+        const nameMusic = req.body.nameMusic;
+        const fileMusic = req.body.fileMusic;
+        const durationMusic = req.body.durationMusic;
+        const idPerformance = req.body.idPerformance;
+        const idTag = req.body.idTag;
+        const music = await db.query('INSERT INTO music (name_music, file_path_music, id_performance, count_auditions, count_likes, count_comments, id_tag, duration_music) VALUES ($1, $2, $3, 0, 0, 0, $4, $5) RETURNING id', [nameMusic, fileMusic, idPerformance, idTag, durationMusic]);
+        res.json(music.rows[0]);
     }
     async getMusic(req, res) {
         const music = await db.query('SELECT * FROM music');
@@ -109,7 +116,7 @@ class MusicController {
     }
     async getCommentsFromMusic(req, res) {
         const id = req.params.id;
-        const comments = await db.query('SELECT comments.id_user, comments.id_music, comments.comment, users.profile_picture, users.name FROM comments JOIN users ON comments.id_user = users.iduser WHERE comments.id_music = $1 ORDER BY id DESC', [id]);
+        const comments = await db.query('SELECT comments.id_user, comments.id_music, comments.comment, users.profile_picture, users.name FROM comments JOIN users ON comments.id_user = users.iduser WHERE comments.id_music = $1 ORDER BY id ASC', [id]);
         res.json(comments.rows);
     }
     async createComment(req, res) {

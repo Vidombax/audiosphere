@@ -83,6 +83,7 @@ const subscribesToPerformer = async (idPerformer) => {
         idUser: idUser.value,
         idPerformer: idPerformer
       })
+      countFollower.value.count++;
     }
     else {
       console.log('Пользователь не зарегистрирован')
@@ -98,6 +99,7 @@ const unsubscribesToPerformer = async (idPerformer) => {
     const idUser = ref(Number(localStorage.getItem('id')) || 0)
     if (idUser.value !== 0) {
       await axios.delete(`/api/unsub-performer/${idUser.value}/${idPerformer}`)
+      countFollower.value.count--;
     }
     else {
       console.log('Пользователь не зарегистрирован')

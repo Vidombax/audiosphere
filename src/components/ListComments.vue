@@ -38,6 +38,16 @@ const createComment = async () => {
 onMounted(async () => {
   idMusic.value = props.idMusic;
   await loadCommentSong();
+
+  const textarea = document.querySelector('textarea');
+  if (textarea) {
+    textarea.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        createComment();
+      }
+    });
+  }
 })
 </script>
 

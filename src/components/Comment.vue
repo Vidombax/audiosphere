@@ -13,7 +13,7 @@ const urlUser = ref(`/performer/${props.idUser}`);
 
 <template>
 <div class="comment">
-  <img :src="imgUser" alt="logo">
+  <router-link :to="urlUser"><img :src="imgUser" alt="logo"></router-link>
   <div class="info">
     <router-link :to="urlUser">{{ nameUser }}</router-link>
     <p>{{ commentUser }}</p>
@@ -32,7 +32,7 @@ const urlUser = ref(`/performer/${props.idUser}`);
   left: 7%;
 }
 
-img {
+a img {
   width: 42px;
   height: 42px;
 }

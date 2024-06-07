@@ -4,6 +4,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import {createRouter, createWebHistory} from 'vue-router'
 import 'boxicons'
+import VueTheMask from 'vue-the-mask'
 
 import MainPage from "@/pages/MainPage.vue";
 import GenrePage from "@/pages/GenrePage.vue";
@@ -45,4 +46,5 @@ const router = createRouter({
 })
 
 app.use(router)
+app.use(VueTheMask)
 app.mount('#app')

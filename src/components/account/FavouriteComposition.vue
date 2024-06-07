@@ -11,10 +11,16 @@ const props = defineProps({
 
 const id = ref(Number(localStorage.getItem('id')))
 
-const {addToPlayerMusic} = inject('app')
+const {addToPlayerMusic} = inject('app');
+const {isAuthor} = inject('account')
 
 const handleClick = async () => {
-  await addToPlayerMusic(props.idMusic, `api/subscribe-music/${id.value}`)
+  if (isAuthor.value !== true) {
+    await addToPlayerMusic(props.idMusic, `api/subscribe-music/${id.value}`)
+  }
+  else {
+    await addToPlayerMusic(props.idMusic, `api/music-performer/${id.value}`)
+  }
 }
 </script>
 
@@ -62,7 +68,7 @@ img{
   justify-content: center;
 }
 
-.favouritesComposition .items .item img {
+.item img {
   width: 50px;
   height: 50px;
   border-radius: 6px;

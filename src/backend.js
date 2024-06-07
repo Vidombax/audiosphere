@@ -32,6 +32,17 @@ const storagePlaylist = multer.diskStorage({
 
 const uploadPlaylist = multer({ storage: storagePlaylist });
 
+const storageMusic = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, './public/music');
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+    }
+});
+
+const uploadMusic = multer({ storage: storageMusic });
+
 app.use(express.json())
 
 app.use('/', userRouter)
@@ -46,6 +57,10 @@ app.post('/upload-photo', upload.single('file'), (req, res) => {
 });
 
 app.post('/upload-photo-playlist', uploadPlaylist.single('file'), (req, res) => {
+    res.json({ filename: req.file.filename });
+});
+
+app.post('/upload-music', uploadMusic.single('file'), (req, res) => {
     res.json({ filename: req.file.filename });
 });
 

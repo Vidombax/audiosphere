@@ -16,11 +16,9 @@ const getSubscribes = async () => {
     if (idUser.value !== 0) {
       const response = await axios.get(`/api/subscribes-performer/${idUser.value}`);
       performersSub.value = response.data;
-      console.log(performersSub.value)
 
       const response_user = await axios.get(`/api/subscribes-user/${idUser.value}`);
       usersSub.value = response_user.data;
-      console.log(usersSub.value)
     }
   }
   catch (err) {

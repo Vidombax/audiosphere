@@ -108,8 +108,8 @@ onMounted(async () => {
   }
   .listSongs .items {
     width: 295px;
-    height: 500px;
-    margin-top: -10px;
+    height: 400px;
+    margin-top: -40px;
   }
 }
 </style>

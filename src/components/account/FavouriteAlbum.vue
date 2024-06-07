@@ -55,7 +55,15 @@ img{
 
 .item {
   display: flex;
-  gap: 64px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.infoSong {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .infoSong h4 {
@@ -66,7 +74,7 @@ img{
   font-weight: normal;
 }
 
-.favouritesAlbums .items .item img {
+.item img {
   width: 50px;
   height: 50px;
   border-radius: 6px;

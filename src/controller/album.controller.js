@@ -2,9 +2,11 @@ import db from '../db.js';
 
 class AlbumController {
     async createAlbum(req, res) {
-        //const name = req.body.name
-        //const newUser = await db.query('INSERT INTO albums () VALUES () RETURNING *', [])
-        //res.json(newUser.rows[0])
+        const name = req.body.nameAlbum;
+        const albumPictures = req.body.albumPictures;
+        const idPerformer = req.body.idPerformer;
+        const newAlbum = await db.query('INSERT INTO albums (name_album, album_cover, count_followers, count_auditions, is_playlist, id_performance, date_publication) VALUES ($1, $2, 0, 0, false, $3, CURRENT_DATE) RETURNING id_album', [name, albumPictures, idPerformer]);
+        res.json(newAlbum.rows[0]);
     }
     async createPlaylist(req, res) {
         const name = req.body.name;
@@ -21,7 +23,7 @@ class AlbumController {
     }
     async getPlaylistsByUser(req, res) {
         const id = req.params.id;
-        const playlists = await db.query('SELECT * FROM albums WHERE id_performance = $1', [id]);
+        const playlists = await db.query('SELECT * FROM albums WHERE id_performance = $1 AND is_playlist = true', [id]);
         res.json(playlists.rows);
     }
     async getPlaylists(req, res) {

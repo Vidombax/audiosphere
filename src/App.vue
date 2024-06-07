@@ -280,10 +280,8 @@ const checkFavourite = async () => {
   try {
     const idUser = ref(Number(localStorage.getItem('id')) || 0)
     if (idUser.value !== 0) {
-      // console.log(idUser.value)
       const response = await axios.get(`/api/subscribe-music/${idUser.value}`)
       favMusic.value = response.data
-      // console.log(favMusic.value) тут какого то хрена бывает api бесоебит починить когда будет время
 
       let indexFav = ref(0)
       if (favMusic.value.length >= 1) {
