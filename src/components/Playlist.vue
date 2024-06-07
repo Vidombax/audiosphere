@@ -23,7 +23,7 @@ const urlPlaylist = ref(`/playlist/${props.idAlbum}`);
   margin-bottom: 12px;
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 8px;
   cursor: pointer;
 }
 .container .sidebar .menu ul li p{

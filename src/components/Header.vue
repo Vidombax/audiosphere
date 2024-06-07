@@ -17,12 +17,18 @@ const searchQuery = async () => {
     console.error(err);
   }
 }
+
+const openSideBar = () => {
+  document.getElementsByClassName('sidebar')[0].classList.add('asideAdaptive');
+  document.getElementsByClassName('sidebarNotFixed')[0].classList.add('asideAdaptive');
+  document.getElementById('menu-close').style.display = 'flex';
+}
 </script>
 
 <template>
   <header>
     <div class="nav-links">
-      <button class="menu-btn" id="menu-open">
+      <button class="menu-btn" id="menu-open" @click="openSideBar">
         <box-icon name='menu'  color='#ffffff'></box-icon>
       </button>
       <router-link to="/subscribes">
@@ -65,7 +71,11 @@ const searchQuery = async () => {
   </header>
 </template>
 
-<style scoped>
+<style>
+.asideAdaptive {
+  display: block !important;
+}
+
 .container main header{
   display: flex;
   align-items: center;
@@ -178,9 +188,6 @@ const searchQuery = async () => {
     gap: 10px;
     margin-left: -10%;
   }
-  .container main header .search {
-    width: 30%;
-  }
 }
 
 @media screen and (max-width: 700px) {
@@ -198,6 +205,10 @@ const searchQuery = async () => {
 @media screen and (max-width: 650px) {
   .container main header .nav-links button {
     display: flex;
+  }
+  .search-items {
+    left: 1%;
+    width: 480px;
   }
 }
 </style>

@@ -27,6 +27,12 @@ const closeCreatePlaylist = () => {
   isOpened.value = false
 }
 
+const closeSideBar = () => {
+  document.getElementsByClassName('sidebar')[0].classList.remove('asideAdaptive');
+  document.getElementsByClassName('sidebarNotFixed')[0].classList.remove('asideAdaptive');
+  document.getElementById('menu-close').style.display = 'none';
+}
+
 onMounted(async () => {
   await getPlaylistsByUser()
 })
@@ -38,8 +44,8 @@ onMounted(async () => {
   </div>
   <aside class="sidebar">
     <div class="logo">
-      <button class="menu-btn" id="menu-close">
-        <box-icon name='log-out-circle' type='solid' ></box-icon>
+      <button class="menu-btn" id="menu-close" @click="closeSideBar">
+        <box-icon name='log-out-circle' type='solid' color='#ffffff'></box-icon>
       </button>
       <router-link to="/"><p>AudioSphere</p></router-link>
     </div>
@@ -172,6 +178,9 @@ p {
     background-color: #18181d;
     display: flex;
   }
+  .sidebar .menu-btn {
+    display: none;
+  }
 }
 
 @media screen and (max-width: 650px) {
@@ -180,6 +189,26 @@ p {
   }
   .sidebar {
     display: none;
+    background-color: #202026;
+    width: 100%;
+  }
+  .sidebar .logo {
+    margin-bottom: 40px;
+  }
+  .sidebar .menu-btn {
+    display: flex;
+  }
+  .sidebar .logo a p {
+    font-size: x-large;
+  }
+  .sidebar .menu {
+    margin-bottom: 80px;
+  }
+  .sidebar .menu ul li {
+    margin-bottom: 24px;
+  }
+  .sidebar .menu ul li p {
+    font-size: large;
   }
 }
 </style>

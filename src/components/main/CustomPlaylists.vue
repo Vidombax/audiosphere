@@ -90,7 +90,7 @@ onMounted(async () => {
 
 @media screen and (max-width: 950px) {
   .customPlaylists {
-    width: 98%;
+    width: 100%;
   }
 }
 </style>

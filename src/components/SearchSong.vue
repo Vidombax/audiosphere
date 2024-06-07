@@ -4,6 +4,7 @@ import axios from "axios";
 
 const {addToPlayerMusic, addToFavourite, removeFromFavourite} = inject('app')
 const isAdded = ref(true)
+const isAddedToPlaylist = ref(true)
 const favMusic = ref([])
 
 const props = defineProps({
@@ -20,7 +21,7 @@ const props = defineProps({
   idAlbum: Number,
 })
 
-const {musicToPlaylist} = inject('createPlaylist')
+const { musicToPlaylist } = (inject('createPlaylist') ?? { musicToPlaylist: null });
 
 const urlPerfomer = ref(`/performer/${props.idPerformance}`)
 
@@ -67,7 +68,7 @@ const addToPlaylist = async () => {
     "id_music": props.idMusic,
     "id_album": props.idAlbum,
   })
-  isAdded.value = false
+  isAddedToPlaylist.value = false
 }
 
 // NOT WORKING
@@ -76,10 +77,10 @@ const removeFromPlaylist = async () => {
   if (musicToPlaylist.value.length >= 1) {
     indexFav = musicToPlaylist.value.findIndex(item => item.id === props.idMusic)
     if (indexFav !== -1) {
-      isAdded.value = false
+      isAddedToPlaylist.value = false
     }
     else {
-      isAdded.value = true
+      isAddedToPlaylist.value = true
     }
   }
 }
@@ -109,7 +110,7 @@ onMounted(async () => {
       <box-icon name='heart' type='solid' v-else color='#ffffff' @click="removeFromFavouriteClick"></box-icon>
     </div>
     <div class="actions" v-else-if="typeSearch === 'createPlaylist'">
-      <box-icon name='plus-square' v-if="isAdded" type='solid' class="addMusicToFavourite" color='#ffffff' @click="addToPlaylist"></box-icon>
+      <box-icon name='plus-square' v-if="isAddedToPlaylist" type='solid' class="addMusicToFavourite" color='#ffffff' @click="addToPlaylist"></box-icon>
       <box-icon name='heart' type='solid' v-else color='#ffffff' @click="removeFromPlaylist"></box-icon>
     </div>
   </div>

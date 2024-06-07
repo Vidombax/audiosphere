@@ -143,10 +143,10 @@ onMounted(async () => {
 
 @media screen and (max-width: 1450px) {
   .container main .playlist .music-list {
-    width: 50%;
+    width: 60%;
   }
   .container main .playlist .genres {
-    width: 30%;
+    width: 40%;
   }
   .container main .trending {
     justify-content: normal;
@@ -166,24 +166,12 @@ onMounted(async () => {
   .container main .playlist .genres {
     width: 98%;
   }
-  .container main .trending {
-    width: 140%;
-  }
-  .container main .trending img {
-    width: 300px;
-  }
 }
 
 @media screen and (max-width: 950px) {
   .playlist {
     flex-direction: column;
     width: 100%;
-  }
-  .trending {
-    width: 100%;
-  }
-  .trending img {
-    display: none;
   }
 }
 

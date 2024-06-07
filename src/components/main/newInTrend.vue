@@ -153,4 +153,22 @@ onMounted(async () => {
   padding: 10px;
   border-radius: 50%;
 }
+
+@media screen and (max-width: 1250px) {
+  .container main .trending {
+    width: 140%;
+  }
+  .container main .trending img {
+    width: 300px;
+  }
+}
+
+@media screen and (max-width: 950px) {
+  .trending {
+    width: 100%;
+  }
+  .trending img {
+    display: none;
+  }
+}
 </style>

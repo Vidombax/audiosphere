@@ -104,12 +104,19 @@ onMounted(async () => {
   }
 }
 
+@media screen and (max-width: 1250px) {
+  .customPlaylists .items .item {
+    width: 75%;
+  }
+}
+
 @media screen and (max-width: 950px) {
   .customPlaylists .items .item:first-child {
     margin-bottom: 12px;
   }
   .customPlaylists .items .item {
-    width: 87%;
+    width: 100%;
+    margin-left: -5px;
   }
 }
 </style>

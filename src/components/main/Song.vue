@@ -80,4 +80,10 @@
   border: 2px solid #464748;
   border-radius: 6px;
 }
+
+@media screen and (max-width: 1250px) {
+  .song {
+    grid-template-columns: 100px 40px 35px;
+  }
+}
 </style>

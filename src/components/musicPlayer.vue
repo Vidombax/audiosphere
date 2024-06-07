@@ -62,6 +62,11 @@ const changeTime = async () => {
   await changeAudioTime(audioTime.value)
 }
 
+const closePlayerAdaptive = () => {
+  document.getElementsByClassName('music-player')[0].classList.remove('displayPlayer');
+  document.getElementsByClassName('player-shortcut')[0].classList.remove('player-shortcutClose');
+}
+
 provide('musicPlayer', {
   closeListSongs,
   listSongsOpen,
@@ -78,6 +83,7 @@ provide('musicPlayer', {
     <ListSongs v-if="listSongsOpen"/>
     <ListComments v-if="listCommentsOpen"/>
     <div class="top-section">
+      <box-icon name='right-arrow-alt' color='#ffffff' @click="closePlayerAdaptive" class="arrowAdaptive"></box-icon>
       <div class="header">
         <h5>Плеер</h5>
         <box-icon name='playlist' type='solid' color='#ffffff' style="cursor: pointer;" @click="openListSongs()"></box-icon>
@@ -298,11 +304,17 @@ input[type="range"]::-ms-thumb {
     width: 350px;
     display: flex;
   }
+  .arrowAdaptive {
+    display: none;
+  }
 }
 
 @media screen and (max-width: 1250px) {
   .music-player {
     display: none;
+  }
+  .arrowAdaptive {
+    display: block;
   }
 }
 </style>

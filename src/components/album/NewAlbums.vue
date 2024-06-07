@@ -147,14 +147,14 @@ onMounted(async () => {
 
 @media screen and (max-width: 1450px) {
   .newAlbums {
-    width: 82.5%;
+    width: 100%;
   }
   .newAlbums .items .item .albumImg {
     width: 100px;
     height: 100px;
   }
   .newAlbums .items {
-    grid-template-columns: repeat(4, 26%);
+    grid-template-columns: repeat(4, 22%);
   }
   .newAlbums .items .item p {
     font-size: small;
@@ -170,7 +170,7 @@ onMounted(async () => {
     height: 130px;
   }
   .newAlbums .items {
-    grid-template-columns: repeat(4, 26%);
+    grid-template-columns: repeat(4, 22%);
   }
 }
 

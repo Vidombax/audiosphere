@@ -347,6 +347,11 @@ const removeFromFavourite = async (idMusic) => {
   }
 }
 
+const openPlayerAdaptive = () => {
+  document.getElementsByClassName('music-player')[0].classList.add('displayPlayer');
+  document.getElementsByClassName('player-shortcut')[0].classList.add('player-shortcutClose');
+}
+
 provide('app', {
   closeApp,
   openApp,
@@ -393,6 +398,9 @@ onMounted(async () => {
           :id-performer="idPerformer"
           :url-performer="urlPerformer"
       />
+      <div class="player-shortcut" @click="openPlayerAdaptive">
+        <p>Плеер</p>
+      </div>
     </div>
   </div>
   <div class="containerRegistration" v-else>
@@ -438,15 +446,54 @@ img{
   justify-content: center;
 }
 
+.player-shortcut {
+  background-color: #5773ff;
+  rotate: -90deg;
+  position: fixed;
+  z-index: 1;
+  padding: 8px;
+  cursor: pointer;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  right: 0;
+  top: 40%;
+  margin-right: -31px;
+  width: 100px;
+}
+
+.player-shortcut p {
+  color: #ffffff;
+  font-size: large;
+  text-align: center;
+}
+
+.displayPlayer {
+  display: flex !important;
+  position: fixed !important;
+  right: 0 !important;
+  top: 12% !important;
+  box-shadow: 1px 5px 5px #919191;
+}
+
+.player-shortcutClose {
+  display: none !important;
+}
+
 @media screen and (max-width: 1540px) {
   .container main {
-    margin-left: 20px;
+    margin-left: 50px;
+  }
+  .player-shortcut {
+    display: none;
   }
 }
 
 @media screen and (max-width: 1250px) {
   .container main {
     margin-left: 25%;
+  }
+  .player-shortcut {
+    display: block;
   }
 }
 
@@ -469,6 +516,8 @@ img{
 @media screen and (max-width: 750px) {
   .right-section {
     width: 120px;
+    position: absolute;
+    right: 0;
   }
 }
 
@@ -482,11 +531,6 @@ img{
 @media screen and (max-width: 650px) {
   .container main {
     margin-left: 0;
-  }
-  .right-section {
-    position: relative;
-    left: -20%;
-    width: 50px;
   }
 }
 </style>

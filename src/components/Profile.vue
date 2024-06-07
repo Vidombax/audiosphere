@@ -94,8 +94,8 @@ onMounted(async () => {
 
 @media screen and (max-width: 700px) {
   .container .right-section .profile {
-    position: relative;
-    left: 80%;
+    position: absolute;
+    right: 0;
   }
 }
 </style>

@@ -30,6 +30,9 @@ const searchQuery = async () => {
 const publishPlaylist = async () => {
   try {
     if (musicToPlaylist.value.length !== 0) {
+      if (fileName.value === '') {
+        fileName.value = '/public/defaultPlaylistPhoto.png';
+      }
       const response = await axios.post('api/add-playlist', {
         name: namePlaylist.value,
         cover: fileName.value,
@@ -133,7 +136,7 @@ provide('createPlaylist', {
     position: fixed;
     left: 30%;
     width: 40%;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     background-color: #202026;
     padding: 20px 12px 12px 20px;
@@ -141,6 +144,7 @@ provide('createPlaylist', {
     border-radius: 12px;
     flex-direction: column;
     z-index: 1;
+    box-shadow: 1px 5px 5px #919191;
   }
 
   .header {
@@ -222,6 +226,9 @@ provide('createPlaylist', {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    position: relative;
+    top: 20%;
+    left: 0;
     background-color: #202026;
     width: 500px;
     height: 300px;
