@@ -6,6 +6,8 @@ const router = new Router();
 router.post("/user", UserController.createUser);
 router.post("/user-application", UserController.createApplication);
 router.get("/user", UserController.getUsers);
+router.get("/users-by-select/:type", UserController.getUsersBySelect);
+router.get("/users-by-nick/:name", UserController.getUserByNickname);
 router.get("/user/:id", UserController.getOneUser);
 router.get("/user/:username/:password", UserController.checkUserAuthorization);
 router.put("/update-user", UserController.updateUser);

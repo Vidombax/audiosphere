@@ -14,7 +14,17 @@ class UserController {
         res.json(newApplication.rows[0]);
     }
     async getUsers(req, res) {
-        const users = await db.query('SELECT * FROM users');
+        const users = await db.query('SELECT * FROM users ORDER BY iduser ASC');
+        res.json(users.rows);
+    }
+    async getUsersBySelect(req, res) {
+        const type = req.params.type;
+        const users = await db.query('SELECT * FROM users ORDER BY is_performance = $1 DESC, iduser ASC', [type])
+        res.json(users.rows);
+    }
+    async getUserByNickname(req, res) {
+        const name = req.params.name;
+        const users = await db.query('SELECT * FROM users WHERE LOWER(users.name) LIKE LOWER($1) ORDER BY iduser ASC', ['%' + name + '%']);
         res.json(users.rows);
     }
     async getOneUser(req, res) {

@@ -4,7 +4,6 @@
 
   const props = defineProps({
     nameAlbum: String,
-    nameAuthor: String,
     albumCover: String,
     idAlbum: Number,
   })
@@ -37,7 +36,6 @@
     <img :src="albumCover" alt="albumCover">
     <div class="infoSong">
       <h4>{{ nameAlbum }}</h4>
-      <h5>{{ nameAuthor }}</h5>
     </div>
     <div class="icon">
       <box-icon name='right-arrow' class="playMusic" type='solid' color='#ffffff' @click="handleClick"></box-icon>

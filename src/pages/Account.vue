@@ -84,6 +84,7 @@ const createApplication = async () => {
     alert('Заявка отправлена!');
     isOpened.value = false;
     isAuthor.value = true;
+    location.reload();
   }
   catch (err) {
     console.error(err)
@@ -311,7 +312,7 @@ onMounted(async () => {
     <div class="items" v-if="performerAlbums.length > 0">
       <FavouriteAlbum v-for="item in performerAlbums" :key="item.id"
                       :id-album="item.id_album" :name-album="item.name_album"
-                      :album-cover="item.album_cover" :name-author="item.name"
+                      :album-cover="item.album_cover"
       />
     </div>
     <div class="items" v-else style="height: 100px; display: flex; justify-content: center; align-items: center; flex-direction: column">
@@ -523,6 +524,8 @@ input {
   padding: 12px;
   border-radius: 8px;
   color: #fff;
+  font-size: medium;
+  margin-bottom: 0;
 }
 
 .favouritesComposition .items,

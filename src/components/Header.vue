@@ -41,7 +41,8 @@ const openSideBar = () => {
     </div>
     <div class="search-items" v-if="searchText">
       <div class="items" v-if="searchData.length > 3" style="margin-top: 110px">
-        <SearchSong v-for="item in searchData" :key="item.id"
+        <SearchSong
+            v-for="item in searchData" :key="item.id"
                     :id-performance="item.id_performance" :album-cover="item.album_cover"
                     :id-music="item.id" :search-text="searchText"
                     :duration-music="item.duration_music"
@@ -116,6 +117,8 @@ const openSideBar = () => {
   border: none;
   outline: none;
   color: #fff;
+  font-size: small;
+  margin-bottom: 0;
 }
 
 .container main header .nav-links button {

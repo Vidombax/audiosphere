@@ -39,7 +39,9 @@ class PerformerController {
         res.json(performer.rows[0]);
     }
     async updatePerformer(req, res) {
-
+        const id = req.body.id;
+        const performer = await db.query('UPDATE users SET is_performance = true WHERE iduser = $1', [id]);
+        res.json('user updated');
     }
     async countFollowers(req, res) {
         const id = req.params.id;
@@ -50,6 +52,16 @@ class PerformerController {
         const id = req.params.id;
         const performer = await db.query('DELETE FROM users WHERE id = $1 AND is_performance = true', [id]);
         res.json(performer.rows[0]);
+    }
+    async getApplications(req, res) {
+        const applications = await db.query('SELECT performer_application.id, performer_application.date_application, performer_application.application_status, users.name, users.mail, performer_application.id_user FROM performer_application JOIN users on users.iduser = performer_application.id_user ORDER BY performer_application.application_status DESC');
+        res.json(applications.rows);
+    }
+    async approveApplication(req, res) {
+        const status = req.body.status;
+        const id = req.body.id;
+        const application = await db.query('UPDATE performer_application SET application_status = $1 WHERE id_user = $2', [status, id]);
+        res.json('status updated');
     }
 }
 

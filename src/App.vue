@@ -120,7 +120,15 @@ const pastComposition = () => {
     audio = new Audio(music.value[index].file_path_music);
     audio.volume = volume.value
     isPlaying.value = false
-    audio.play()
+    audio.onloadedmetadata = () => {
+
+      audio.currentTime = 0;
+      currentTime.value = audio.currentTime
+      allTimeMusic.value = Math.round(audio.duration)
+      increaseVariable(currentTime);
+
+      audio.play();
+    };
     audio.onended = () => endTrack()
   }
 }
@@ -135,7 +143,15 @@ const nextComposition = () => {
     audio = new Audio(music.value[index].file_path_music);
     audio.volume = volume.value
     isPlaying.value = false
-    audio.play()
+    audio.onloadedmetadata = () => {
+
+      audio.currentTime = 0;
+      currentTime.value = audio.currentTime
+      allTimeMusic.value = Math.round(audio.duration)
+      increaseVariable(currentTime);
+
+      audio.play();
+    };
     audio.onended = () => endTrack()
   }
 }
@@ -389,14 +405,16 @@ onMounted(async () => {
       <MusicPlayer
           :all-time-music="allTimeMusic"
           :current-time="currentTime"
-          :title="title" :author="author"
-          :album-cover="albumCover" :album-name="albumName"
+          :title="title"
+          :author="author"
+          :album-cover="albumCover"
+          :album-name="albumName"
           :duration-music="durationMusic"
-          @volume-change="volumeChanged"
           :id-music="idMusic"
           :is-added="isAdded"
           :id-performer="idPerformer"
           :url-performer="urlPerformer"
+          @volume-change="volumeChanged"
       />
       <div class="player-shortcut" @click="openPlayerAdaptive">
         <p>Плеер</p>

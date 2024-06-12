@@ -44,3 +44,14 @@ box-icon{
     cursor: pointer;
 }
 
+select {
+    width: 150px;
+    background-color: #1d1d1d;
+    border: 1px solid #464748;
+    outline: none;
+    padding: 6px;
+    border-radius: 8px;
+    color: #fff;
+    text-align: center;
+    font-size: 20px;
+}

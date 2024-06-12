@@ -1,9 +1,15 @@
 <script setup>
 import {onMounted, ref} from "vue";
+import UsersAdmin from "@/components/admin/UsersAdmin.vue";
+import AlbumsAdmin from "@/components/admin/AlbumsAdmin.vue";
+import MusicAdmin from "@/components/admin/MusicAdmin.vue";
+import ApplicationAdmin from "@/components/admin/ApplicationAdmin.vue";
 
 defineProps({
   button: Object,
-})
+});
+
+document.title = 'Панель администратора | Пользователи'
 
 const username = ref( '');
 const password = ref('');
@@ -29,6 +35,38 @@ const authorization = () => {
     location.reload();
   }
 }
+
+const selectedTable = ref(0);
+const points = document.getElementsByClassName('aside-point');
+
+const handlerTableClick = (e) => {
+  for (let i = 0; i < points.length; i++) {
+    points[i].classList.remove('selected-point');
+  }
+  switch (e.target.innerText) {
+    case 'Пользователи':
+      selectedTable.value = 0;
+      e.target.classList.add('selected-point');
+      document.title = 'Панель администратора | Пользователи'
+      break;
+    case 'Альбомы':
+      selectedTable.value = 1;
+      e.target.classList.add('selected-point');
+      document.title = 'Панель администратора | Альбомы'
+      break;
+    case 'Музыка':
+      selectedTable.value = 2;
+      e.target.classList.add('selected-point');
+      document.title = 'Панель администратора | Музыка'
+      break;
+    case 'Заявка на получение статуса':
+      selectedTable.value = 3;
+      e.target.classList.add('selected-point');
+      document.title = 'Панель администратора | Заявки'
+      break;
+  }
+}
+
 onMounted(async () => {
   await checkAuthorization();
 })
@@ -49,11 +87,22 @@ onMounted(async () => {
     </form>
   </div>
   <div v-else>
-
+    <div class="aside">
+      <p class="selected-point aside-point" id="usersAdmin" @click="handlerTableClick">Пользователи</p>
+      <p class="aside-point" id="albumsAdmin" @click="handlerTableClick">Альбомы</p>
+      <p class="aside-point" id="musicAdmin" @click="handlerTableClick">Музыка</p>
+      <p class="aside-point" id="performerAdmin" @click="handlerTableClick">Заявка на получение статуса</p>
+    </div>
+    <div class="main">
+      <UsersAdmin v-if="selectedTable === 0" />
+      <AlbumsAdmin v-else-if="selectedTable === 1" />
+      <MusicAdmin v-else-if="selectedTable === 2" />
+      <ApplicationAdmin v-else-if="selectedTable === 3" />
+    </div>
   </div>
 </template>
 
-<style scoped>
+<style>
 p {
   color: white;
 }
@@ -74,7 +123,7 @@ input {
   padding: 24px;
 }
 
-.header {
+.form .header {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -83,17 +132,17 @@ input {
   margin-bottom: 1rem;
 }
 
-.header p {
+.form .header p {
   font-size: 28px;
   font-weight: bold;
 }
 
-.header img {
+.form .header img {
   width: 32px;
   height: 32px;
 }
 
-.items {
+.form .items {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -102,20 +151,20 @@ input {
   margin-top: 10px;
 }
 
-.items p:first-child {
+.form .items p:first-child {
   font-size: 20px;
   font-weight: bold;
   margin-bottom: 1rem;
 }
 
-.items p:last-child {
+.form .items p:last-child {
   font-size: small;
   color: #494949;
   cursor: pointer;
   transition: color 0.3s;
 }
 
-.items p:last-child:hover {
+.form .items p:last-child:hover {
   color: #939090;
 }
 
@@ -128,6 +177,10 @@ input {
   margin-bottom: 2rem;
 }
 
+select {
+  width: 200px;
+}
+
 button {
   padding: 14px;
   background-color: #5773ff;
@@ -138,5 +191,55 @@ button {
   font-weight: bold;
   cursor: pointer;
   margin-bottom: 0.5rem;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  width: 1000px;
+  height: 800px;
+  margin-left: 15rem;
+}
+
+.main .header-main {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  gap: 24px;
+}
+
+.table .header-table h2 {
+  width: 180px;
+  text-align: center;
+}
+
+.aside {
+  position: fixed;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: #18181d;
+  top: 0;
+  gap: 1px;
+  height: 100%;
+}
+
+.aside p {
+  font-size: larger;
+  transition: .3s linear;
+  width: 100%;
+  padding: 36px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.selected-point {
+  background-color: #476a8a;
+}
+
+.aside p:hover {
+  background-color: #5a7fa1;
 }
 </style>

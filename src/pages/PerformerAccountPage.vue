@@ -155,7 +155,7 @@ onMounted(async () => {
     <div class="items">
       <FavouriteAlbum v-for="item in performerAlbums" :key="item.id"
                       :album-cover="item.album_cover" :id-album="item.id_album"
-                      :name-album="item.name_album" :name-author="item.name"
+                      :name-album="item.name_album"
       />
     </div>
   </div>
