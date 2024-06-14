@@ -57,6 +57,11 @@ class PerformerController {
         const applications = await db.query('SELECT performer_application.id, performer_application.date_application, performer_application.application_status, users.name, users.mail, performer_application.id_user FROM performer_application JOIN users on users.iduser = performer_application.id_user ORDER BY performer_application.application_status DESC');
         res.json(applications.rows);
     }
+    async getApplicationsBySelector(req, res) {
+        const type = req.params.type;
+        const applications = await db.query('SELECT performer_application.id, performer_application.date_application, performer_application.application_status, users.name, users.mail, performer_application.id_user FROM performer_application JOIN users on users.iduser = performer_application.id_user ORDER BY performer_application.application_status = $1 DESC', [type]);
+        res.json(applications.rows);
+    }
     async approveApplication(req, res) {
         const status = req.body.status;
         const id = req.body.id;

@@ -4,6 +4,7 @@ import UsersAdmin from "@/components/admin/UsersAdmin.vue";
 import AlbumsAdmin from "@/components/admin/AlbumsAdmin.vue";
 import MusicAdmin from "@/components/admin/MusicAdmin.vue";
 import ApplicationAdmin from "@/components/admin/ApplicationAdmin.vue";
+import SubscribeAdmin from "@/components/admin/SubscribeAdmin.vue";
 
 defineProps({
   button: Object,
@@ -49,7 +50,7 @@ const handlerTableClick = (e) => {
       e.target.classList.add('selected-point');
       document.title = 'Панель администратора | Пользователи'
       break;
-    case 'Альбомы':
+    case 'Альбомы & Плейлисты':
       selectedTable.value = 1;
       e.target.classList.add('selected-point');
       document.title = 'Панель администратора | Альбомы'
@@ -59,10 +60,15 @@ const handlerTableClick = (e) => {
       e.target.classList.add('selected-point');
       document.title = 'Панель администратора | Музыка'
       break;
-    case 'Заявка на получение статуса':
+    case 'Заявки на получение статуса':
       selectedTable.value = 3;
       e.target.classList.add('selected-point');
       document.title = 'Панель администратора | Заявки'
+      break;
+    case 'Подписки':
+      selectedTable.value = 4;
+      e.target.classList.add('selected-point');
+      document.title = 'Панель администратора | Подписки'
       break;
   }
 }
@@ -89,15 +95,17 @@ onMounted(async () => {
   <div v-else>
     <div class="aside">
       <p class="selected-point aside-point" id="usersAdmin" @click="handlerTableClick">Пользователи</p>
-      <p class="aside-point" id="albumsAdmin" @click="handlerTableClick">Альбомы</p>
+      <p class="aside-point" id="albumsAdmin" @click="handlerTableClick">Альбомы & Плейлисты</p>
       <p class="aside-point" id="musicAdmin" @click="handlerTableClick">Музыка</p>
-      <p class="aside-point" id="performerAdmin" @click="handlerTableClick">Заявка на получение статуса</p>
+      <p class="aside-point" id="performerAdmin" @click="handlerTableClick">Заявки на получение статуса</p>
+      <p class="aside-point" id="subscribeAdmin" @click="handlerTableClick">Подписки</p>
     </div>
     <div class="main">
       <UsersAdmin v-if="selectedTable === 0" />
       <AlbumsAdmin v-else-if="selectedTable === 1" />
       <MusicAdmin v-else-if="selectedTable === 2" />
       <ApplicationAdmin v-else-if="selectedTable === 3" />
+      <SubscribeAdmin  v-else-if="selectedTable === 4"/>
     </div>
   </div>
 </template>

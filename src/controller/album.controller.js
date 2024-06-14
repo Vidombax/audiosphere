@@ -32,8 +32,19 @@ class AlbumController {
         res.json(playlists.rows);
     }
     async getAlbums(req, res) {
-        const users = await db.query('SELECT * FROM albums');
-        res.json(users.rows);
+        const albums = await db.query('SELECT albums.id_album, albums.name_album, users.name, albums.date_publication, albums.is_playlist FROM albums JOIN users ON albums.id_performance = users.iduser ORDER BY albums.id_album ASC');
+        res.json(albums.rows);
+    }
+    async getAlbumsSelector(req, res) {
+        const type = Boolean(req.params.type);
+        if (type === true) {
+            const albums = await db.query('SELECT albums.id_album, albums.name_album, users.name, albums.date_publication, albums.is_playlist FROM albums JOIN users ON albums.id_performance = users.iduser ORDER BY albums.is_playlist DESC');
+            res.json(albums.rows);
+        }
+        else {
+            const albums = await db.query('SELECT albums.id_album, albums.name_album, users.name, albums.date_publication, albums.is_playlist FROM albums JOIN users ON albums.id_performance = users.iduser ORDER BY albums.is_playlist = false');
+            res.json(albums.rows);
+        }
     }
     async getOneAlbum(req, res) {
         const id = req.params.id;

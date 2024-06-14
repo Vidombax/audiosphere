@@ -9,6 +9,7 @@ router.post("/add-music-playlist", AlbumController.addMusicToPlaylist);
 router.get("/get-playlists/:id", AlbumController.getPlaylistsByUser);
 router.get("/get-playlists", AlbumController.getPlaylists);
 router.get("/album", AlbumController.getAlbums);
+router.get("/get-albums-selector/:type", AlbumController.getAlbumsSelector);
 router.get("/album/:id", AlbumController.getOneAlbum);
 router.get("/new-albums", AlbumController.getNewAlbums);
 router.get("/popular-albums", AlbumController.getPopularAlbums);

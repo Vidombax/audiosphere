@@ -171,8 +171,9 @@ const openSideBar = () => {
 
 @media screen and (max-width: 1550px) {
   .search-items {
-    left: 33.4%;
-    width: 550px;
+    left: 34.5%;
+    top: 9.4%;
+    width: 525px;
   }
 }
 

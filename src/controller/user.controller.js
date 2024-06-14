@@ -83,6 +83,22 @@ class UserController {
         const update = await db.query('UPDATE users SET count_follower = count_follower - 1 WHERE iduser = $1', [idPerformer]);
         res.json(subscribe.rows[0]);
     }
+    async getAllSubscribes(req, res) {
+        const subscribes = await db.query('SELECT \n' +
+            '    followings.id, \n' +
+            '    followings.date_following, \n' +
+            '    follower.name AS follower, \n' +
+            '    following.name AS following\n' +
+            'FROM \n' +
+            '    followings\n' +
+            'JOIN \n' +
+            '    users AS follower ON followings.id_follower = follower.iduser\n' +
+            'JOIN \n' +
+            '    users AS following ON followings.id_following = following.iduser\n' +
+            'ORDER BY \n' +
+            '    followings.id ASC;\n');
+        res.json(subscribes.rows);
+    }
     async getSubscribes(req, res) {
         const idUser = req.params.user;
         const idPerformer = req.params.performer;

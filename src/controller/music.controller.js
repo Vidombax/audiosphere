@@ -31,6 +31,21 @@ class MusicController {
             'LIMIT 5')
         res.json(music.rows)
     }
+    async getMusicForAdmin(req, res) {
+        const music = await db.query('SELECT music.id, music.name_music, music.count_auditions, users.name, music.duration_music, tags.name_tag FROM users JOIN music ON users.iduser = music.id_performance JOIN tags ON music.id_tag = tags.id ORDER BY music.id ASC');
+        res.json(music.rows);
+    }
+    async getMusicBySelector(req, res) {
+        const type = req.params.type;
+        if (type === '1') {
+            const music = await db.query('SELECT music.id, music.name_music, music.count_auditions, users.name, music.duration_music, tags.name_tag FROM users JOIN music ON users.iduser = music.id_performance JOIN tags ON music.id_tag = tags.id ORDER BY music.count_auditions DESC');
+            res.json(music.rows);
+        }
+        else {
+            const music = await db.query('SELECT music.id, music.name_music, music.count_auditions, users.name, music.duration_music, tags.name_tag FROM users JOIN music ON users.iduser = music.id_performance JOIN tags ON music.id_tag = tags.id ORDER BY music.id ASC');
+            res.json(music.rows);
+        }
+    }
     async getPopularMusicToPlayer(req, res) {
         const music = await db.query('SELECT music.id, music.name_music, music.count_auditions, music.id_performance, music.count_likes, albums.album_cover, albums.name_album, users.name, music.duration_music, music.file_path_music\n' +
             'FROM music\n' +

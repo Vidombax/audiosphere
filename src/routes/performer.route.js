@@ -14,6 +14,7 @@ router.put("/performer", PerformersController.updatePerformer);
 router.get("/follower-count/:id", PerformersController.countFollowers);
 router.delete("/performer/:id", PerformersController.deletePerformer);
 router.get("/applications", PerformersController.getApplications);
+router.get("/selector-applications/:type", PerformersController.getApplicationsBySelector);
 router.put("/application", PerformersController.approveApplication);
 
 export default router;
