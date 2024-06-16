@@ -134,6 +134,7 @@ provide('createPlaylist', {
   .modalPlaylist {
     display: flex;
     position: fixed;
+    top: -10%;
     left: 30%;
     width: 40%;
     justify-content: center;
@@ -169,6 +170,8 @@ provide('createPlaylist', {
     padding: 12px;
     border-radius: 8px;
     color: #fff;
+    margin-bottom: 0;
+    font-size: medium;
   }
 
   label {
@@ -220,6 +223,8 @@ provide('createPlaylist', {
     border: none;
     outline: none;
     color: #fff;
+    margin-bottom: 0;
+    font-size: medium;
   }
 
   .search-items {

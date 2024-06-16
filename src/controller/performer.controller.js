@@ -68,6 +68,11 @@ class PerformerController {
         const application = await db.query('UPDATE performer_application SET application_status = $1 WHERE id_user = $2', [status, id]);
         res.json('status updated');
     }
+    async removePerformerStatus(req, res) {
+        const id = req.params.id;
+        const performer = await db.query('UPDATE users SET is_performance = false WHERE iduser = $1', [id]);
+        res.json('user updated');
+    }
 }
 
 export default new PerformerController();

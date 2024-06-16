@@ -1,10 +1,13 @@
 <script setup>
-import {onMounted, ref} from "vue";
+import {onMounted, provide, ref} from "vue";
 import UsersAdmin from "@/components/admin/UsersAdmin.vue";
 import AlbumsAdmin from "@/components/admin/AlbumsAdmin.vue";
 import MusicAdmin from "@/components/admin/MusicAdmin.vue";
 import ApplicationAdmin from "@/components/admin/ApplicationAdmin.vue";
 import SubscribeAdmin from "@/components/admin/SubscribeAdmin.vue";
+import ModalAdmin from "@/components/admin/ModalAdmin.vue";
+import GenreAdmin from "@/components/admin/GenreAdmin.vue";
+import AddModalAdmin from "@/components/admin/AddModalAdmin.vue";
 
 defineProps({
   button: Object,
@@ -39,6 +42,8 @@ const authorization = () => {
 
 const selectedTable = ref(0);
 const points = document.getElementsByClassName('aside-point');
+const typeDetaliztaion = ref('пользователя');
+const idObject = ref(0);
 
 const handlerTableClick = (e) => {
   for (let i = 0; i < points.length; i++) {
@@ -49,29 +54,67 @@ const handlerTableClick = (e) => {
       selectedTable.value = 0;
       e.target.classList.add('selected-point');
       document.title = 'Панель администратора | Пользователи'
+      typeDetaliztaion.value = 'пользователя'
       break;
     case 'Альбомы & Плейлисты':
       selectedTable.value = 1;
       e.target.classList.add('selected-point');
       document.title = 'Панель администратора | Альбомы'
+      typeDetaliztaion.value = 'альбома'
       break;
     case 'Музыка':
       selectedTable.value = 2;
       e.target.classList.add('selected-point');
       document.title = 'Панель администратора | Музыка'
+      typeDetaliztaion.value = 'музыки'
       break;
     case 'Заявки на получение статуса':
       selectedTable.value = 3;
       e.target.classList.add('selected-point');
       document.title = 'Панель администратора | Заявки'
+      typeDetaliztaion.value = 'заявки'
       break;
     case 'Подписки':
       selectedTable.value = 4;
       e.target.classList.add('selected-point');
       document.title = 'Панель администратора | Подписки'
+      typeDetaliztaion.value = 'подписки'
+      break;
+    case 'Жанры':
+      selectedTable.value = 5;
+      e.target.classList.add('selected-point');
+      document.title = 'Панель администратора | Жанры'
+      typeDetaliztaion.value = 'жанра'
       break;
   }
 }
+
+const isOpened = ref(false);
+const isOpenedAddModal = ref(false);
+const openModal = (id) => {
+  isOpened.value = true;
+  idObject.value = id;
+}
+
+const openAddModal = (id) => {
+  isOpenedAddModal.value = true;
+  idObject.value = id;
+}
+
+const closeModal = () => {
+  isOpened.value = false;
+}
+
+const closeAddModal = () => {
+  isOpenedAddModal.value = false;
+}
+
+provide('admin', {
+  openModal,
+  closeModal,
+  openAddModal,
+  closeAddModal
+})
 
 onMounted(async () => {
   await checkAuthorization();
@@ -99,6 +142,7 @@ onMounted(async () => {
       <p class="aside-point" id="musicAdmin" @click="handlerTableClick">Музыка</p>
       <p class="aside-point" id="performerAdmin" @click="handlerTableClick">Заявки на получение статуса</p>
       <p class="aside-point" id="subscribeAdmin" @click="handlerTableClick">Подписки</p>
+      <p class="aside-point" id="subscribeAdmin" @click="handlerTableClick">Жанры</p>
     </div>
     <div class="main">
       <UsersAdmin v-if="selectedTable === 0" />
@@ -106,7 +150,17 @@ onMounted(async () => {
       <MusicAdmin v-else-if="selectedTable === 2" />
       <ApplicationAdmin v-else-if="selectedTable === 3" />
       <SubscribeAdmin  v-else-if="selectedTable === 4"/>
+      <GenreAdmin v-else-if="selectedTable === 5"/>
     </div>
+    <ModalAdmin v-if="isOpened"
+                :id-object="idObject"
+                :type-detaliztaion="typeDetaliztaion"
+                :selected-table="selectedTable"
+    />
+    <AddModalAdmin v-if="isOpenedAddModal"
+                   :id-object="idObject"
+                   :selected-table="selectedTable"
+    />
   </div>
 </template>
 

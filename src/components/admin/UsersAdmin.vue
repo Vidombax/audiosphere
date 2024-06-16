@@ -72,6 +72,7 @@
         <th>Кол-во подписчиков</th>
         <th>Дата регистрации</th>
         <th>Верификация</th>
+        <th>Детализация</th>
       </tr>
       <ItemAdminTableUsers v-for="item in users" v-if="users !== null"
         :key="item.id"
@@ -102,7 +103,7 @@
     width: 100%;
   }
   th {
-    font-size: larger;
+    font-size: large;
   }
   tr, td {
     padding: 5px;

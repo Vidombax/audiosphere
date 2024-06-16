@@ -30,7 +30,18 @@ const storagePlaylist = multer.diskStorage({
     }
 });
 
+const storageGenre = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, './public/tagPictures');
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+    }
+});
+
 const uploadPlaylist = multer({ storage: storagePlaylist });
+
+const uploadGenre = multer({ storage: storageGenre });
 
 const storageMusic = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -57,6 +68,10 @@ app.post('/upload-photo', upload.single('file'), (req, res) => {
 });
 
 app.post('/upload-photo-playlist', uploadPlaylist.single('file'), (req, res) => {
+    res.json({ filename: req.file.filename });
+});
+
+app.post('/upload-photo-genre', uploadGenre.single('file'), (req, res) => {
     res.json({ filename: req.file.filename });
 });
 
