@@ -92,10 +92,12 @@
     padding: 12px;
     border-radius: 8px;
     color: #fff;
+    margin-bottom: 0;
+    font-size: medium;
   }
 
   input[type=text]:nth-child(3) {
-    width: 59px;
+    width: 65px;
   }
 
   .inputFile {

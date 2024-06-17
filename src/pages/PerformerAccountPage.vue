@@ -141,10 +141,12 @@ onMounted(async () => {
       <h1>{{ data.name }}</h1>
     </div>
     <div class="exit" v-if="data.iduser !== idCurrentUser">
+      <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;" v-if="idCurrentUser !== 0">
         <box-icon name='plus' color='#ffffff' style="cursor: pointer" v-if="isAdded" @click="subClick"></box-icon>
         <box-icon name='heart' type='solid' v-else color='#ffffff' @click="unsubClick"></box-icon>
         <h3 v-if="isAdded">подписаться</h3>
         <h3 v-else>отписаться</h3>
+      </div>
     </div>
   </div>
   <div class="favouritesAlbums">
@@ -301,4 +303,4 @@ img{
   color: #919191;
   font-size: 12px;
 }
-</style scoped>
+</style>

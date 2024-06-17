@@ -24,7 +24,6 @@ onMounted(async () => {
   <div class="customPlaylists">
     <div class="header">
       <h4>Слушайте друг друга</h4>
-      <a href="#">Смотреть все</a>
     </div>
     <div class="items">
       <CustomPlaylist v-for="item in playlists" :key="item.id"
@@ -91,6 +90,9 @@ onMounted(async () => {
 @media screen and (max-width: 950px) {
   .customPlaylists {
     width: 100%;
+  }
+  .customPlaylists .items {
+    grid-template-columns: 1fr;
   }
 }
 </style>

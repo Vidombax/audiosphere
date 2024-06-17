@@ -176,7 +176,7 @@ onMounted(async () => {
 
 @media screen and (max-width: 950px) {
   .newAlbums {
-    width: 98%;
+    width: 100%;
   }
   .newAlbums .items {
     grid-template-columns: repeat(2, 50%);

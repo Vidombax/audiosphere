@@ -18,6 +18,8 @@ const searchQuery = async () => {
   }
 }
 
+const id = ref(Number(localStorage.getItem('id')) || 0)
+
 const openSideBar = () => {
   document.getElementsByClassName('sidebar')[0].classList.add('asideAdaptive');
   document.getElementsByClassName('sidebarNotFixed')[0].classList.add('asideAdaptive');
@@ -31,7 +33,7 @@ const openSideBar = () => {
       <button class="menu-btn" id="menu-open" @click="openSideBar">
         <box-icon name='menu'  color='#ffffff'></box-icon>
       </button>
-      <router-link to="/subscribes">
+      <router-link to="/subscribes" v-if="id !== 0">
         <p>Подписки</p>
       </router-link>
     </div>

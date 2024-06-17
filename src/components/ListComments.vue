@@ -4,6 +4,7 @@ import Comment from "@/components/Comment.vue";
 import axios from "axios";
 
 const {closeCommentSong, props} = inject('musicPlayer');
+const {Toast} = inject('app');
 
 const idMusic = ref(0);
 const comment = ref('');
@@ -19,16 +20,26 @@ const loadCommentSong = async () => {
   }
 }
 
+const id = ref(Number(localStorage.getItem('id')) || 0);
+
 const createComment = async () => {
   try {
-    const response = await axios.post(`api/create-comment`, {
-      idMusic: idMusic.value,
-      comment: comment.value,
-      idUser: Number(localStorage.getItem('id')),
-    });
-    comments.value = [];
-    comment.value = '';
-    await loadCommentSong();
+    if (id.value !== 0) {
+      const response = await axios.post(`api/create-comment`, {
+        idMusic: idMusic.value,
+        comment: comment.value,
+        idUser: Number(localStorage.getItem('id')),
+      });
+      comments.value = [];
+      comment.value = '';
+      await loadCommentSong();
+    }
+    else {
+      Toast.fire({
+        icon: "error",
+        title: "Авторизируйтесь или выберите композицию!"
+      })
+    }
   }
   catch (err) {
     console.error(err);

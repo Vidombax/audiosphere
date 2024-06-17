@@ -58,6 +58,8 @@ const removeFromFavouriteClick = async () => {
   await removeFromFavourite(props.idMusic)
 }
 
+const id = ref(Number(localStorage.getItem('id')) || 0);
+
 onMounted(async () => {
   await checkFavourite()
 })
@@ -80,8 +82,10 @@ onMounted(async () => {
       <div class="icon">
         <box-icon name='right-arrow' class="playMusic" type='solid' color='#ffffff' @click="handleClick"></box-icon>
       </div>
-      <box-icon name='plus-square' v-if="isAdded" type='solid' class="addMusicToFavourite" color='#ffffff' @click="addToFavouriteClick"></box-icon>
-      <box-icon name='heart' type='solid' v-else color='#ffffff' @click="removeFromFavouriteClick"></box-icon>
+      <div v-if="id !== 0">
+        <box-icon name='plus-square' v-if="isAdded" type='solid' class="addMusicToFavourite" color='#ffffff' @click="addToFavouriteClick"></box-icon>
+        <box-icon name='heart' type='solid' v-else color='#ffffff' @click="removeFromFavouriteClick"></box-icon>
+      </div>
     </div>
   </div>
 </template>

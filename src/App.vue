@@ -6,6 +6,7 @@ import MusicPlayer from "@/components/musicPlayer.vue";
 import Sidebar from "@/components/Sidebar.vue";
 import Profile from "@/components/Profile.vue";
 import Header from "@/components/Header.vue";
+import Swal from "sweetalert2";
 
 const visibleComponent = ref(true)
 let index = 0
@@ -320,9 +321,7 @@ const checkFavourite = async () => {
 }
 
 const addToFavouriteClick = async (idMusic) => {
-  isAdded.value = false
-  await addToFavourite(idMusic)
-
+    await addToFavourite(idMusic)
 }
 
 const removeFromFavouriteClick = async (idMusic) => {
@@ -333,6 +332,7 @@ const removeFromFavouriteClick = async (idMusic) => {
 const addToFavourite = async (idMusic) => {
   try {
     const idUser = ref(Number(localStorage.getItem('id')) || 0)
+    isAdded.value = false
     if (idUser.value !== 0) {
       await axios.post(`api/add-favourite`, {
         idUser: idUser.value,
@@ -340,7 +340,11 @@ const addToFavourite = async (idMusic) => {
       })
     }
     else {
-      console.log('Пользователь не зарегистрирован')
+      console.log('Пользователь не зарегистрирован');
+      Toast.fire({
+        icon: "error",
+        title: "Авторизируйтесь чтобы добавить трек в избранное!"
+      });
     }
   }
   catch (err) {
@@ -368,6 +372,18 @@ const openPlayerAdaptive = () => {
   document.getElementsByClassName('player-shortcut')[0].classList.add('player-shortcutClose');
 }
 
+const Toast = Swal.mixin({
+  toast: true,
+  position: "top-end",
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.onmouseenter = Swal.stopTimer;
+    toast.onmouseleave = Swal.resumeTimer;
+  }
+});
+
 provide('app', {
   closeApp,
   openApp,
@@ -386,6 +402,7 @@ provide('app', {
   removeFromFavourite,
   addToFavouriteClick,
   removeFromFavouriteClick,
+  Toast
 })
 
 onMounted(async () => {
@@ -508,7 +525,7 @@ img{
 
 @media screen and (max-width: 1250px) {
   .container main {
-    margin-left: 25%;
+    margin-left: 10%;
   }
   .player-shortcut {
     display: block;
@@ -517,7 +534,7 @@ img{
 
 @media screen and (max-width: 950px) {
   .container main {
-    margin-left: 30%;
+    margin-left: 10%;
     width: 95%;
   }
   .right-section {

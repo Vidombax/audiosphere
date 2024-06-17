@@ -76,7 +76,7 @@ onMounted(async () => {
              :name-performance="item.name"
              :album-cover="item.album_cover"
              :duration-music="item.duration_music"
-            :id-performance="item.id_performance"
+             :id-performance="item.id_performance"
         />
       </div>
     </div>
@@ -111,6 +111,7 @@ onMounted(async () => {
   padding: 20px;
   border-radius: 6px;
   width: 45%;
+  height: 420px;
 }
 
 .container main .playlist .genres .header,
@@ -129,7 +130,6 @@ onMounted(async () => {
 
 .container main .playlist .genres .items{
   display: grid;
-  grid-template-columns: 1fr 1fr;
   gap: 10px;
 }
 
@@ -139,6 +139,15 @@ onMounted(async () => {
   color: #fff;
   border-radius: 6px;
   width: 80%;
+}
+
+@media screen and (min-width: 1250px) {
+  .playlist .genres .items {
+    grid-template-columns: 1fr 1fr;
+  }
+  .container main .playlist {
+    flex-direction: row;
+  }
 }
 
 @media screen and (max-width: 1450px) {
@@ -166,12 +175,26 @@ onMounted(async () => {
   .container main .playlist .genres {
     width: 98%;
   }
+  .playlist .genres .items {
+    grid-template-columns: 1fr;
+  }
+  .container main .playlist {
+    flex-direction: column;
+  }
 }
 
 @media screen and (max-width: 950px) {
   .playlist {
     flex-direction: column;
     width: 100%;
+    margin-left: -150px;
+  }
+  .container main .playlist .music-list {
+    width: 60%;
+  }
+  .container main .playlist .genres {
+    width: 60%;
+    height: 600px;
   }
 }
 
@@ -180,7 +203,7 @@ onMounted(async () => {
     width: 100%;
   }
   .container main .playlist {
-    width: 100%;
+    width: 180%;
   }
 }
 </style>

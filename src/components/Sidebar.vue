@@ -6,7 +6,7 @@ import CreatePlaylist from "@/components/CreatePlaylist.vue";
 import axios from "axios";
 
 const isOpened = ref(false);
-const id = ref(Number(localStorage.getItem('id')));
+const id = ref(Number(localStorage.getItem('id')) || 0);
 const playlists = ref([]);
 
 const getPlaylistsByUser = async () => {
@@ -80,7 +80,7 @@ onMounted(async () => {
       </ul>
     </div>
     <div class="menu">
-      <h5>Библиотека</h5>
+      <h5 v-if="id !== 0">Библиотека</h5>
       <ul>
 <!--        <li>-->
 <!--          <box-icon name='album' type='solid' color='#ffffff' ></box-icon>-->
@@ -88,7 +88,7 @@ onMounted(async () => {
 <!--            <p>Ваши альбомы</p>-->
 <!--          </router-link>-->
 <!--        </li>-->
-        <li>
+        <li v-if="id !== 0">
           <box-icon name='heart' type='solid' color='#ffffff' ></box-icon>
           <router-link to="/favourites">
             <p>Любимые</p>
@@ -98,7 +98,7 @@ onMounted(async () => {
       </ul>
     </div>
 
-    <div class="menu">
+    <div class="menu"v-if="id !== 0">
       <h5>Плейлисты</h5>
       <ul>
         <li @click="openCreatePlaylist">

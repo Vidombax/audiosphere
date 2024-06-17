@@ -62,6 +62,8 @@ const changeTime = async () => {
   await changeAudioTime(audioTime.value)
 }
 
+const id = ref(Number(localStorage.getItem('id')) || 0)
+
 const closePlayerAdaptive = () => {
   document.getElementsByClassName('music-player')[0].classList.remove('displayPlayer');
   document.getElementsByClassName('player-shortcut')[0].classList.remove('player-shortcutClose');
@@ -111,9 +113,11 @@ provide('musicPlayer', {
         <box-icon name='play-circle' @click="playMusic" v-if="isPlaying" color='#ffffff' style="cursor: pointer;"></box-icon>
         <box-icon name='pause-circle' @click="stopMusic" v-else color='#ffffff' style="cursor: pointer"></box-icon>
         <box-icon name='last-page' @click="nextComposition" color='#ffffff' style="cursor: pointer;"></box-icon>
-        <box-icon name='plus' color='#ffffff' style="cursor: pointer" v-if="isAdded" @click="addToFavouriteClick(idMusic)"></box-icon>
-        <box-icon name='heart' type='solid' v-else color='#ffffff' @click="removeFromFavouriteClick(idMusic)"></box-icon>
-        <box-icon name='chat' type='solid' color='#ffffff' @click="openCommentSong"></box-icon>
+        <div v-if="id !== 0" style="position: relative; top: 7.5px">
+          <box-icon name='plus' color='#ffffff' style="cursor: pointer" v-if="isAdded" @click="addToFavouriteClick(idMusic)"></box-icon>
+          <box-icon name='heart' type='solid' v-else color='#ffffff' @click="removeFromFavouriteClick(idMusic)"></box-icon>
+        </div>
+        <box-icon name='chat' v-if="id !== 0" type='solid' color='#ffffff' @click="openCommentSong"></box-icon>
       </div>
       <div class="volumeChange">
         <box-icon name='volume-low' color='#ffffff' ></box-icon>

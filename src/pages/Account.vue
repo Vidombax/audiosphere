@@ -475,10 +475,15 @@ label {
   border-radius: 12px;
   overflow-y: auto;
   position: fixed;
-  left: 15%;
-  top: 5%;
-  width: 850px;
+  left: 18%;
+  top: 10%;
+  width: 800px;
   box-shadow: 1px 5px 5px #919191;
+}
+
+.createAlbumModal input {
+  font-size: medium;
+  margin-bottom: 0;
 }
 
 .createAlbumModal .header h5 {

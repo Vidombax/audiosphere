@@ -60,7 +60,7 @@ onMounted(async () => {
 <template>
   <div class="performersContainer">
     <PerformersAfisha />
-    <div class="genres">
+    <div class="genres" v-if="idUser !== 0">
       <div class="header">
         <h5>Ваши любимые исполнители</h5>
         <router-link to="/account">Смотреть все</router-link>

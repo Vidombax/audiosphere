@@ -30,7 +30,7 @@ class PerformerController {
         const id = req.params.id;
         const albums = await db.query('SELECT albums.id_album, albums.name_album, albums.album_cover, users.name, users.iduser FROM albums\n' +
             'JOIN public.users on users.iduser = albums.id_performance\n' +
-            'WHERE id_performance = $1', [id])
+            'WHERE id_performance = $1 AND albums.is_playlist = false', [id])
         res.json(albums.rows)
     }
     async getOnePerformer(req, res) {

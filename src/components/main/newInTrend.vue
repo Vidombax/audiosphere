@@ -3,6 +3,7 @@ import {inject, onMounted, ref} from "vue";
 import axios from "axios";
 
 const music = ref([])
+const id = ref(Number(localStorage.getItem('id')) || 0);
 
 const url = ref(`/api/afisha-music/`)
 
@@ -73,13 +74,15 @@ onMounted(async () => {
       <h3>Новые тренды</h3>
       <div class="info">
         <p hidden>{{ music.id }}</p>
-        <h2>{{ music.name_music }}</h2>
+        <h2 class="nameMusic">{{ music.name_music }}</h2>
         <p class="name">{{ music.name }}</p>
         <p class="count">{{ music.count_auditions }} прослушиваний</p>
         <div class="buttons">
           <button @click="handleClick">Слушать</button>
-          <box-icon name='plus' color='#ffffff' style="cursor: pointer" v-if="isAdded" @click="addToFavouriteClick(music.id)"></box-icon>
-          <box-icon name='heart' type='solid' v-else color='#ffffff' @click="removeFromFavouriteClick(music.id)"></box-icon>
+          <div v-if="id !== 0">
+            <box-icon name='plus' color='#ffffff' style="cursor: pointer" v-if="isAdded" @click="addToFavouriteClick(music.id)"></box-icon>
+            <box-icon name='heart' type='solid' v-else color='#ffffff' @click="removeFromFavouriteClick(music.id)"></box-icon>
+          </div>
         </div>
       </div>
     </div>
@@ -169,6 +172,10 @@ onMounted(async () => {
   }
   .trending img {
     display: none;
+  }
+  .nameMusic {
+    word-break: break-all;
+    width: 355px;
   }
 }
 </style>

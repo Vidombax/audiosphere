@@ -31,7 +31,7 @@ onMounted(async () => {
 
 <template>
   <div class="profile">
-    <router-link to="/settings">
+    <router-link to="/settings" v-if="id !== 0">
       <box-icon name='cog' type='solid' color='#ffffff' style="cursor: pointer;"></box-icon>
     </router-link>
     <router-link :to="urlAddress">
