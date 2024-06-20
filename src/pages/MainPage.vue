@@ -11,14 +11,10 @@ import CustomPlaylists from "@/components/main/CustomPlaylists.vue";
 
 document.title = 'AudioSphere | Главная'
 
-const props = defineProps({
-  sendMessage: Function,
-})
-
 const genres = ref([])
 
 const popularMusic = ref([])
-const countPopularMusic = 1
+let countPopularMusic = 1
 
 const fetchGenres = async () => {
   try {
@@ -47,7 +43,7 @@ onMounted(async () => {
 </script>
 
 <template>
-<!--  <NewInTrend />-->
+  <NewInTrend />
 
   <div class="playlist">
     <div class="genres">
