@@ -2,6 +2,7 @@
   import {inject} from "vue";
   import ItemsUsersModal from "@/components/admin/modalItemsAdmin/ItemsUsersModal.vue";
   import ItemGenresModal from "@/components/admin/modalItemsAdmin/ItemGenresModal.vue";
+  import ItemMusicModal from "@/components/admin/modalItemsAdmin/ItemMusicModal.vue";
 
   const {closeModal} = inject('admin')
   const props = defineProps({
@@ -19,6 +20,9 @@
     </div>
     <ItemsUsersModal v-if="selectedTable === 0"
                      :id-user="idObject"
+    />
+    <ItemMusicModal v-else-if="selectedTable === 2"
+                    :id-music="idObject"
     />
     <ItemGenresModal v-else-if="selectedTable === 5"
                      :id-genre="idObject"

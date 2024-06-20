@@ -141,6 +141,38 @@ class MusicController {
         const new_comment = await db.query('INSERT INTO comments (id_user, id_music, comment) VALUES ($1, $2, $3)', [id_user, id_music, comment]);
         res.json('comment create');
     }
+    async createReport(req, res) {
+        const report = req.body.report;
+        const id_user = req.body.user;
+        const id_music = req.body.music;
+        let text = '';
+        switch (report) {
+            case 'copyright':
+                text = 'Нарушение авторских прав';
+                const report_copyright = await db.query('INSERT INTO complaints (reason_complaint, id_user, id_music) VALUES ($1, $2, $3)', [text, id_user, id_music]);
+                res.json('');
+                break;
+            case 'notMusic':
+                text = 'Аудиофайл не содержит музыки';
+                const report_notMusic = await db.query('INSERT INTO complaints (reason_complaint, id_user, id_music) VALUES ($1, $2, $3)', [text, id_user, id_music]);
+                res.json('');
+                break;
+            case 'notPlay':
+                text = 'Музыка не воспроизводится';
+                const report_notPlay = await db.query('INSERT INTO complaints (reason_complaint, id_user, id_music) VALUES ($1, $2, $3)', [text, id_user, id_music]);
+                res.json('');
+                break;
+        }
+    }
+    async getReports(req, res) {
+        const reports = await db.query('SELECT complaints.id, complaints.reason_complaint, users.name, music.name_music FROM complaints JOIN music ON complaints.id_music = music.id JOIN users ON complaints.id_user = users.iduser ORDER BY complaints.id ASC');
+        res.json(reports.rows);
+    }
+    async denyReport(req, res) {
+        const id = req.params.id;
+        const report = await db.query('DELETE FROM complaints WHERE id = $1', [id]);
+        res.json('');
+    }
 }
 
 export default new MusicController();

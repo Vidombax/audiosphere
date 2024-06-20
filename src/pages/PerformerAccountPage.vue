@@ -98,6 +98,7 @@ const unsubscribesToPerformer = async (idPerformer) => {
   try {
     const idUser = ref(Number(localStorage.getItem('id')) || 0)
     if (idUser.value !== 0) {
+      console.log(idPerformer)
       await axios.delete(`/api/unsub-performer/${idUser.value}/${idPerformer}`)
       countFollower.value.count--;
     }
@@ -107,6 +108,19 @@ const unsubscribesToPerformer = async (idPerformer) => {
   }
   catch (err) {
     console.error(err)
+  }
+}
+
+const playlists = ref([]);
+const fetchPlaylistByUser = async () => {
+  try {
+    console.log(id.value)
+    const response = await axios.get(`/api/get-playlists/${id.value}`);
+    playlists.value = response.data;
+    console.log(playlists.value)
+  }
+  catch (err) {
+    console.error(err);
   }
 }
 
@@ -126,6 +140,7 @@ onMounted(async () => {
   await getSubscribe()
   await getMusicByPerformer()
   await getAlbumsByPerformer()
+  await fetchPlaylistByUser()
 })
 </script>
 
@@ -155,7 +170,11 @@ onMounted(async () => {
       <h4 v-else>Плейлисты пользователя</h4>
     </div>
     <div class="items">
-      <FavouriteAlbum v-for="item in performerAlbums" :key="item.id"
+      <FavouriteAlbum v-for="item in performerAlbums" :key="item.id" v-if="data.is_performance === true"
+                      :album-cover="item.album_cover" :id-album="item.id_album"
+                      :name-album="item.name_album"
+      />
+      <FavouriteAlbum v-for="item in playlists" :key="item.idd" v-else
                       :album-cover="item.album_cover" :id-album="item.id_album"
                       :name-album="item.name_album"
       />

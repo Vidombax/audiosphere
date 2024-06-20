@@ -21,8 +21,19 @@ const listSongsOpen = ref(false)
 const listCommentsOpen = ref(false)
 const isLooping = ref(true)
 
-const {stopMusic, playMusic, pastComposition, nextComposition, loopMusic,
-  volumeChanged, isPlaying, changeAudioTime, addToFavouriteClick, removeFromFavouriteClick} = inject('app')
+const {
+  stopMusic,
+  playMusic,
+  pastComposition,
+  nextComposition,
+  loopMusic,
+  volumeChanged,
+  isPlaying,
+  changeAudioTime,
+  addToFavouriteClick,
+  removeFromFavouriteClick,
+  sendReport
+} = inject('app')
 
 const volume = ref(100)
 const audioTime = ref(0)
@@ -107,8 +118,10 @@ provide('musicPlayer', {
 
     <div class="player-actions">
       <div class="buttons">
-        <box-icon name='repeat' v-if="isLooping" color='#ffffff' style="cursor: pointer;" @click="handlerLoop"></box-icon>
-        <box-icon name='repeat' v-else color='#1c3bd5' style="cursor: pointer;" @click="handlerLoop"></box-icon>
+        <div v-if="id !== 0" style="position: relative; top: 7.5px;">
+          <box-icon name='repeat' v-if="isLooping" color='#ffffff' style="cursor: pointer;" @click="handlerLoop"></box-icon>
+          <box-icon name='repeat' v-else color='#1c3bd5' style="cursor: pointer;" @click="handlerLoop"></box-icon>
+        </div>
         <box-icon name='first-page' @click="pastComposition" color='#ffffff' style="cursor: pointer;"></box-icon>
         <box-icon name='play-circle' @click="playMusic" v-if="isPlaying" color='#ffffff' style="cursor: pointer;"></box-icon>
         <box-icon name='pause-circle' @click="stopMusic" v-else color='#ffffff' style="cursor: pointer"></box-icon>
@@ -123,6 +136,7 @@ provide('musicPlayer', {
         <box-icon name='volume-low' color='#ffffff' ></box-icon>
         <input type="range" value="100" v-model="volume" @input="handleVolumeChange">
         <box-icon name='volume-full' color='#ffffff' ></box-icon>
+        <box-icon v-if="id !== 0" name='error' type='solid' color='#ffffff' @click="sendReport"></box-icon>
       </div>
     </div>
   </div>

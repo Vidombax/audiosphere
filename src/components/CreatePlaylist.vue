@@ -134,7 +134,7 @@ provide('createPlaylist', {
   .modalPlaylist {
     display: flex;
     position: fixed;
-    top: -10%;
+    top: 10%;
     left: 30%;
     width: 40%;
     justify-content: center;

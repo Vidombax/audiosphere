@@ -352,9 +352,9 @@ const addToFavourite = async (idMusic) => {
   }
 }
 
+const idUser = ref(Number(localStorage.getItem('id')) || 0)
 const removeFromFavourite = async (idMusic) => {
   try {
-    const idUser = ref(Number(localStorage.getItem('id')) || 0)
     if (idUser.value !== 0) {
       await axios.delete(`api/del-favourite/${idUser.value}/${idMusic}`)
     }
@@ -370,6 +370,45 @@ const removeFromFavourite = async (idMusic) => {
 const openPlayerAdaptive = () => {
   document.getElementsByClassName('music-player')[0].classList.add('displayPlayer');
   document.getElementsByClassName('player-shortcut')[0].classList.add('player-shortcutClose');
+}
+
+const sendReport = async () => {
+  try {
+    if (idUser.value !== 0 && idMusic.value !== 0) {
+      const { value: report } = await Swal.fire({
+        title: "Выберите причину жалобы",
+        input: "select",
+        inputOptions: {
+          copyright: "Нарушение авторских прав",
+          notMusic: "Аудиофайл не содержит музыки",
+          notPlay: "Музыка не воспроизводится",
+        },
+        inputPlaceholder: "Причины",
+        showCancelButton: true,
+        inputValidator: (value) => {
+          return new Promise((resolve) => {
+            resolve();
+          });
+        }
+      });
+
+      const response = await axios.post(`api/send-report`, {
+        report: report,
+        user: idUser.value,
+        music: idMusic.value
+      });
+      Swal.fire("Жалоба отправлена");
+    }
+    else {
+      Toast.fire({
+        icon: "error",
+        title: "Выберите музыку!"
+      });
+    }
+  }
+  catch (err) {
+    console.log(err);
+  }
 }
 
 const Toast = Swal.mixin({
@@ -402,7 +441,8 @@ provide('app', {
   removeFromFavourite,
   addToFavouriteClick,
   removeFromFavouriteClick,
-  Toast
+  Toast,
+  sendReport
 })
 
 onMounted(async () => {
@@ -508,6 +548,11 @@ img{
   right: 0 !important;
   top: 12% !important;
   box-shadow: 1px 5px 5px #919191;
+}
+
+.swal2-select {
+  position: relative;
+  left: 90px;
 }
 
 .player-shortcutClose {

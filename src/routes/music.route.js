@@ -18,5 +18,8 @@ router.delete("/music/:id", MusicController.deleteMusic);
 router.get("/music-search/:search", MusicController.getMusicBySearch);
 router.get("/get-comments/:id", MusicController.getCommentsFromMusic);
 router.post("/create-comment", MusicController.createComment);
+router.post("/send-report", MusicController.createReport);
+router.get("/reports", MusicController.getReports);
+router.delete("/report/:id", MusicController.denyReport);
 
 export default router;

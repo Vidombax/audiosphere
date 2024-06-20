@@ -8,6 +8,7 @@ import SubscribeAdmin from "@/components/admin/SubscribeAdmin.vue";
 import ModalAdmin from "@/components/admin/ModalAdmin.vue";
 import GenreAdmin from "@/components/admin/GenreAdmin.vue";
 import AddModalAdmin from "@/components/admin/AddModalAdmin.vue";
+import ReportAdmin from "@/components/admin/ReportAdmin.vue";
 
 defineProps({
   button: Object,
@@ -86,6 +87,12 @@ const handlerTableClick = (e) => {
       document.title = 'Панель администратора | Жанры'
       typeDetaliztaion.value = 'жанра'
       break;
+    case 'Жалобы':
+      selectedTable.value = 6;
+      e.target.classList.add('selected-point');
+      document.title = 'Панель администратора | Жалобы'
+      typeDetaliztaion.value = 'жалобы'
+      break;
   }
 }
 
@@ -142,7 +149,8 @@ onMounted(async () => {
       <p class="aside-point" id="musicAdmin" @click="handlerTableClick">Музыка</p>
       <p class="aside-point" id="performerAdmin" @click="handlerTableClick">Заявки на получение статуса</p>
       <p class="aside-point" id="subscribeAdmin" @click="handlerTableClick">Подписки</p>
-      <p class="aside-point" id="subscribeAdmin" @click="handlerTableClick">Жанры</p>
+      <p class="aside-point" id="genreAdmin" @click="handlerTableClick">Жанры</p>
+      <p class="aside-point" id="reportAdmin" @click="handlerTableClick">Жалобы</p>
     </div>
     <div class="main">
       <UsersAdmin v-if="selectedTable === 0" />
@@ -151,6 +159,7 @@ onMounted(async () => {
       <ApplicationAdmin v-else-if="selectedTable === 3" />
       <SubscribeAdmin  v-else-if="selectedTable === 4"/>
       <GenreAdmin v-else-if="selectedTable === 5"/>
+      <ReportAdmin v-else-if="selectedTable === 6"/>
     </div>
     <ModalAdmin v-if="isOpened"
                 :id-object="idObject"

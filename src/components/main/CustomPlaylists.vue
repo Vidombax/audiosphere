@@ -9,6 +9,7 @@ const getPlaylists = async () => {
   try {
     const response = await axios.get('api/get-playlists');
     playlists.value = response.data;
+    console.log(playlists.value)
   }
   catch (err) {
     console.error(err);

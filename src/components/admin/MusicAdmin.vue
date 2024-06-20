@@ -59,6 +59,7 @@ onMounted(async () => {
         <th>Кол-во прослушиваний</th>
         <th>Жанр</th>
         <th>Продолжительность</th>
+        <th>Детализация</th>
       </tr>
       <ItemAdminTableMusic v-for="item in music" v-if="music !== null"
                            :key="item.id"
@@ -89,7 +90,7 @@ onMounted(async () => {
     width: 100%;
   }
   th {
-    font-size: larger;
+    font-size: large;
   }
   tr, td {
     padding: 5px;

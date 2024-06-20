@@ -19,7 +19,6 @@ import PlaylistPage from "@/pages/PlaylistPage.vue";
 import RegistrationPage from "@/pages/RegistrationPage.vue";
 import PerformerAccountPage from "@/pages/PerformerAccountPage.vue";
 import AdminPage from "@/pages/AdminPage.vue";
-import UsersAdmin from "@/components/admin/UsersAdmin.vue";
 
 const app = createApp(App)
 
