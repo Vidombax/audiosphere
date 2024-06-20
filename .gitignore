@@ -7,6 +7,9 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 package-lock.json
+db.js
+vite.config.js
+vercel.json
 
 node_modules
 public
