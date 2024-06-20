@@ -5,11 +5,11 @@ import axios from "axios";
 const music = ref([])
 const id = ref(Number(localStorage.getItem('id')) || 0);
 
-const url = ref(`/api/afisha-music/`)
+const url = ref(`/api/afisha-music`)
 
 const fetchMusic = async () => {
   try {
-    const response = await axios.get(url.value)
+    const response = await axios.get('/api/afisha-music')
     music.value = response.data
   }
   catch (err) {
