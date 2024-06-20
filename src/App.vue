@@ -23,7 +23,7 @@ const openApp = () => {
 }
 
 const checkAdminPage = async () => {
-  if (location.href === 'http://localhost:5173/admin') {
+  if (location.href === 'https://audiosphere.vercel.app/admin') {
     visibleComponent.value = false
   }
   else {

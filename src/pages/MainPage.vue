@@ -47,7 +47,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <NewInTrend />
+<!--  <NewInTrend />-->
 
   <div class="playlist">
     <div class="genres">
