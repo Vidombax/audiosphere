@@ -76,16 +76,16 @@ function playerInformation(index) {
   allTimeMusic.value = audio.duration;
 }
 
-let intervalId = ref()
+let intervalId = ref(null)
 
 function increaseVariable(currentTime) {
-  clearInterval(intervalId);
+  clearInterval(intervalId.value);
 
   intervalId = setInterval(() => {
     currentTime.value++;
     if (currentTime.value === Math.round(audio.duration)) {
       setTimeout(() => {
-        clearInterval(intervalId)
+        clearInterval(intervalId.value)
 
       })
     }
@@ -108,7 +108,7 @@ const playMusic = async () => {
 const stopMusic = () => {
   isPlaying.value = true
   audio.pause()
-  clearInterval(intervalId)
+  clearInterval(intervalId.value)
 }
 
 const pastComposition = () => {
