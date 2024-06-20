@@ -1,9 +1,6 @@
 import pg from 'pg';
 const db = new pg.Pool({
-    user: 'postgres',
-    password: '1234',
-    host: 'localhost',
-    database: 'audiosphere',
+    connectionString: "postgres://default:no1RIb8TrGeW@ep-quiet-night-a4e7kuyq-pooler.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require?sslmode=require",
 })
 
 export default db;
